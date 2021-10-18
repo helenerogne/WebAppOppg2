@@ -22,10 +22,22 @@
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     <None Remove="Controllers\" />
+    <None Remove="TicketController\" />
+    <None Remove="ClientApp\src\app\save\" />
+    <None Remove="ClientApp\src\app\orderComplete\" />
+    <None Remove="ClientApp\src\app\admin\" />
+    <None Remove="ClientApp\src\app\adminLogin\" />
+    <None Remove="ClientApp\src\app\validation\" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="OrderController\" />
+    <Folder Include="ClientApp\src\app\home\" />
+    <Folder Include="ClientApp\src\app\orderComplete\" />
+    <Folder Include="ClientApp\src\app\admin\" />
+    <Folder Include="ClientApp\src\app\adminLogin\" />
+    <Folder Include="ClientApp\src\app\validation\" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
