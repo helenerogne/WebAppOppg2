@@ -7,6 +7,7 @@ import { Ticket } from "../Ticket";
 @Component({
   templateUrl: "admin.component.html"
 })
+
 export class admin.component.ts {
   allTickets: Array<Ticket>;
   loading: boolean;
