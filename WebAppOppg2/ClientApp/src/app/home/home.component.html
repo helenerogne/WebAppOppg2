@@ -1,0 +1,191 @@
+  <!-- Headerbilde -->
+
+<div class="container-fluid header"></div>
+
+<div class="container">
+    <h1 class="sr-only">Bestill reise</h1>
+
+    <form class="ticketForm" oninput="formatForm()">
+        <fieldset class="form-group">
+            <!-- Kilde: https://a11y-guidelines.orange.com/en/web/components-examples/accessible-hiding/-->
+
+            <legend class="sr-only">Reisetype</legend>
+
+            <div class="form-row center-div">
+                <p>Begynn med å velge reisetype.</p>
+            </div>
+
+            <div class="form-row center-div">
+                <div class="col-md-6">
+                    <label for="tripType" class="sr-only">Reisetype</label>
+                    <!-- Kilde: https://getbootstrap.com/docs/4.0/components/forms/ -->
+
+                    <select id="tripType" name="tripType" class="form-control form-control-lg inputhighlight" onchange="formatRouteChoice()">
+                        <option value="placeholder">Velg reisetype</option>
+                        <option value="oneWay">Én vei</option>
+                        <option value="returnTrip">Tur/Retur</option>
+                        <option value="cruise">Cruise</option>
+                        <option value="domesticOneWay">Innenriks - Én vei</option>
+                        <option value="domesticReturnTrip">Innenriks - Tur/retur</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <div id="errorTripType" class="error"></div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div>
+            <hr />
+        </div>
+
+        <fieldset class="form-group">
+            <legend class="sr-only">Rute og dato</legend>
+
+
+            <div class="form-row center-div">
+                <p>Hvor drar du fra, og hvor ønsker du å dra til?</p>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="routeFrom">Fra</label>
+                    <select id="routeFrom" name="routeFrom" class="form-control form-control-lg inputhighlight" onchange="formatRouteChoice()">
+                        <option value="placeholder">Velg avgangshavn</option>
+                        <option value="fromBergen" id="fromBergen">Bergen</option>
+                        <option value="fromHirtshals" id="fromHirtshals">Hirtshals</option>
+                        <option value="fromKristiansand" id="fromKristiansand">Kristiansand</option>
+                        <option value="fromLangesund" id="fromLangesund">Langesund</option>
+                        <option value="fromStavanger" id="fromStavanger">Stavanger</option>
+                        <option value="fromSandefjord" id="fromSandefjord">Sandefjord</option>
+                        <option value="fromStromstad" id="fromStromstad">Strømstad</option>
+                    </select>
+                    <div id="errorRouteFrom" class="error"></div>
+                </div>
+                <div class="col-md-6">
+                    <label for="routeTo">Til</label>
+                    <select id="routeTo" name="routeTo" class="form-control form-control-lg inputhighlight">
+                        <option value="placeholder">Velg ankomsthavn</option>
+                        <option value="toBergen" id="toBergen">Bergen</option>
+                        <option value="toHirtshals" id="toHirtshals">Hirtshals</option>
+                        <option value="toKristiansand" id="toKristiansand">Kristiansand</option>
+                        <option value="toLangesund" id="toLangesund">Langesund</option>
+                        <option value="toStavanger" id="toStavanger">Stavanger</option>
+                        <option value="toSandefjord" id="toSandefjord">Sandefjord</option>
+                        <option value="toStromstad" id="toStromstad">Strømstad</option>
+                    </select>
+                    <div id="errorRouteTo" class="error"></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-row">
+                        <label for="departureDate">Utreisedato</label>
+                    </div>
+                    <input type="date" id="departureDate" name="departureDate" class="datetext form-control form-control-lg inputhighlight" />
+                    <div id="errorDepartureDate" class="error"></div>
+                </div>
+                <div id="returnDateBlock" class="col-md-6">
+                    <div class="form-row">
+                        <label for="returnDate">Returdato</label>
+                    </div>
+                    <input type="date" id="returnDate" name="returnDate" class="datetext form-control form-control-lg inputhighlight" />
+                    <div id="errorReturnDate" class="error"></div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div>
+            <hr />
+        </div>
+
+        <fieldset class="form-group">
+            <legend class="sr-only">Antall billetter</legend>
+
+            <div class="form-row center-div">
+                <p>Hvor mange billetter?</p>
+            </div>
+
+            <div class="form-row center-div">
+                <div class="col-md-4">
+                    <label for="ticketCount">Antall billetter</label>
+
+                    <input type="number" id="ticketCount" min="1" max="50" name="ticketCount" placeholder="0" class="form-control form-control-lg inputhighlight" onchange="sumPrice(this.value)" />
+
+                    <div id="errorTicketCount" class="error"></div>
+                </div>
+            </div>
+
+            <div class="form-row center-div">
+                <p class="pricetag">Pris</p>
+                <div class="form-row">
+                    <ul>
+                        <li>50 kr per billett.</li>
+                        <li>Legg til billetter over for å se samlet sum.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-row center-div">
+                <div class="col-md-4">
+                    <label for="sumPrice" class="sr-only">Pris</label>
+
+                    <div class="price-div">
+                        <p id="sumPrice"></p>
+                    </div>
+
+                    <div id="errorPrice" class="error"></div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div>
+            <hr />
+        </div>
+
+        <fieldset class="form-group userInfo center-div">
+            <legend>Kundeinformasjon</legend>
+
+            <div class="form-row">
+                <p>Vennligst oppgi fornavn, etternavn og e-post.</p>
+            </div>
+            <div class="form-row">
+                <ul>
+                    <li>Mellom 2 og 30 karakterer per input.</li>
+                    <li>Eksempel på gyldig e-post: colorline@mail.no</li>
+                </ul>
+            </div>
+
+            <input type="hidden" id="id" />
+
+            <div class="form-row center-div userInput">
+                <label for="firstname" class="sr-only">Fornavn</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Fornavn" class="form-control form-control-lg inputhighlight" />
+                <div id="errorFirstname" class="error"></div>
+            </div>
+
+            <div class="form-row userInput">
+                <label for="lastname" class="sr-only">Etternavn</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Etternavn" class="form-control form-control-lg inputhighlight" />
+                <div id="errorLastname" class="error"></div>
+            </div>
+
+            <div class="form-row userInput">
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" id="email" name="email" placeholder="E-post" class="form-control form-control-lg inputhighlight" />
+                <div id="errorEmail" class="error"></div>
+            </div>
+        </fieldset>
+    </form>
+
+    <button class="btn btn-primary btnStyle" onclick="validateTicket()">Bestill</button>
+    <br />
+    <span id="errorOrderBtn" class="error"></span>
+    <br />
+</div>
+<div id="showOrders"></div>
+
+
+
+
