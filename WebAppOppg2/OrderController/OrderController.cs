@@ -5,7 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace WebAppOppg2.OrderController
 {
+
     [Route ("api/[controller]")] 
+
     public class OrderController
     {
         /*
@@ -30,7 +32,7 @@ namespace WebAppOppg2.OrderController
             return Ok(inTicket);
         }
 
-        
+
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOne(int id)
         {
