@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +66,7 @@ namespace WebAppOppg2.DAL
         {
             try
             {
-                Tickets oneTicket = await _db.Tickets.FindAsync(id);
+                Ticket oneTicket = await _db.Tickets.FindAsync(id);
                 _db.Tickets.Remove(oneTicket);
                 await _db.SaveChangesAsync();
                 return true;

@@ -1,5 +1,6 @@
 ﻿using WebAppOppg2.Models;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebAppOppg2.DAL
 {
@@ -11,7 +12,7 @@ namespace WebAppOppg2.DAL
         public string Password { get; set; }
     }
 
-    public class Tickets
+    public class Ticket
     {
         public int ID { get; set; }
         public string Firstname { get; set; }
@@ -33,7 +34,7 @@ namespace WebAppOppg2.DAL
             Database.EnsureCreated();
         }
 
-        public DbSet<Tickets> Tickets { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Admin> Admins { get; set; }
     }
 }
