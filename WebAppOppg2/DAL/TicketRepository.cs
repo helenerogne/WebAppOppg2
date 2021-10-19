@@ -48,7 +48,7 @@ namespace WebAppOppg2.DAL
                     Email = t.Email,
                     Route = t.Route,
                     Date = t.Date,
-                    Count = t.Count,
+                    Quantity = t.Quantity,
                     Type = t.Type,
                     Price = t.Price
                 }).ToListAsync();
@@ -90,7 +90,7 @@ namespace WebAppOppg2.DAL
                     Email = oneTicket.Email,
                     Route = oneTicket.Route,
                     Date = oneTicket.Date,
-                    Count = oneTicket.Count,
+                    Quantity = oneTicket.Quantity,
                     Type = oneTicket.Type,
                     Price = oneTicket.Price
                 };
@@ -113,7 +113,7 @@ namespace WebAppOppg2.DAL
                 editObject.Email = editTicket.Email;
                 editObject.Route = editTicket.Route;
                 editObject.Date = editTicket.Date;
-                editObject.Count = editTicket.Count;
+                editObject.Quantity = editTicket.Quantity;
                 editObject.Type = editTicket.Type;
                 editObject.Price = editTicket.Price;
                 await _db.SaveChangesAsync();
