@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>Adminside</h1>
+    <div>
+        <div class="col-md-12">
+            <div *ngIf="loading">Laster billetter....</div>
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Kontaktinfo</th>
+                        <th>Rute</th>
+                        <th>Type</th>
+                        <th>Dato</th>
+                        <th>Antall</th>
+                        <th>Pris</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let ticket of allTickets">
+                    <tr>
+                        <td>{{ticket.firstname}}, {{ticket.lastname}, {{ticket.email}}</td>
+                        <td>{{ticket.route}}</td>
+                        <td>{{ticket.count}}</td>
+                        <td>{{ticket.price}}</td>
+                        <td><button class="btn btn-danger" (click)="deleteOneTicket(ticket.id)">Slett</button></td>
+                        <td><button class="btn btn-success" (routerLink)="['/adminEdit', ticket.id]">Endre</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary" routerLink="/admin">Lagre kunde</button>
+        </div>
+    </div>
+</div>
+
