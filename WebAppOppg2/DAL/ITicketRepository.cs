@@ -13,5 +13,6 @@ namespace WebAppOppg2.DAL
         Task<bool> EditTicket(Ticket editTicket);
         Task<Ticket> GetOne(int id);
         Task<List<Ticket>> GetAll();
+        Task<bool> EditAdmin(Admin editAdmin);
     }
 }
