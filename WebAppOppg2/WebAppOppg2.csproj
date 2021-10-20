@@ -14,12 +14,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.11" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
-    <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     <None Remove="Controllers\" />
     <None Remove="TicketController\" />
@@ -32,6 +33,9 @@
     <None Remove="ClientApp\src\app\adminEdit\" />
     <None Remove="ClientApp\src\app\orderComplete\" />
     <None Remove="OrderController\" />
+    <None Remove="DAL\" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +49,7 @@
     <Folder Include="ClientApp\src\app\adminEdit\" />
     <Folder Include="ClientApp\src\app\orderComplete\" />
     <Folder Include="OrderController\" />
+    <Folder Include="DAL\" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
