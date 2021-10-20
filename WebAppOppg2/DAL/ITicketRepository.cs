@@ -14,5 +14,7 @@ namespace WebAppOppg2.DAL
         Task<Ticket> GetOne(int id);
         Task<List<Ticket>> GetAll();
         Task<bool> EditAdmin(Admin editAdmin);
+        Task<bool> LogIn(Admin admin);
+        //Task<bool> LogOut();
     }
 }
