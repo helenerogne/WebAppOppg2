@@ -1,56 +1,78 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WebAppOppg2.DAL;
+
 
 namespace WebAppOppg2.OrderController
 {
 
+    [ApiController]
+
     [Route ("api/[controller]")] 
 
-    public class OrderController
+    public class OrderController : ControllerBase
     {
-        
+
+        private ITicketRepository _db;
         private ILogger<OrderController> _log;
-        private readonly ITicketRepository _db;
+        private const string _loggetInn = "loggetInn";
 
         public OrderController(ITicketRepository db, ILogger<OrderController> log)
         {
             _db = db;
             _log = log;
         }
-
+        //SaveTicket
         [HttpPost]
-        public async Task<ActionResult> SaveOrder(Ticket inTicket)
+        public async Task<ActionResult> SaveTicket(Ticket ticket)
         {
-            bool returOK = await _db.saveOrder(inTicket);
-            if (!returOK)
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
-                _log.LogInformation("Bestilling ble ikke lagret");
-                return BadRequest("Bestilling ble ikke lagret");
+                return Unauthorized();
             }
-            return Ok(inTicket);
+            if (ModelState.IsValid)
+            {
+                bool returOK = await _db.SaveTicket(ticket);
+                if (!returOK)
+                {
+                    _log.LogInformation("Billett kunne ikke lagres!");
+                    return BadRequest("");
+                }
+                return Ok("");
+            }
+            _log.LogInformation("Feil i inputvalidering");
+            return BadRequest("");
         }
 
 
+        //GetOne
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOne(int id)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
             if (ModelState.IsValid)
             {
                 Ticket ticket = await _db.GetOne(id);
                 if (ticket == null)
                 {
-                    _log.LogInformation("Fant ikke kunden");
-                    return NotFound("Fant ikke kunden");
+                    _log.LogInformation("Fant ikke bilett");
+                    return NotFound();
                 }
                 return Ok(ticket);
             }
             _log.LogInformation("Feil i inputvalidering");
-            return BadRequest("Feil i inputvalidering på server");
+            return BadRequest();
         }
 
-        
+
 
     }
 }

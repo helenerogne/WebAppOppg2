@@ -24,27 +24,6 @@ namespace WebAppOppg2.Controllers
             _log = log;
         }
 
-        //SaveTicket
-        [HttpPost]
-        public async Task<ActionResult> SaveTicket(Ticket ticket)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-            if (ModelState.IsValid)
-            {
-                bool returOK = await _db.SaveTicket(ticket);
-                if (!returOK)
-                {
-                    _log.LogInformation("Bilett kunne ikke lagres!");
-                    return BadRequest("");
-                }
-                return Ok("");
-            }
-            _log.LogInformation("Feil i inputvalidering");
-            return BadRequest("");
-        }
 
         //GetALl
         [HttpGet]
