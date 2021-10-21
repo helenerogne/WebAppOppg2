@@ -10,7 +10,7 @@ namespace WebAppOppg2.OrderController
 
     public class OrderController
     {
-        /*
+        
         private ILogger<OrderController> _log;
         private readonly ITicketRepository _db;
 
@@ -50,7 +50,7 @@ namespace WebAppOppg2.OrderController
             return BadRequest("Feil i inputvalidering på server");
         }
 
-        */
+        
 
     }
 }
