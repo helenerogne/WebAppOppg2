@@ -12,8 +12,6 @@ namespace WebAppOppg2.OrderController
 {
     [ApiController]
 
-    [ApiController]
-
     [Route ("api/[controller]")] 
 
     public class OrderController : ControllerBase
