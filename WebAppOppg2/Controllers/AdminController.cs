@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppOppg2.DAL;
+using WebAppOppg2.Models;
 
 namespace WebAppOppg2.Controllers
 {

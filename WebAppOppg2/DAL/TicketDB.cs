@@ -4,14 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebAppOppg2.DAL
 {
-
-    public class Admin
-    {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
-
     public class Ticket
     {
         public int ID { get; set; }
@@ -35,6 +27,5 @@ namespace WebAppOppg2.DAL
         }
 
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Admin> Admins { get; set; }
     }
 }
