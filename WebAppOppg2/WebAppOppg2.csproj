@@ -32,7 +32,6 @@
     <None Remove="ClientApp\src\app\meny\" />
     <None Remove="ClientApp\src\app\adminEdit\" />
     <None Remove="ClientApp\src\app\orderComplete\" />
-    <None Remove="OrderController\" />
     <None Remove="DAL\" />
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
@@ -47,7 +46,6 @@
     <Folder Include="ClientApp\src\app\meny\" />
     <Folder Include="ClientApp\src\app\adminEdit\" />
     <Folder Include="ClientApp\src\app\orderComplete\" />
-    <Folder Include="OrderController\" />
     <Folder Include="DAL\" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
