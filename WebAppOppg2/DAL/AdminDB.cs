@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAppOppg2.DAL.Admin
+namespace WebAppOppg2.DAL
 {
-    public class Admin
+    public class Admins
         {
             public int Id { get; set; }
             public string Username { get; set; }
@@ -15,12 +15,12 @@ namespace WebAppOppg2.DAL.Admin
         }
         public class AdminDB : DbContext
         {
-            public AdminDB(DbContextOptions<TicketDB> options)
+            public AdminDB(DbContextOptions<AdminDB> options)
                 : base(options)
             {
                 Database.EnsureCreated();
             }
-            public DbSet<Admin> Admins { get; set; }
+            public DbSet<Admins> Admins { get; set; }
         }
 }
 

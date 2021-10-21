@@ -26,6 +26,7 @@ namespace WebAppOppg2.OrderController
             _db = db;
             _log = log;
         }
+
         //SaveTicket
         [HttpPost]
         public async Task<ActionResult> SaveTicket(Ticket ticket)
@@ -71,7 +72,52 @@ namespace WebAppOppg2.OrderController
             return BadRequest();
         }
 
+        //GetALl
+        [HttpGet]
+        public async Task<ActionResult> GetAll()
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
+            List<Ticket> tickets = await _db.GetAll();
+            return Ok(tickets);
+        }
 
+        //DeleteTicket
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteTicket(int id)
+        {
+            bool returOK = await _db.DeleteTicket(id);
+            if (!returOK)
+            {
+                _log.LogInformation("Sletting av biletten ble ikke utført");
+                return NotFound();
+            }
+            return Ok();
 
+        }
+
+        //EditTicket
+        [HttpPut]
+        public async Task<ActionResult> EditTicket(Ticket ticket)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
+            if (ModelState.IsValid)
+            {
+                bool returOK = await _db.EditTicket(ticket);
+                if (!returOK)
+                {
+                    _log.LogInformation("Endringen kunne ikke utføres");
+                    return NotFound();
+                }
+                return Ok();
+            }
+            _log.LogInformation("Feil i inputvalidering");
+            return BadRequest();
+        }
     }
 }

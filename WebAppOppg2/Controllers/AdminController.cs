@@ -15,85 +15,14 @@ namespace WebAppOppg2.Controllers
     [Route("api/[controller]")]
     public class AdminController : ControllerBase
     {
-        private ITicketRepository _db;
+        private IAdminRepository _db;
         private ILogger<AdminController> _log;
         private const string _loggetInn = "loggetInn";
 
-        public AdminController(ITicketRepository db, ILogger<AdminController> log)
+        public AdminController(IAdminRepository db, ILogger<AdminController> log)
         {
             _db = db;
             _log = log;
-        }
-
-
-        //GetALl
-        [HttpGet]
-        public async Task<ActionResult> GetAll()
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-            List<Ticket> tickets = await _db.GetAll();
-            return Ok(tickets);
-        }
-
-        //DeleteTicket
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTicket(int id)
-        {
-            bool returOK = await _db.DeleteTicket(id);
-            if (!returOK)
-            {
-                _log.LogInformation("Sletting av biletten ble ikke utført");
-                return NotFound();
-            }
-            return Ok();
-
-        }
-
-        //GetOne
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetOne(int id)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-            if (ModelState.IsValid)
-            {
-                Ticket ticket = await _db.GetOne(id);
-                if (ticket == null)
-                {
-                    _log.LogInformation("Fant ikke bilett");
-                    return NotFound();
-                }
-                return Ok(ticket);
-            }
-            _log.LogInformation("Feil i inputvalidering");
-            return BadRequest();
-        }
-
-        //EditTicket
-        [HttpPut]
-        public async Task<ActionResult> EditTicket(Ticket ticket)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-            if (ModelState.IsValid)
-            {
-                bool returOK = await _db.EditTicket(ticket);
-                if (!returOK)
-                {
-                    _log.LogInformation("Endringen kunne ikke utføres");
-                    return NotFound();
-                }
-                return Ok();
-            }
-            _log.LogInformation("Feil i inputvalidering");
-            return BadRequest();
         }
 
         //EditAdmin

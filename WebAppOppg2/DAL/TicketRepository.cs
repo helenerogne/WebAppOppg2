@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebAppOppg2.Models;
+
 
 namespace WebAppOppg2.DAL
 {
@@ -122,24 +122,6 @@ namespace WebAppOppg2.DAL
             catch (Exception e)
             {
                 _log.LogInformation(e.Message + "Feil i editTicket");
-                return false;
-            }
-            return true;
-        }
-
-
-        public async Task<bool> EditAdmin(Admin editAdmin)
-        {
-            try
-            {
-                var editObject = await _db.Admins.FindAsync(editAdmin.Id);
-                editObject.Username = editAdmin.Username;
-                editObject.Password = editAdmin.Password;
-                await _db.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                _log.LogInformation(e.Message + "Feil i editAdmin");
                 return false;
             }
             return true;
