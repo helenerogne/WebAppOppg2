@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAppOppg2.DAL
 {
-    public class Admins
+    public class AdminUser
         {
             public int Id { get; set; }
             public string Username { get; set; }
@@ -20,7 +20,7 @@ namespace WebAppOppg2.DAL
             {
                 Database.EnsureCreated();
             }
-            public DbSet<Admins> Admins { get; set; }
+            public DbSet<AdminUser> AdminUsers { get; set; }
         }
 }
 

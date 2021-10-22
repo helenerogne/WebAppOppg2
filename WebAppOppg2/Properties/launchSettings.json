@@ -11,9 +11,13 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      //"launchUrl": "somethingurl.url",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+
+//legg inn custom fra launchSettings.json i KundeApp2 hvis det ikke funker
+
     },
     "WebAppOppg2": {
       "commandName": "Project",
