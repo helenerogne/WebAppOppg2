@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using WebAppOppg2.DAL;
 using WebAppOppg2.Models;
@@ -29,9 +31,9 @@ namespace WebAppOppg2.DAL
 
             try
             {
-                var editObject = await _db.Admins.FindAsync(editAdmin.ID);
+                var editObject = await _db.AdminUsers.FindAsync(editAdmin.ID);
                 editObject.Username = editAdmin.Username;
-               // editObject.Password = editAdmin.Password;
+                //editObject.Password = editAdmin.Password;
                 await _db.SaveChangesAsync();
             }
             catch (Exception e)
@@ -41,23 +43,26 @@ namespace WebAppOppg2.DAL
             }
             return true;
         }
+
+
         public async Task<bool> LogIn(Admin admin)
         {
             try
             {
-                Admins funnetAdmin = await _db.Admins.FirstOrDefaultAsync(b => b.Username == admin.Username);
-                return true;
+                //hvis noe er feil, sjekk at adminuser reference er riktig
+                AdminUser funnetAdmin = await _db.AdminUsers.FirstOrDefaultAsync(b => b.Username == admin.Username);
+                //sjekk passordet
+                byte[] hash = makeHash(admin.Password, funnetAdmin.Salt);
+                bool ok = hash.SequenceEqual(funnetAdmin.Password);
+
+                if (ok)
+                {
+                    return true;
+                }
+                return false;
+
             }
-            /* sjekk passordet
-            byte[] hash = LagHash(bruker.Passord, funnetBruker.Salt);
-            bool ok = hash.SequenceEqual(funnetBruker.Passord);
-            if (ok)
-            {
-                return true;
-            }
-            return false;
-        }
-            */
+
             catch (Exception e)
             {
                 _log.LogInformation(e.Message);
@@ -65,6 +70,24 @@ namespace WebAppOppg2.DAL
             }
 
         }
-               
+
+        public static byte[] makeHash(string passord, byte[] salt)
+        {
+            return KeyDerivation.Pbkdf2(
+                                password: passord,
+                                salt: salt,
+                                prf: KeyDerivationPrf.HMACSHA512,
+                                iterationCount: 1000,
+                                numBytesRequested: 32);
+        }
+
+        public static byte[] makeSalt()
+        {
+            var csp = new RNGCryptoServiceProvider();
+            var salt = new byte[24];
+            csp.GetBytes(salt);
+            return salt;
+        }
+
     }
 }

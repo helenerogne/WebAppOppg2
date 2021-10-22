@@ -23,7 +23,7 @@
                         <td>{{ticket.count}}</td>
                         <td>{{ticket.price}}</td>
                         <td><button class="btn btn-danger" (click)="deleteOneTicket(ticket.id)">Slett</button></td>
-                        <td><button class="btn btn-success" (routerLink)="['/adminEdit', ticket.id]">Endre</button></td>
+                        <td><button class="btn btn-success" [routerLink]="['/adminEdit', ticket.id]">Endre</button></td>
                     </tr>
                 </tbody>
             </table>
