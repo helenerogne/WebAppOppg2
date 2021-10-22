@@ -12,7 +12,7 @@ const appRoots: Routes = [
   { path: 'adminEdit/:id', component: AdminEdit },
   { path: 'home', component: Home },
   { path: 'orderComplete', component: OrderComplete },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }  
+  { path: '', redirectTo: '/admin', pathMatch: 'full' }  
 ]
 
 @NgModule({
