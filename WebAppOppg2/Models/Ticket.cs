@@ -10,42 +10,44 @@ namespace WebAppOppg2.Models
     public class Ticket
     {
         [Key]
-        public int ID { get; set; }
-        [ForeignKey("Passenger")]
+        public int TicketID { get; set; }
+        [ForeignKey("PassengerID")]
         public Passenger Passenger { get; set; }
-        [ForeignKey("Route")]
-        public Route Route { get; set; }
+        public string TravelType { get; set; }
+        public string Route { get; set; }
+        public string Departure { get; set; }
         public string Date { get; set; }
+        public int TicketPrice { get; set; }
     }
 
     public class Port
     {
         [Key]
-        public int ID { get; set; }
+        public int PortID { get; set; }
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}")]
-        public string Name { get; set; }
+        public string PortName { get; set; }
     }
 
     public class TravelType
     {
         [Key]
-        public int ID { get; set; }
+        public int TravelTypeID { get; set; }
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}")]
-        public string Name { get; set; }
+        public string TravelTypeName { get; set; }
     }
 
     public class Route
     {
         [Key]
-        public int ID { get; set; }
+        public int RouteID { get; set; }
         [ForeignKey("TravelType")]
-        public TravelType TravelType { get; set; }
+        public int TravelTypeFK { get; set; }
         [ForeignKey("Port")]
-        public Port PortFrom { get; set; }
+        public int PortFromFK { get; set; }
         [ForeignKey("Port")]
-        public Port PortTo { get; set; }
+        public int PortToFK { get; set; }
         [RegularExpression(@"[0-9]{1,100}")]
-        public int Price { get; set; }
+        public int RoutePrice { get; set; }
         public string DepartureOption1 { get; set; }
         public string DepartureOption2 { get; set; }
     }
@@ -53,7 +55,7 @@ namespace WebAppOppg2.Models
     public class Passenger
     {
         [Key]
-        public int ID { get; set; }
+        public int PassengerID { get; set; }
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}")]
         public string Firstname { get; set; }
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}")]
@@ -61,15 +63,15 @@ namespace WebAppOppg2.Models
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,50}")]
         public string Email { get; set; }
         [ForeignKey("PassengerType")]
-        public PassengerType PassengerType { get; set; }
+        public int PassengerTypeFK { get; set; }
     }
 
     public class PassengerType
     {
         [Key]
-        public int ID { get; set; }
+        public int PassengerTypeID { get; set; }
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}")]
-        public string Name { get; set; }
+        public string PassengerTypeName { get; set; }
         [RegularExpression(@"[0-9]{1,100}")]
         public int Discount { get; set; }
     }

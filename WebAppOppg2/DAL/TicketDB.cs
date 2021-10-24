@@ -6,49 +6,51 @@ namespace WebAppOppg2.DAL
 {
     public class Ticket
     {
-        public int ID { get; set; }
+        public int TicketID { get; set; }
         public Passenger Passenger { get; set; }
-        public Route Route { get; set; }
-        public string Date { get; set; }
-
+        public string TicketTravelType { get; set; }
+        public string TicketRoute { get; set; }
+        public string TicketDeparture { get; set; }
+        public string TicketDate { get; set; }
+        public int TicketPrice { get; set; }
     }
 
     public class Port
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
+        public int PortID { get; set; }
+        public string PortName { get; set; }
     }
 
     public class TravelType
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
+        public int TravelTypeID { get; set; }
+        public string TravelTypeName { get; set; }
     }
 
     public class Route
     {
-        public int ID { get; set; }
-        public TravelType TravelType { get; set; }
-        public Port PortFrom { get; set; }
-        public Port PortTo { get; set; }
-        public int Price { get; set; }
+        public int RouteID { get; set; }
+        public int TravelTypeFK { get; set; }
+        public int PortFromFK { get; set; }
+        public int PortToFK { get; set; }
+        public int RoutePrice { get; set; }
         public string DepartureOption1 { get; set; }
         public string DepartureOption2 { get; set; }
     }
 
     public class Passenger
     {
-        public int ID { get; set; }
+        public int PassengerID { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }
-        public PassengerType PassengerType { get; set; }
+        public int PassengerTypeFK { get; set; }
     }
 
     public class PassengerType
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
+        public int PassengerTypeID { get; set; }
+        public string PassengerTypeName { get; set; }
         public int Discount { get; set; }
     }
 
