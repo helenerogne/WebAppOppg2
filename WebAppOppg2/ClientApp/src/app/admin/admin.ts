@@ -19,7 +19,7 @@ export class admin.component.ts {
     this.getAllTickets();
   }
 
-  getAllTickets() {
+  getAllTickets() { 
     this.http.get<Ticket[]>("api/ticket/")
       .subscribe(tickets => {
         this.allTickets = tickets;

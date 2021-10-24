@@ -1,11 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+<div class="container">
+  <div class="col-md4">
+    <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
+      <input class="form-control" formControlName="id" type="hidden" />
 
-</body>
-</html>
+      <div class="form-group">
+        <label>Fornavn</label>
+        <input class="form-control" formControlName="firstname" />
+      </div>
+
+      <div class="form-group">
+        <label>Etternavn</label>
+        <input class="form-control" formControlName="lastname" />
+
+      </div>
+
+      <div class="form-group">
+        <label>Epost</label>
+        <input class="form-control" formControlName="email" />
+      </div>
+
+
+      <div class="form-group">
+        <label>Rute</label>
+        <input class="form-control" formControlName="route" />
+      </div>
+
+
+      <div class="form-group">
+        <label>Dato</label>
+        <input class="form-control" formControlName="date" />
+      </div>
+
+
+      <div class="form-group">
+        <label>Antall</label>
+        <input class="form-control" formControlName="quantity" />
+      </div>
+
+      <div class="form-group">
+        <label>Type</label>
+        <input class="form-control" formControlName="type" />
+      </div>
+
+
+      <div class="form-group">
+        <label>Pris</label>
+        <input class="form-control" formControlName="price" />
+      </div>
+
+    </form>
+</div>
+
+     </div>
 
