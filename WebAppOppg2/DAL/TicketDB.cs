@@ -69,5 +69,12 @@ namespace WebAppOppg2.DAL
         public DbSet<Route> Routes { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
         public DbSet<PassengerType> PassengerTypes { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // må importere pakken Microsoft.EntityFrameworkCore.Proxies
+            // og legge til"viritual" på de attriuttene som ønskes å lastes automatisk (LazyLoading)
+            optionsBuilder.UseLazyLoadingProxies();
+        }
     }
 }

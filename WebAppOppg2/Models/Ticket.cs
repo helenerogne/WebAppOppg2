@@ -12,11 +12,11 @@ namespace WebAppOppg2.Models
         [Key]
         public int TicketID { get; set; }
         [ForeignKey("PassengerID")]
-        public Passenger Passenger { get; set; }
-        public string TravelType { get; set; }
-        public string Route { get; set; }
-        public string Departure { get; set; }
-        public string Date { get; set; }
+        public Passenger TicketPassenger { get; set; }
+        public string TicketTravelType { get; set; }
+        public string TicketRoute { get; set; }
+        public string TicketDeparture { get; set; }
+        public string TicketDate { get; set; }
         public int TicketPrice { get; set; }
     }
 
