@@ -280,6 +280,31 @@ namespace WebAppOppg2.DAL
                 return null;
             }
         }
+        public async Task<List<Route>> GetAllRoutes()
+        {
+            try
+            {
+                List<Route> allRoutes = await _db.Routes.Select(p => new Route
+                {
+                    RouteID = p.RouteID,
+                    TravelTypeFK = p.TravelTypeFK,
+                    PortFromFK = p.PortFromFK,
+                    PortToFK = p.PortToFK,
+                    RoutePrice = p.RoutePrice,
+                    DepartureOption1 = p.DepartureOption1,
+                    DepartureOption2 = p.DepartureOption2,
+
+                }).ToListAsync();
+                return allRoutes;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetAllRoutes");
+                return null;
+            }
+        }
+
+        
 
 
         //Traveltype
@@ -465,7 +490,7 @@ namespace WebAppOppg2.DAL
             }
         }
 
-        public async Task<List<PassengerType>> GetAllPassengersType()
+        public async Task<List<PassengerType>> GetAllPassengerTypes()
         {
             try
             {
