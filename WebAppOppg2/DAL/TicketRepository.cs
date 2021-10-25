@@ -121,6 +121,7 @@ namespace WebAppOppg2.DAL
             return true;
         }
 
+        //Port 
         public async Task<bool> AddPort(Port port)
         {
             try
@@ -136,6 +137,60 @@ namespace WebAppOppg2.DAL
             }
         }
 
+        public async Task <bool> DeletePort (int portID)
+        {
+            try
+            {
+                Port onePort = await _db.Ports.FindAsync(portID);
+                _db.Ports.Remove(onePort);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i DeletePort");
+                return false;
+            }
+        }
+
+        public async Task <bool> EditPort (Port editPort)
+        {
+            try
+            {
+                var editObject = await _db.Ports.FindAsync(editPort.PortID);
+                editObject.PortName = editPort.PortName;
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i editPort");
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<Port> GetOnePort(int portID)
+        {
+            try
+            {
+                Port onePort = await _db.Ports.FindAsync(portID);
+                var gotPort = new Port()
+                {
+                    PortID = onePort.PortID,
+                    PortName = onePort.PortName,
+                    
+                };
+                return gotPort;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetOnePort");
+                return null;
+            }
+        }
+
+
+        //Traveltype
         public async Task<bool> AddTravelType(TravelType travelType)
         {
             try
