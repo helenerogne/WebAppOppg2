@@ -205,5 +205,75 @@ namespace WebAppOppg2.DAL
                 return false;
             }
         }
+
+        public async Task<bool> DeleteTravelType(int id)
+        {
+            try
+            {
+                TravelType oneTravelType = await _db.TravelTypes.FindAsync(id);
+                _db.TravelTypes.Remove(oneTravelType);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i DeleteTravelPort");
+                return false;
+            }
+        }
+
+        public async Task<bool> EditTravelType(TravelType travelType)
+        {
+            try
+            {
+                var editObject = await _db.TravelTypes.FindAsync(travelType.TravelTypeID);
+                editObject.TravelTypeName = travelType.TravelTypeName;
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i editTravelType");
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<TravelType> GetOneTravelType(int id)
+        {
+            try
+            {
+                TravelType OneTravelType = await _db.TravelTypes.FindAsync(id);
+                var gotTravelType = new TravelType()
+                {
+                    TravelTypeID = OneTravelType.TravelTypeID,
+                    TravelTypeName = OneTravelType.TravelTypeName,
+
+                };
+                return gotTravelType;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetOneTravelType");
+                return null;
+            }
+        }
+
+        public async Task<List<TravelType>> GetAllTravelTypes()
+        {
+            try
+            {
+                List<TravelType> allTravelType = await _db.TravelTypes.Select(t => new TravelType
+                {
+                    TravelTypeID = t.TravelTypeID,
+                    TravelTypeName = t.TravelTypeName,
+                }).ToListAsync();
+                return allTravelType;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetAllTravelTypes");
+                return null;
+            }
+        }
     }
 }
