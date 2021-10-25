@@ -189,6 +189,98 @@ namespace WebAppOppg2.DAL
             }
         }
 
+        public async Task <List<Port>> GetAllPorts ()
+        {
+            try
+            {
+                List<Port> allPorts = await _db.Ports.Select(p => new Port
+                {
+                    PortID = p.PortID,
+                    PortName = p.PortName,
+                   
+                }).ToListAsync();
+                return allPorts;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetAllPorts");
+                return null;
+            }
+        }
+
+        //Route
+
+        public async Task<bool> AddRoute (Route route)
+        {
+            try
+            {
+                _db.Routes.Add(route);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i AddRoute");
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteRoute(int routeID)
+        {
+            try
+            {
+                Route oneRoute = await _db.Routes.FindAsync(routeID);
+                _db.Routes.Remove(oneRoute);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i DeleteRoute");
+                return false;
+            }
+        }
+
+        public async Task<bool> EditRoute(Route editRoute)
+        {
+            try //må se om jeg må endre noe med departurepunkter her 
+            {
+                var editObject = await _db.Routes.FindAsync(editRoute.RouteID);
+                editObject.RouteID = editRoute.RouteID;
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i editPort");
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<Route> GetOneRoute(int routeID)
+        {
+            try
+            {
+                Route oneRoute = await _db.Routes.FindAsync(routeID);
+                var gotRoute = new Route()
+                {
+                    RouteID = oneRoute.RouteID,
+                    PortFromFK = oneRoute.PortFromFK,
+                    PortToFK = oneRoute.PortToFK,
+                    RoutePrice = oneRoute.RoutePrice,
+                    DepartureOption1 = oneRoute.DepartureOption1,
+                    DepartureOption2 = oneRoute.DepartureOption2
+
+                };
+                return gotRoute;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetOneRoute");
+                return null;
+            }
+        }
+
 
         //Traveltype
         public async Task<bool> AddTravelType(TravelType travelType)
@@ -203,6 +295,192 @@ namespace WebAppOppg2.DAL
             {
                 _log.LogInformation(e.Message + "Feil i AddTravelType");
                 return false;
+            }
+        }
+
+
+        //Passenger
+        public async Task<bool> AddPassenger(Passenger passenger)
+        {
+            try
+            {
+                _db.Passengers.Add(passenger);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i addPassenger");
+                return false;
+            }
+        }
+
+        public async Task<bool> DeletePassenger(int passengerID)
+        {
+            try
+            {
+                Passenger onePassenger = await _db.Passengers.FindAsync(passengerID);
+                _db.Passengers.Remove(onePassenger);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i deletePassenger");
+                return false;
+            }
+        }
+
+        public async Task<bool> EditPassenger(Passenger editPassenger)
+        {
+            try
+            {
+                var editObject = await _db.Passengers.FindAsync(editPassenger.PassengerID);
+                editObject.Firstname = editPassenger.Firstname;
+                editObject.Lastname = editPassenger.Lastname;
+                editObject.Email = editPassenger.Email;
+                editObject.PassengerTypeFK = editPassenger.PassengerTypeFK;
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i editPassenger");
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<Passenger> GetOnePassenger(int passengerID)
+        {
+            try
+            {
+                Passenger onePassenger = await _db.Passengers.FindAsync(passengerID);
+                var gotPassenger = new Passenger()
+                {
+                    PassengerID = onePassenger.PassengerID,
+                    Firstname = onePassenger.Firstname,
+                    Lastname = onePassenger.Lastname,
+                    Email = onePassenger.Email,
+                    PassengerTypeFK = onePassenger.PassengerTypeFK
+
+                };
+                return gotPassenger;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetOnePassenger");
+                return null;
+            }
+        }
+
+        public async Task<List<Passenger>> GetAllPassengers()
+        {
+            try
+            {
+                List<Passenger> allPassengers = await _db.Passengers.Select(p => new Passenger
+                {
+                    PassengerID = p.PassengerID,
+                    Firstname = p.Firstname,
+                    Lastname = p.Lastname,
+                    Email = p.Email,
+                    PassengerTypeFK = p.PassengerTypeFK
+                }).ToListAsync();
+                return allPassengers;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetAllPassengers");
+                return null;
+            }
+        }
+
+
+        //PassengerType
+        public async Task<bool> AddPassengerType(PassengerType passengerType)
+        {
+            try
+            {
+                _db.PassengerTypes.Add(passengerType);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i addPassengerType");
+                return false;
+            }
+        }
+
+        public async Task<bool> DeletePassengerType(int passengerTypeID)
+        {
+            try
+            {
+                PassengerType onePassengerType = await _db.PassengerTypes.FindAsync(passengerTypeID);
+                _db.PassengerTypes.Remove(onePassengerType);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i deletePassengerType");
+                return false;
+            }
+        }
+
+        public async Task<bool> EditPassengerType(PassengerType editPassengerType)
+        {
+            try
+            {
+                var editObject = await _db.PassengerTypes.FindAsync(editPassengerType.PassengerTypeID);
+                editObject.PassengerTypeID = editPassengerType.PassengerTypeID;
+                editObject.PassengerTypeName = editPassengerType.PassengerTypeName;
+                editObject.Discount = editPassengerType.Discount;
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i editPassengerType");
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<PassengerType> GetOnePassengerType(int passengerTypeID)
+        {
+            try
+            {
+                PassengerType onePassengerType = await _db.PassengerTypes.FindAsync(passengerTypeID);
+                var gotPassengerType = new PassengerType()
+                {
+                    PassengerTypeID = onePassengerType.PassengerTypeID,
+                    PassengerTypeName = onePassengerType.PassengerTypeName,
+                    Discount = onePassengerType.Discount
+                };
+                return gotPassengerType;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetOnePassengerType");
+                return null;
+            }
+        }
+
+        public async Task<List<PassengerType>> GetAllPassengersType()
+        {
+            try
+            {
+                List<PassengerType> allPassengerTypes = await _db.PassengerTypes.Select(p => new PassengerType
+                {
+                    PassengerTypeID = p.PassengerTypeID,
+                    PassengerTypeName = p.PassengerTypeName,
+                    Discount = p.Discount
+                }).ToListAsync();
+                return allPassengerTypes;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetAllPassengersTypes");
+                return null;
             }
         }
 
