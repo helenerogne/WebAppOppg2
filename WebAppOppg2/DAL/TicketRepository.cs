@@ -189,6 +189,98 @@ namespace WebAppOppg2.DAL
             }
         }
 
+        public async Task <List<Port>> GetAllPorts ()
+        {
+            try
+            {
+                List<Port> allPorts = await _db.Ports.Select(p => new Port
+                {
+                    PortID = p.PortID,
+                    PortName = p.PortName,
+                   
+                }).ToListAsync();
+                return allPorts;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetAllPorts");
+                return null;
+            }
+        }
+
+        //Route
+
+        public async Task<bool> AddRoute (Route route)
+        {
+            try
+            {
+                _db.Routes.Add(route);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i AddRoute");
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteRoute(int routeID)
+        {
+            try
+            {
+                Route oneRoute = await _db.Routes.FindAsync(routeID);
+                _db.Routes.Remove(oneRoute);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i DeleteRoute");
+                return false;
+            }
+        }
+
+        public async Task<bool> EditRoute(Route editRoute)
+        {
+            try //må se om jeg må endre noe med departurepunkter her 
+            {
+                var editObject = await _db.Routes.FindAsync(editRoute.RouteID);
+                editObject.RouteID = editRoute.RouteID;
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i editPort");
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<Route> GetOneRoute(int routeID)
+        {
+            try
+            {
+                Route oneRoute = await _db.Routes.FindAsync(routeID);
+                var gotRoute = new Route()
+                {
+                    RouteID = oneRoute.RouteID,
+                    PortFromFK = oneRoute.PortFromFK,
+                    PortToFK = oneRoute.PortToFK,
+                    RoutePrice = oneRoute.RoutePrice,
+                    DepartureOption1 = oneRoute.DepartureOption1,
+                    DepartureOption2 = oneRoute.DepartureOption2
+
+                };
+                return gotRoute;
+            }
+            catch (Exception e)
+            {
+                _log.LogInformation(e.Message + "Feil i GetOneRoute");
+                return null;
+            }
+        }
+
 
         //Traveltype
         public async Task<bool> AddTravelType(TravelType travelType)
