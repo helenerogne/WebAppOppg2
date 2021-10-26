@@ -6,16 +6,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { Admin } from './admin/admin';
-import { AdminLogin } from './adminLogin/adminLogin.component';
+import { admin } from './admin/admin';
+//import { AdminLogin } from './adminLogin/adminLogin.component';
 import { AdminEdit } from './adminEdit/adminEdit.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    Admin,
-    AdminLogin,
+    admin,
     AdminEdit
   ],
   imports: [

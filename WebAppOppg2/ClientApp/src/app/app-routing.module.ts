@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
-import { Admin } from './admin/admin';
-import { AdminLogin } from './adminLogin/adminLogin.component';
+import { admin } from './admin/admin';
 import { AdminEdit } from './adminEdit/adminEdit.component';
-import { Home } from './home/home.component';
-import { OrderComplete } from './orderComplete/orderComplete.component'; 
+//import { AdminLogin } from './adminLogin/adminLogin.component';
+
 
 const appRoots: Routes = [
-  { path: 'admin', component: Admin },
-  { path: 'adminLogin', component: AdminLogin },
+  { path: 'admin', component: admin },
+  //{ path: 'adminLogin', component: AdminLogin },
   { path: 'adminEdit/:id', component: AdminEdit },
-  { path: 'home', component: Home },
-  { path: 'orderComplete', component: OrderComplete },
   { path: '', redirectTo: '/admin', pathMatch: 'full' }  
 ]
 

@@ -74,7 +74,7 @@ namespace WebAppOppg2.DAL
         {
             // må importere pakken Microsoft.EntityFrameworkCore.Proxies
             // og legge til"viritual" på de attriuttene som ønskes å lastes automatisk (LazyLoading)
-            optionsBuilder.UseLazyLoadingProxies();
+            //optionsBuilder.UseLazyLoadingProxies();
         }
     }
 }

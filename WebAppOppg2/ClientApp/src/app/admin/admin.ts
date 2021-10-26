@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Ticket } from '../Ticket';
 
 @Component({
-  templateUrl: "admin.component.html"
+  templateUrl: "admin.html"
 })
 
 export class admin.component.ts {
@@ -34,7 +34,7 @@ export class admin.component.ts {
     this.http.delete("api/ticket/" + id)
       .subscribe(retur => {
         this.getAllTickets();
-        this.router.navigate(['/admin.component.html']);
+        this.router.navigate(['/admin.html']);
       },
         error => console.log(error)
       );
