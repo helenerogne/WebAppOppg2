@@ -4,7 +4,6 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Ticket } from "../Ticket"
-import { tick } from "@angular/core/testing";
 
 
 @Component({

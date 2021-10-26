@@ -9,17 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { Admin } from './admin/admin';
 import { AdminLogin } from './adminLogin/adminLogin.component';
 import { AdminEdit } from './adminEdit/adminEdit.component';
-import { Home } from './home/home.component';
-import { OrderComplete } from './orderComplete/orderComplete.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     Admin,
     AdminLogin,
-    AdminEdit,
-    Home,
-    OrderComplete
+    AdminEdit
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
