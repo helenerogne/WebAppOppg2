@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http;
  Kode hentet fra Canvas-modul "Enhetstest av KundeApp-logginn løsning" (i faget ITPE3200-1 21H).
  */
 
+/*
+ 
 namespace UnitTestProject
 {
     public class MockHttpSession : ISession
@@ -41,3 +43,5 @@ namespace UnitTestProject
         }
     }
 }
+
+*/
