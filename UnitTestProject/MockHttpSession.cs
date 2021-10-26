@@ -1,9 +1,13 @@
-﻿using System;
+﻿/*
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+
+*/
 
 /*
  Kode hentet fra Canvas-modul "Enhetstest av KundeApp-logginn løsning" (i faget ITPE3200-1 21H).
