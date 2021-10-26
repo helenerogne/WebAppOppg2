@@ -6,10 +6,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Ticket } from '../Ticket';
 
 @Component({
-  templateUrl: "admin.html"
+  templateUrl: "admin.component.html"
 })
 
-export class admin.component.ts {
+export class admin {
   allTickets: Array<Ticket>;
   loading: boolean;
 

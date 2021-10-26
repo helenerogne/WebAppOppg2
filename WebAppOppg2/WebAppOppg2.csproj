@@ -35,6 +35,8 @@
     <None Remove="DAL\" />
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
+    <None Remove="ClientApp\src\app\meny\meny.html" />
+    <None Remove="ClientApp\src\app\admin\admin.ts" />
   </ItemGroup>
 
   <ItemGroup>
