@@ -7,10 +7,10 @@
                 <thead>
                     <tr>
                         <th>Kontaktinfo</th>
-                        <th>Rute</th>
                         <th>Type</th>
+                        <th>Rute</th>
+                        <th>Avgang</th>
                         <th>Dato</th>
-                        <th>Antall</th>
                         <th>Pris</th>
                         <th></th>
                         <th></th>
@@ -18,10 +18,12 @@
                 </thead>
                 <tbody *ngFor="let ticket of allTickets">
                     <tr>
-                        <td>{{ticket.firstname}}, {{ticket.lastname}, {{ticket.email}}</td>
-                        <td>{{ticket.route}}</td>
-                        <td>{{ticket.count}}</td>
-                        <td>{{ticket.price}}</td>
+                        <td>{{ticket.TicketPassenger}}</td>
+                        <td>{{ticket.TicketTravelType}}</td>
+                        <td>{{ticket.TicketRoute}}</td>
+                        <td>{{ticket.TicketDepature}}</td>
+                        <td>{{ticket.TicketDate}}</td>
+                        <td>{{ticket.TicketPrice}}</td>
                         <td><button class="btn btn-danger" (click)="deleteOneTicket(ticket.id)">Slett</button></td>
                         <td><button class="btn btn-success" [routerLink]="['/adminEdit', ticket.id]">Endre</button></td>
                     </tr>

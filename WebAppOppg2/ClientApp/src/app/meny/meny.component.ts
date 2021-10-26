@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-nav-meny',
-  templateUrl: './meny.html'
+  templateUrl: './meny.component.html'
 })
 export class Meny {
   isExpanded = false;
