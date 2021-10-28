@@ -26,10 +26,14 @@ namespace WebAppOppg2.DAL
             try
             {
                 var newTicketRow = new Tickets();
+
+                //CheckPassenger
+
                 var checkPassenger = await _db.Passengers.FindAsync(inTicket.PassengerID);
                 if(checkPassenger == null)
                 {
                     var passengerRow = new Passengers();
+                
                     passengerRow.Firstname = inTicket.Firstname;
                     passengerRow.Lastname = inTicket.Lastname;
                     passengerRow.Email = inTicket.Email;
@@ -53,6 +57,35 @@ namespace WebAppOppg2.DAL
                 {
                     newTicketRow.Passenger = checkPassenger;
                 }
+
+                //CheckRoute
+
+                var checkRoute = await _db.Routes.FindAsync(inTicket.RouteID);
+                if (checkRoute == null)
+                {
+                    var routeRow = new Route();
+                    routeRow.PortFrom = inTicket.RouteFrom;
+                    routeRow.PortTo = inTicket.RouteTo;
+                    routeRow.RoutePrice = inTicket.Price;
+                    routeRow.DepartureOption1 = inTicket.Departure;
+
+                    var checkTravelType = await _db.TravelTypes.FindAsync(inTicket.TravelType);
+                    if(checkTravelType == null)
+                    {
+                        var travelTypeRow = new TravelTypes();
+                        travelTypeRow.TravelTypeName = inTicket.TravelType;
+                        newTicketRow.Route.TravelType = travelTypeRow;
+                    }
+                    else
+                    {
+                        newTicketRow.Route.TravelType = checkTravelType;
+                    }
+                }
+                else
+                {
+                    newTicketRow.Route = checkRoute;
+                }
+                newTicketRow.TicketDate = inTicket.TicketDate;
 
                 _db.Tickets.Add(newTicketRow);
                 await _db.SaveChangesAsync();
@@ -164,15 +197,27 @@ namespace WebAppOppg2.DAL
         }
 
         //Port 
-        public async Task<bool> AddPort(Port port)
+        public async Task<bool> AddPort(Port inPort)
         {
             try
             {
-
                 var newPortRow = new Ports();
-                new 
+                newPortRow.PortName = inPort.PortName;
 
-                _db.Ports.Add(port);
+                var checkPort = await _db.Ports.FindAsync(inPort.PortID);
+                if(checkPort == null)
+                {
+                    var portsRow = new Ports();
+                    portsRow.PortID = inPort.PortID;
+                    portsRow.PortName = inPort.PortName;
+                    newPortRow = portsRow;
+                }
+                else
+                {
+                    newPortRow = checkPort;
+                }
+
+                _db.Ports.Add(newPortRow);
                 await _db.SaveChangesAsync();
                 return true;
             }
@@ -187,8 +232,8 @@ namespace WebAppOppg2.DAL
         {
             try
             {
-                Ports onePort = await _db.Ports.FindAsync(portID);
-                _db.Ports.Remove(onePort);
+                Ports oneDBPort = await _db.Ports.FindAsync(portID);
+                _db.Ports.Remove(oneDBPort);
                 await _db.SaveChangesAsync();
                 return true;
             }
@@ -219,11 +264,11 @@ namespace WebAppOppg2.DAL
         {
             try
             {
-                Port onePort = await _db.Ports.FindAsync(portID);
+                Ports oneDBPort = await _db.Ports.FindAsync(portID);
                 var gotPort = new Port()
                 {
-                    PortID = onePort.PortID,
-                    PortName = onePort.PortName,
+                    PortID = oneDBPort.PortID,
+                    PortName = oneDBPort.PortName,
                     
                 };
                 return gotPort;
@@ -467,11 +512,15 @@ namespace WebAppOppg2.DAL
 
 
         //PassengerType
-        public async Task<bool> AddPassengerType(PassengerType passengerType)
+        public async Task<bool> AddPassengerType(PassengerType inPassengerType)
         {
             try
             {
-                _db.PassengerTypes.Add(passengerType);
+                var newPassengerTypeRow = new PassengerTypes();
+                newPassengerTypeRow.PassengerTypeName = inPassengerType.PassengerTypeName;
+                newPassengerTypeRow.Discount = inPassengerType.Discount;
+
+                _db.PassengerTypes.Add(newPassengerTypeRow);
                 await _db.SaveChangesAsync();
                 return true;
             }
@@ -486,7 +535,7 @@ namespace WebAppOppg2.DAL
         {
             try
             {
-                PassengerType onePassengerType = await _db.PassengerTypes.FindAsync(passengerTypeID);
+                PassengerTypes onePassengerType = await _db.PassengerTypes.FindAsync(passengerTypeID);
                 _db.PassengerTypes.Remove(onePassengerType);
                 await _db.SaveChangesAsync();
                 return true;
@@ -520,7 +569,7 @@ namespace WebAppOppg2.DAL
         {
             try
             {
-                PassengerType onePassengerType = await _db.PassengerTypes.FindAsync(passengerTypeID);
+                PassengerTypes onePassengerType = await _db.PassengerTypes.FindAsync(passengerTypeID);
                 var gotPassengerType = new PassengerType()
                 {
                     PassengerTypeID = onePassengerType.PassengerTypeID,
