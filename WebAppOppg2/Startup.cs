@@ -49,6 +49,7 @@ namespace WebAppOppg2
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                DBInit.Initialize(app);
             }
             else
             {

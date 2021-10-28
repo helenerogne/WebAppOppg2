@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.11" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,14 +30,12 @@
     <None Remove="ClientApp\src\app\adminLogin\" />
     <None Remove="ClientApp\src\app\validation\" />
     <None Remove="Models\" />
-    <None Remove="ClientApp\src\app\meny\" />
     <None Remove="ClientApp\src\app\adminEdit\" />
     <None Remove="ClientApp\src\app\orderComplete\" />
     <None Remove="DAL\" />
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
-    <None Remove="ClientApp\src\app\meny\meny.html" />
-    <None Remove="ClientApp\src\app\admin\admin.ts" />
+    <None Remove="Microsoft.EntityFrameworkCore.Proxies" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +44,6 @@
     <Folder Include="ClientApp\src\app\adminLogin\" />
     <Folder Include="ClientApp\src\app\validation\" />
     <Folder Include="Models\" />
-    <Folder Include="ClientApp\src\app\meny\" />
     <Folder Include="ClientApp\src\app\adminEdit\" />
     <Folder Include="ClientApp\src\app\orderComplete\" />
   </ItemGroup>

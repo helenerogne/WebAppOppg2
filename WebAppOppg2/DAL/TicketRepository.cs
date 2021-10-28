@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using WebAppOppg2.Models;
 
 namespace WebAppOppg2.DAL
 {
@@ -20,12 +20,41 @@ namespace WebAppOppg2.DAL
             _log = log;
         }
 
-        public async Task<bool> SaveTicket(Ticket ticket)
+        public async Task<bool> SaveTicket(Ticket inTicket)
         {
 
             try
             {
-                _db.Tickets.Add(ticket);
+                var newTicketRow = new Tickets();
+                var checkPassenger = await _db.Passengers.FindAsync(inTicket.PassengerID);
+                if(checkPassenger == null)
+                {
+                    var passengerRow = new Passengers();
+                    passengerRow.Firstname = inTicket.Firstname;
+                    passengerRow.Lastname = inTicket.Lastname;
+                    passengerRow.Email = inTicket.Email;
+
+                    var checkPassengertype = await _db.PassengerTypes.FindAsync(inTicket.PassengerType);
+                    var newPassengerTypeRow = new PassengerTypes();
+                    if (checkPassengertype == null)
+                    {
+                        var passengerTypeRow = new PassengerTypes();
+                        passengerTypeRow.PassengerTypeName = inTicket.PassengerType;
+                        newTicketRow.Passenger.PassengerType = passengerTypeRow;
+                    }
+                    else
+                    {
+                        newTicketRow.Passenger.PassengerType = checkPassengertype;
+                    }
+
+                    newTicketRow.Passenger = passengerRow;
+                }
+                else
+                {
+                    newTicketRow.Passenger = checkPassenger;
+                }
+
+                _db.Tickets.Add(newTicketRow);
                 await _db.SaveChangesAsync();
                 return true;
             }
@@ -44,12 +73,16 @@ namespace WebAppOppg2.DAL
                 List<Ticket> allTickets = await _db.Tickets.Select(t => new Ticket
                 {
                     TicketID = t.TicketID,
-                    Passenger = t.Passenger,
-                    TicketTravelType = t.TicketTravelType,
-                    TicketRoute = t.TicketRoute,
-                    TicketDeparture = t.TicketDeparture,
+                    Firstname = t.Passenger.Firstname,
+                    Lastname = t.Passenger.Lastname,
+                    Email = t.Passenger.Email,
+                    PassengerType = t.Passenger.PassengerType.PassengerTypeName,
+                    TravelType = t.Route.TravelType.TravelTypeName,
+                    RouteTo = t.Route.PortTo.PortName,
+                    RouteFrom = t.Route.PortFrom.PortName,
+                    Departure = t.Route.DepartureOption1,
                     TicketDate = t.TicketDate,
-                    TicketPrice = t.TicketPrice
+                    Price = t.Route.RoutePrice
                 }).ToListAsync();
                 return allTickets;
             }
@@ -64,7 +97,7 @@ namespace WebAppOppg2.DAL
         {
             try
             {
-                Ticket oneTicket = await _db.Tickets.FindAsync(id);
+                Tickets oneTicket = await _db.Tickets.FindAsync(id);
                 _db.Tickets.Remove(oneTicket);
                 await _db.SaveChangesAsync();
                 return true;
@@ -80,16 +113,20 @@ namespace WebAppOppg2.DAL
         {
             try
             {
-                Ticket oneTicket = await _db.Tickets.FindAsync(id);
+                Tickets oneTicket = await _db.Tickets.FindAsync(id);
                 var gotTicket = new Ticket()
                 {
                     TicketID = oneTicket.TicketID,
-                    Passenger = oneTicket.Passenger,
-                    TicketTravelType = oneTicket.TicketTravelType,
-                    TicketRoute = oneTicket.TicketRoute,
-                    TicketDeparture = oneTicket.TicketDeparture,
+                    Firstname = oneTicket.Passenger.Firstname,
+                    Lastname = oneTicket.Passenger.Lastname,
+                    Email = oneTicket.Passenger.Email,
+                    PassengerType = oneTicket.Passenger.PassengerType.PassengerTypeName,
+                    TravelType = oneTicket.Route.TravelType.TravelTypeName,
+                    RouteTo = oneTicket.Route.PortTo.PortName,
+                    RouteFrom = oneTicket.Route.PortFrom.PortName,
+                    Departure = oneTicket.Route.DepartureOption1,
                     TicketDate = oneTicket.TicketDate,
-                    TicketPrice = oneTicket.TicketPrice
+                    Price = oneTicket.Route.RoutePrice
                 };
                 return gotTicket;
             }
@@ -105,12 +142,17 @@ namespace WebAppOppg2.DAL
             try
             {
                 var editObject = await _db.Tickets.FindAsync(editTicket.TicketID);
-                editObject.Passenger = editTicket.Passenger;
-                editObject.TicketTravelType = editTicket.TicketTravelType;
-                editObject.TicketRoute = editTicket.TicketRoute;
-                editObject.TicketDeparture = editTicket.TicketDeparture;
+                editObject.Passenger.Firstname = editTicket.Firstname;
+                editObject.Passenger.Lastname = editTicket.Lastname;
+                editObject.Passenger.Email = editTicket.Email;
+                editObject.Passenger.PassengerType.PassengerTypeName = editTicket.PassengerType;
+                editObject.Route.TravelType.TravelTypeName = editTicket.TravelType;
+                editObject.Route.PortFrom.PortName = editTicket.RouteFrom;
+                editObject.Route.PortTo.PortName = editTicket.RouteTo;
+                editObject.Route.DepartureOption1 = editTicket.Departure;
                 editObject.TicketDate = editTicket.TicketDate;
-                editObject.TicketPrice = editTicket.TicketPrice;
+                editObject.Route.RoutePrice = editTicket.Price;
+
                 await _db.SaveChangesAsync();
             }
             catch (Exception e)
@@ -126,6 +168,10 @@ namespace WebAppOppg2.DAL
         {
             try
             {
+
+                var newPortRow = new Ports();
+                new 
+
                 _db.Ports.Add(port);
                 await _db.SaveChangesAsync();
                 return true;
@@ -141,7 +187,7 @@ namespace WebAppOppg2.DAL
         {
             try
             {
-                Port onePort = await _db.Ports.FindAsync(portID);
+                Ports onePort = await _db.Ports.FindAsync(portID);
                 _db.Ports.Remove(onePort);
                 await _db.SaveChangesAsync();
                 return true;
@@ -265,8 +311,8 @@ namespace WebAppOppg2.DAL
                 var gotRoute = new Route()
                 {
                     RouteID = oneRoute.RouteID,
-                    PortFromFK = oneRoute.PortFromFK,
-                    PortToFK = oneRoute.PortToFK,
+                    PortFrom = oneRoute.PortFrom,
+                    PortTo = oneRoute.PortTo,
                     RoutePrice = oneRoute.RoutePrice,
                     DepartureOption1 = oneRoute.DepartureOption1,
                     DepartureOption2 = oneRoute.DepartureOption2
@@ -287,9 +333,9 @@ namespace WebAppOppg2.DAL
                 List<Route> allRoutes = await _db.Routes.Select(p => new Route
                 {
                     RouteID = p.RouteID,
-                    TravelTypeFK = p.TravelTypeFK,
-                    PortFromFK = p.PortFromFK,
-                    PortToFK = p.PortToFK,
+                    TravelType = p.TravelType,
+                    PortFrom = p.PortFrom,
+                    PortTo = p.PortTo,
                     RoutePrice = p.RoutePrice,
                     DepartureOption1 = p.DepartureOption1,
                     DepartureOption2 = p.DepartureOption2,
@@ -364,7 +410,7 @@ namespace WebAppOppg2.DAL
                 editObject.Firstname = editPassenger.Firstname;
                 editObject.Lastname = editPassenger.Lastname;
                 editObject.Email = editPassenger.Email;
-                editObject.PassengerTypeFK = editPassenger.PassengerTypeFK;
+                editObject.PassengerType = editPassenger.PassengerType;
                 await _db.SaveChangesAsync();
             }
             catch (Exception e)
@@ -386,7 +432,7 @@ namespace WebAppOppg2.DAL
                     Firstname = onePassenger.Firstname,
                     Lastname = onePassenger.Lastname,
                     Email = onePassenger.Email,
-                    PassengerTypeFK = onePassenger.PassengerTypeFK
+                    PassengerType = onePassenger.PassengerType
 
                 };
                 return gotPassenger;
@@ -408,7 +454,7 @@ namespace WebAppOppg2.DAL
                     Firstname = p.Firstname,
                     Lastname = p.Lastname,
                     Email = p.Email,
-                    PassengerTypeFK = p.PassengerTypeFK
+                    PassengerType = p.PassengerType
                 }).ToListAsync();
                 return allPassengers;
             }

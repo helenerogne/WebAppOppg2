@@ -11,13 +11,17 @@ namespace WebAppOppg2.Models
     {
         [Key]
         public int TicketID { get; set; }
-        [ForeignKey("PassengerID")]
-        public Passenger TicketPassenger { get; set; }
-        public string TicketTravelType { get; set; }
-        public string TicketRoute { get; set; }
-        public string TicketDeparture { get; set; }
+        public int PassengerID { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Email { get; set; }
+        public string PassengerType { get; set; }
+        public string TravelType { get; set; }
+        public string RouteFrom { get; set; }
+        public string RouteTo { get; set; }
+        public string Departure { get; set; }
         public string TicketDate { get; set; }
-        public int TicketPrice { get; set; }
+        public int Price { get; set; }
     }
 
     public class Port
@@ -36,16 +40,17 @@ namespace WebAppOppg2.Models
         public string TravelTypeName { get; set; }
     }
 
+
     public class Route
     {
         [Key]
         public int RouteID { get; set; }
-        [ForeignKey("TravelType")]
-        public int TravelTypeFK { get; set; }
-        [ForeignKey("Port")]
-        public int PortFromFK { get; set; }
-        [ForeignKey("Port")]
-        public int PortToFK { get; set; }
+        //[ForeignKey("TravelType")]
+        public string TravelType { get; set; }
+        //[ForeignKey("Port")]
+        public string PortFrom { get; set; }
+        //[ForeignKey("Port")]
+        public string PortTo { get; set; }
         [RegularExpression(@"[0-9]{1,100}")]
         public int RoutePrice { get; set; }
         public string DepartureOption1 { get; set; }
@@ -62,8 +67,8 @@ namespace WebAppOppg2.Models
         public string Lastname { get; set; }
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,50}")]
         public string Email { get; set; }
-        [ForeignKey("PassengerType")]
-        public int PassengerTypeFK { get; set; }
+        //[ForeignKey("PassengerType")]
+        public string PassengerType { get; set; }
     }
 
     public class PassengerType
@@ -75,4 +80,5 @@ namespace WebAppOppg2.Models
         [RegularExpression(@"[0-9]{1,100}")]
         public int Discount { get; set; }
     }
+   
 }
