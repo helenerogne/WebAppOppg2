@@ -1,11 +1,13 @@
 export class Ticket {
-  id: number;
-  FirstName: string;
-  LastName: string;
+  TicketID: number;
+  Firstname: string;
+  Lastname: string;
   Email: string;
-  Route: string;
-  Date: string;
-  Quantity: number;
-  Type: string;
+  PassengerType: string;
+  TravelType: string;
+  RouteTo: string;
+  RouteFrom: string;
+  Departure: string;
+  TicketDate: string;
   Price: string;
 }

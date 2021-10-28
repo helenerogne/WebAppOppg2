@@ -1,54 +1,61 @@
 ﻿using WebAppOppg2.Models;
 using System;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAppOppg2.DAL
 {
-    public class Ticket
+    public class Tickets
     {
         public int TicketID { get; set; }
-        public Passenger Passenger { get; set; }
-        public string TicketTravelType { get; set; }
-        public string TicketRoute { get; set; }
-        public string TicketDeparture { get; set; }
+        virtual public Passengers Passenger { get; set; }
+        virtual public Routes Route { get; set; }
         public string TicketDate { get; set; }
-        public int TicketPrice { get; set; }
     }
 
-    public class Port
+    public class Ports
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PortID { get; set; }
         public string PortName { get; set; }
     }
 
-    public class TravelType
+    public class TravelTypes
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int TravelTypeID { get; set; }
         public string TravelTypeName { get; set; }
     }
 
-    public class Route
+    public class Routes
     {
         public int RouteID { get; set; }
-        public int TravelTypeFK { get; set; }
-        public int PortFromFK { get; set; }
-        public int PortToFK { get; set; }
+        virtual public TravelTypes TravelType { get; set; }
+        virtual public Ports PortFrom { get; set; }
+        virtual public Ports PortTo { get; set; }
         public int RoutePrice { get; set; }
         public string DepartureOption1 { get; set; }
         public string DepartureOption2 { get; set; }
     }
 
-    public class Passenger
+    public class Passengers
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PassengerID { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }
-        public int PassengerTypeFK { get; set; }
+        virtual public PassengerTypes PassengerType { get; set; }
     }
 
-    public class PassengerType
+    public class PassengerTypes
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PassengerTypeID { get; set; }
         public string PassengerTypeName { get; set; }
         public int Discount { get; set; }
@@ -63,18 +70,19 @@ namespace WebAppOppg2.DAL
             Database.EnsureCreated();
         }
 
-        public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Port> Ports { get; set; }
-        public DbSet<TravelType> TravelTypes { get; set; }
-        public DbSet<Route> Routes { get; set; }
-        public DbSet<Passenger> Passengers { get; set; }
-        public DbSet<PassengerType> PassengerTypes { get; set; }
+        public DbSet<Tickets> Tickets { get; set; }
+        public DbSet<Ports> Ports { get; set; }
+        public DbSet<TravelTypes> TravelTypes { get; set; }
+        public DbSet<Routes> Routes { get; set; }
+        public DbSet<Passengers> Passengers { get; set; }
+        public DbSet<PassengerTypes> PassengerTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // må importere pakken Microsoft.EntityFrameworkCore.Proxies
             // og legge til"viritual" på de attriuttene som ønskes å lastes automatisk (LazyLoading)
-            //optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.EnableSensitiveDataLogging();
         }
     }
 }

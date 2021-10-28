@@ -40,29 +40,33 @@ export class AdminEdit {
     this.http.get<Ticket>("api/ticket" + id)
       .subscribe()
       ticket => {
-        this.skjema.patchValue({ id: ticket.ID });
-        this.skjema.patchValue({ id: ticket.FirstName });
-        this.skjema.patchValue({ id: ticket.LastName });
-        this.skjema.patchValue({ id: ticket.Email });
-        this.skjema.patchValue({ id: ticket.Route });
-        this.skjema.patchValue({ id: ticket.Date });
-        this.skjema.patchValue({ id: ticket.Quantity });
-        this.skjema.patchValue({ id: ticket.Type });
-        this.skjema.patchValue({ id: ticket.Price });
+        this.skjema.patchValue({ id: ticket.TicketID });
+        this.skjema.patchValue({ firstname: ticket.Firstname });
+        this.skjema.patchValue({ lastname: ticket.Lastname });
+        this.skjema.patchValue({ email: ticket.Email });
+        this.skjema.patchValue({ passengerType: ticket.PassengerType });
+        this.skjema.patchValue({ travelType: ticket.TravelType });
+        this.skjema.patchValue({ routeFrom: ticket.RouteFrom });
+        this.skjema.patchValue({ routeTo: ticket.RouteTo });
+        this.skjema.patchValue({ departure: ticket.Departure });
+        this.skjema.patchValue({ ticketDate: ticket.TicketDate });
+        this.skjema.patchValue({ price: ticket.Price });
       }
     }
   
 
 changeOneTicket(){
   const changedTicket = new Ticket();
-  changedTicket.id = this.skjema.value.id;
-  changedTicket.FirstName = this.skjema.value.firstname;
-  changedTicket.LastName = this.skjema.value.lastname;
+  changedTicket.TicketID = this.skjema.value.id;
+  changedTicket.Firstname = this.skjema.value.firstname;
+  changedTicket.Lastname = this.skjema.value.lastname;
+  changedTicket.PassengerType = this.skjema.value.passengerType;
   changedTicket.Email = this.skjema.value.email;
-  changedTicket.Route = this.skjema.value.route;
-  changedTicket.Date = this.skjema.value.date;
-  changedTicket.Quantity = this.skjema.value.quantity;
-  changedTicket.Type = this.skjema.value.type;
+  changedTicket.TravelType = this.skjema.value.travelType;
+  changedTicket.RouteTo = this.skjema.value.routeTo;
+  changedTicket.RouteFrom = this.skjema.value.routeFrom;
+  changedTicket.Departure = this.skjema.value.departure;
+  changedTicket.TicketDate = this.skjema.value.ticketDate;
   changedTicket.Price = this.skjema.value.price;
 
   this.http.put("api/kunde/", changedTicket)
