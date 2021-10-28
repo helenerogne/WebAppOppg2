@@ -305,6 +305,31 @@ namespace WebAppOppg2.DAL
         {
             try
             {
+                var newRoute = new Routes();
+                newRoute.DepartureOption1 = route.DepartureOption1;
+
+                var checkPorts = await _db.Routes.FindAsync(route);
+                if(checkPorts == null)
+                {
+                    var portRow = new Routes();
+                    portRow.PortFrom = route.PortFrom;
+
+                }
+
+                var checkTraveltype = await _db.TravelTypes.FindAsync(route);
+                if(checkTraveltype == null)
+                {
+                    var travelTyperow = new TravelTypes();
+                    travelTyperow.TravelTypeName = route.TravelType; //skjønner ikke om dette er riktig
+                    newRoute.TravelType.TravelTypeName = travelTyperow; 
+                }
+
+                var checkPortFrom = await _db.Ports.FindAsync(route);
+                var checkPortTo = await _db.Ports.FindAsync(route);
+
+
+
+
                 _db.Routes.Add(route);
                 await _db.SaveChangesAsync();
                 return true;
@@ -320,7 +345,7 @@ namespace WebAppOppg2.DAL
         {
             try
             {
-                Route oneRoute = await _db.Routes.FindAsync(routeID);
+                Routes oneRoute = await _db.Routes.FindAsync(routeID);
                 _db.Routes.Remove(oneRoute);
                 await _db.SaveChangesAsync();
                 return true;
@@ -352,15 +377,14 @@ namespace WebAppOppg2.DAL
         {
             try
             {
-                Route oneRoute = await _db.Routes.FindAsync(routeID);
+                Routes oneRoute = await _db.Routes.FindAsync(routeID);
                 var gotRoute = new Route()
                 {
                     RouteID = oneRoute.RouteID,
-                    PortFrom = oneRoute.PortFrom,
-                    PortTo = oneRoute.PortTo,
+                    PortTo = oneRoute.PortTo.PortName,
+                    PortFrom = oneRoute.PortFrom.PortName,
                     RoutePrice = oneRoute.RoutePrice,
                     DepartureOption1 = oneRoute.DepartureOption1,
-                    DepartureOption2 = oneRoute.DepartureOption2
 
                 };
                 return gotRoute;
@@ -378,12 +402,11 @@ namespace WebAppOppg2.DAL
                 List<Route> allRoutes = await _db.Routes.Select(p => new Route
                 {
                     RouteID = p.RouteID,
-                    TravelType = p.TravelType,
-                    PortFrom = p.PortFrom,
-                    PortTo = p.PortTo,
+                    TravelType = p.TravelType.TravelTypeName,
+                    PortFrom = p.PortFrom.PortName,
+                    PortTo = p.PortTo.PortName,
                     RoutePrice = p.RoutePrice,
                     DepartureOption1 = p.DepartureOption1,
-                    DepartureOption2 = p.DepartureOption2,
 
                 }).ToListAsync();
                 return allRoutes;
