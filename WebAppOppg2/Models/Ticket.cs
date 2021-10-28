@@ -54,7 +54,11 @@ namespace WebAppOppg2.Models
         [RegularExpression(@"[0-9]{1,100}")]
         public int RoutePrice { get; set; }
         public string DepartureOption1 { get; set; }
-        public string DepartureOption2 { get; set; }
+
+        public static implicit operator Route(Route v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class Passenger

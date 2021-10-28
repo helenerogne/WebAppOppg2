@@ -38,7 +38,6 @@ namespace WebAppOppg2.DAL
         virtual public Ports PortTo { get; set; }
         public int RoutePrice { get; set; }
         public string DepartureOption1 { get; set; }
-        public string DepartureOption2 { get; set; }
     }
 
     public class Passengers
