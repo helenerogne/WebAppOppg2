@@ -54,10 +54,11 @@ namespace WebAppOppg2.OrderController
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOne(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized();
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 Ticket ticket = await _db.GetOne(id);
@@ -76,10 +77,12 @@ namespace WebAppOppg2.OrderController
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized();
             }
+            */
             List<Ticket> tickets = await _db.GetAll();
             return Ok(tickets);
         }
