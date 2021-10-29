@@ -16,7 +16,13 @@ export class AdminEdit {
 
 
   validering = {
-
+    id: [''],
+    firstName: [''],
+    lastName: [''],
+    email: [''],
+    routeFrom: [''],
+    ticketDate: [''],
+    price: ['']
   }
 
   constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private route: ActivatedRoute ) {
@@ -37,8 +43,13 @@ export class AdminEdit {
   }
 
   changeTicket(id: number) {
-    this.http.get<Ticket>("api/ticket" + id)
-      .subscribe()
+    this.http.get<Ticket>("api/order/" + id)
+      .subscribe(ticket => {
+        console.log(ticket)
+        this.skjema.get("price").setValue(ticket.price);
+        this.skjema.get("ticketDate").setValue(ticket.ticketDate);
+      })
+    /*
       ticket => {
         this.skjema.patchValue({ id: ticket.TicketID });
         this.skjema.patchValue({ firstname: ticket.Firstname });
@@ -50,8 +61,9 @@ export class AdminEdit {
         this.skjema.patchValue({ routeTo: ticket.RouteTo });
         this.skjema.patchValue({ departure: ticket.Departure });
         this.skjema.patchValue({ ticketDate: ticket.TicketDate });
-        this.skjema.patchValue({ price: ticket.Price });
-      }
+        this.skjema.patchValue({ price: ticket.price });
+        
+      }*/
     }
   
 
@@ -69,7 +81,7 @@ changeOneTicket(){
   changedTicket.TicketDate = this.skjema.value.ticketDate;
   changedTicket.Price = this.skjema.value.price;
 
-  this.http.put("api/kunde/", changedTicket)
+  this.http.put("api/order/", changedTicket)
     .subscribe(
       retur => {
         this.router.navigate(['/home.component']); 

@@ -1,28 +1,28 @@
 <div class="container">
   <div class="col-md4">
     <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
-      <input class="form-control" formControlName="id" type="hidden" />
+      <input class="form-control" formControlName="id" type="hidden"/>
 
       <div class="form-group">
         <label>Fornavn</label>
-        <input class="form-control" formControlName="ticketPassenger" />
+        <input class="form-control" formControlName="firstName" />
       </div>
 
       <div class="form-group">
         <label>Etternavn</label>
-        <input class="form-control" formControlName="ticketTravelType" />
+        <input class="form-control" formControlName="lastName" />
 
       </div>
 
       <div class="form-group">
         <label>Epost</label>
-        <input class="form-control" formControlName="ticketRoute" />
+        <input class="form-control" formControlName="email" />
       </div>
 
 
       <div class="form-group">
-        <label>Rute</label>
-        <input class="form-control" formControlName="ticketDeparture" />
+         <label>Route From</label>
+        <input class="form-control" formControlName="routeFrom" />
       </div>
 
 
@@ -33,8 +33,8 @@
 
 
       <div class="form-group">
-        <label>Antall</label>
-        <input class="form-control" formControlName="ticketPrice" />
+        <label>Price</label>
+        <input class="form-control" formControlName="price"/>
       </div>
 
     </form>

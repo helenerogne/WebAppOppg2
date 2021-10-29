@@ -21,7 +21,7 @@ export class admin {
   }
 
   getAllTickets() { 
-    this.http.get<Ticket[]>("api/ticket/")
+    this.http.get<Ticket[]>("api/order")
       .subscribe(tickets => {
         this.allTickets = tickets;
         this.loading = false;
@@ -30,11 +30,11 @@ export class admin {
       );
   };
 
-  deleteTicket(id: number) {
-    this.http.delete("api/ticket/" + id)
+  deleteOneTicket(id: number) {
+    this.http.delete("api/order/" + id)
       .subscribe(retur => {
         this.getAllTickets();
-        this.router.navigate(['/admin.html']);
+        this.router.navigate(['/admin.component.html']);
       },
         error => console.log(error)
       );

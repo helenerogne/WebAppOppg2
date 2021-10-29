@@ -20,18 +20,18 @@
                 </thead>
                 <tbody *ngFor="let ticket of allTickets">
                     <tr>
-                        <td>{{ticket.Firstname}}</td>
-                        <td>{{ticket.Lastname}}</td>
-                        <td>{{ticket.Email}}</td>
-                        <td>{{ticket.PassengerType}}</td>
-                        <td>{{ticket.TravelType}}</td>
-                        <td>{{ticket.RouteFrom}}</td>
-                        <td>{{ticket.RouteTo}}</td>
-                        <td>{{ticket.Departure}}</td>
-                        <td>{{ticket.TicketDate}}</td>
-                        <td>{{ticket.Price}}</td>
-                        <td><button class="btn btn-danger" (click)="deleteOneTicket(ticket.id)">Slett</button></td>
-                        <td><button class="btn btn-success" [routerLink]="['/adminEdit', ticket.id]">Endre</button></td>
+                        <td>{{ticket.firstname}}</td>
+                        <td>{{ticket.lastname}}</td>
+                        <td>{{ticket.email}}</td>
+                        <td>{{ticket.passengerType}}</td>
+                        <td>{{ticket.travelType}}</td>
+                        <td>{{ticket.routeFrom}}</td>
+                        <td>{{ticket.routeTo}}</td>
+                        <td>{{ticket.departure}}</td>
+                        <td>{{ticket.ticketDate}}</td>
+                        <td>{{ticket.price}}</td>
+                        <td><button class="btn btn-danger" (click)="deleteOneTicket(ticket.ticketID)">Slett</button></td>
+                        <td><button class="btn btn-success" [routerLink]="['/adminEdit', ticket.ticketID]">Endre</button></td>
                     </tr>
                 </tbody>
             </table>
