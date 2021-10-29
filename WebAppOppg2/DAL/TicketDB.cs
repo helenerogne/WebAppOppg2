@@ -8,6 +8,7 @@ namespace WebAppOppg2.DAL
 {
     public class Tickets
     {
+        [Key]
         public int TicketID { get; set; }
         virtual public Passengers Passenger { get; set; }
         virtual public Routes Route { get; set; }
@@ -17,7 +18,6 @@ namespace WebAppOppg2.DAL
     public class Ports
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PortID { get; set; }
         public string PortName { get; set; }
     }
@@ -25,25 +25,24 @@ namespace WebAppOppg2.DAL
     public class TravelTypes
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int TravelTypeID { get; set; }
         public string TravelTypeName { get; set; }
     }
 
     public class Routes
     {
+        [Key]
         public int RouteID { get; set; }
         virtual public TravelTypes TravelType { get; set; }
         virtual public Ports PortFrom { get; set; }
         virtual public Ports PortTo { get; set; }
         public int RoutePrice { get; set; }
-        public string DepartureOption1 { get; set; }
+        public string Departure { get; set; }
     }
 
     public class Passengers
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PassengerID { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
@@ -54,7 +53,6 @@ namespace WebAppOppg2.DAL
     public class PassengerTypes
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PassengerTypeID { get; set; }
         public string PassengerTypeName { get; set; }
         public int Discount { get; set; }

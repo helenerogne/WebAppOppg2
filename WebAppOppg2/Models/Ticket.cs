@@ -46,20 +46,12 @@ namespace WebAppOppg2.Models
     {
         [Key]
         public int RouteID { get; set; }
-        //[ForeignKey("TravelType")]
         public string TravelType { get; set; }
-        //[ForeignKey("Port")]
         public string PortFrom { get; set; }
-        //[ForeignKey("Port")]
         public string PortTo { get; set; }
         [RegularExpression(@"[0-9]{1,100}")]
         public int RoutePrice { get; set; }
-        public string DepartureOption1 { get; set; }
-
-        public static implicit operator Route(Route v)
-        {
-            throw new NotImplementedException();
-        }
+        public string Departure { get; set; }
     }
 
     public class Passenger
@@ -72,7 +64,6 @@ namespace WebAppOppg2.Models
         public string Lastname { get; set; }
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,50}")]
         public string Email { get; set; }
-        //[ForeignKey("PassengerType")]
         public string PassengerType { get; set; }
     }
 
