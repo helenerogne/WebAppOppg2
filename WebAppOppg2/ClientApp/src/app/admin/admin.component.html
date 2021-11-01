@@ -1,42 +1,19 @@
-  <div class="container">
-    <h1>Adminside</h1>
-    <div>
-        <div class="col-md-12">
-            <div *ngIf="loading">Laster billetter....</div>
-            <table class="table table-bordered table-condensed">
-                <thead>
-                    <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
-                        <th>Type</th>
-                        <th>Type</th>
-                        <th>Fra</th>
-                        <th>Til</th>
-                        <th>Avgang</th>
-                        <th>Dato</th>
-                        <th>Pris</th>
-                    </tr>
-                </thead>
-                <tbody *ngFor="let ticket of allTickets">
-                    <tr>
-                        <td>{{ticket.Firstname}}</td>
-                        <td>{{ticket.Lastname}}</td>
-                        <td>{{ticket.Email}}</td>
-                        <td>{{ticket.PassengerType}}</td>
-                        <td>{{ticket.TravelType}}</td>
-                        <td>{{ticket.RouteFrom}}</td>
-                        <td>{{ticket.RouteTo}}</td>
-                        <td>{{ticket.Departure}}</td>
-                        <td>{{ticket.TicketDate}}</td>
-                        <td>{{ticket.Price}}</td>
-                        <td><button class="btn btn-danger" (click)="deleteOneTicket(ticket.id)">Slett</button></td>
-                        <td><button class="btn btn-success" [routerLink]="['/adminEdit', ticket.id]">Endre</button></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn btn-primary" routerLink="/admin">Lagre kunde</button>
+  <div class="container-fluid">
+    <h1>Adminpanel</h1>
+    <div class="flex">
+        <div class="admin-button-wrapper flex-box">
+            <button class="btn panelbtn" routerLink="/ticketList">Administrer billetter</button>
+        </div>
+        <div class="admin-button-wrapper flex-box">
+            <button class="btn panelbtn" routerLink="/passengerList">Administrer kunder</button>
+        </div>
+        <div class="admin-button-wrapper flex-box">
+            <button class="btn panelbtn" routerLink="/ticketList">Administrer ruter</button>
+        </div>
+        <div class="admin-button-wrapper flex-box">
+            <button class="btn panelbtn" routerLink="/settings">Administrer innstillinger</button>
         </div>
     </div>
+                      
 </div>
 

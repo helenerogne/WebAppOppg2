@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
-import { Ticket } from "../Ticket"
+import {ActivatedRoute, Router} from '@angular/router';
+import { Ticket } from "../Ticket";
+import { Route } from "../Route";
+import { Passenger } from '../Passenger';
+import { PassengerType } from "../PassengerType";
+import { TravelType } from '../TravelType';
 
 
 @Component({
@@ -13,10 +16,25 @@ import { Ticket } from "../Ticket"
 export class AdminEdit {
   allTickets: Array<Ticket>;
   skjema: FormGroup;
+  routes: any = [];
+  allPtypes: any[];
+  allTtypes: any[];
 
 
   validering = {
-
+    id: [''],
+    passengerID: [''],
+    firstname: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+    lastname: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+    email: [''],
+    passengerType: [''],
+    routeID: [''],
+    travelType: [''],
+    routeFrom: [''],
+    routeTo: [''],
+    departure: [''],
+    ticketDate: [''],
+    price: [null, Validators.compose([Validators.required, Validators.pattern("[0-9]{1,9999}")])]
   }
 
   constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private route: ActivatedRoute ) {
@@ -24,57 +42,83 @@ export class AdminEdit {
 
   }
 
-
   ngOnInit() {
+    this.getRoutes();
+    this.getTtypes();
     this.route.params.subscribe(params => {
-      this.changeTicket(params.id);
-
+      this.getTicket(params.id);
     })
   }
 
-  vedSubmit() {
+  onSubmit() {
     this.changeOneTicket();
   }
 
-  changeTicket(id: number) {
-    this.http.get<Ticket>("api/ticket" + id)
-      .subscribe()
-      ticket => {
-        this.skjema.patchValue({ id: ticket.TicketID });
-        this.skjema.patchValue({ firstname: ticket.Firstname });
-        this.skjema.patchValue({ lastname: ticket.Lastname });
-        this.skjema.patchValue({ email: ticket.Email });
-        this.skjema.patchValue({ passengerType: ticket.PassengerType });
-        this.skjema.patchValue({ travelType: ticket.TravelType });
-        this.skjema.patchValue({ routeFrom: ticket.RouteFrom });
-        this.skjema.patchValue({ routeTo: ticket.RouteTo });
-        this.skjema.patchValue({ departure: ticket.Departure });
-        this.skjema.patchValue({ ticketDate: ticket.TicketDate });
-        this.skjema.patchValue({ price: ticket.Price });
-      }
+  getTicket(id: number) {
+    this.http.get<Ticket>("api/order/" + id)
+      .subscribe(
+        ticket => {
+          console.log(ticket)
+          this.skjema.patchValue({ id: ticket.ticketID });
+          this.skjema.patchValue({ passengerID: ticket.passengerID });
+          this.skjema.patchValue({ firstname: ticket.firstname });
+          this.skjema.patchValue({ lastname: ticket.lastname });
+          this.skjema.patchValue({ email: ticket.email });
+          this.skjema.patchValue({ passengerType: ticket.passengerType });
+          this.skjema.patchValue({ routeID: ticket.routeID });
+          this.skjema.patchValue({ travelType: ticket.travelType });
+          this.skjema.patchValue({ routeTo: ticket.routeTo });
+          this.skjema.patchValue({ routeFrom: ticket.routeFrom });
+          this.skjema.patchValue({ departure: ticket.departure });
+          this.skjema.patchValue({ ticketDate: ticket.ticketDate });
+          this.skjema.patchValue({ price: ticket.price });
+        },
+        error => console.log(error)
+      );
     }
-  
+ 
+getRoutes() {
+  this.http.get("api/route/")
+    .subscribe(
+      routes => {
+        this.routes = routes;
+      },
+      error => console.log(error)
+    );
+}
+getTtypes() {
+  this.http.get<TravelType[]>("api/travelType")
+    .subscribe(travelTypes => {
+      this.allTtypes = travelTypes;
+    },
+      error => console.log(error)
+    );
+};
 
 changeOneTicket(){
   const changedTicket = new Ticket();
-  changedTicket.TicketID = this.skjema.value.id;
-  changedTicket.Firstname = this.skjema.value.firstname;
-  changedTicket.Lastname = this.skjema.value.lastname;
-  changedTicket.PassengerType = this.skjema.value.passengerType;
-  changedTicket.Email = this.skjema.value.email;
-  changedTicket.TravelType = this.skjema.value.travelType;
-  changedTicket.RouteTo = this.skjema.value.routeTo;
-  changedTicket.RouteFrom = this.skjema.value.routeFrom;
-  changedTicket.Departure = this.skjema.value.departure;
-  changedTicket.TicketDate = this.skjema.value.ticketDate;
-  changedTicket.Price = this.skjema.value.price;
+  console.log(this.skjema.value)
+  changedTicket.ticketID = Number(this.skjema.value.id);
+  changedTicket.passengerID = this.skjema.value.passengerID;
+  changedTicket.firstname = this.skjema.value.firstname;
+  changedTicket.lastname = this.skjema.value.lastname;
+  changedTicket.email = this.skjema.value.email;
+  changedTicket.passengerType = this.skjema.value.passengerType;
+  changedTicket.routeID = Number(this.skjema.value.routeID);
+  changedTicket.travelType = this.skjema.value.travelType;
+  changedTicket.routeTo = this.skjema.value.routeTo;
+  changedTicket.routeFrom = this.skjema.value.routeFrom;
+  changedTicket.departure = this.skjema.value.departure;
+  changedTicket.ticketDate = this.skjema.value.ticketDate;
+  changedTicket.price = this.skjema.value.price;
 
-  this.http.put("api/kunde/", changedTicket)
+  this.http.put("api/order/", changedTicket)
     .subscribe(
       retur => {
-        this.router.navigate(['/home.component']); 
-        },
-        );
+        this.router.navigate(['/ticketList']); 
+      },
+      error => console.log(error)
+     );
   }
 }
 

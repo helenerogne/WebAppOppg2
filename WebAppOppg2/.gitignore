@@ -10,6 +10,10 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+Ticket.db
+Ticket.db-shm
+Ticket.db-wal
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
