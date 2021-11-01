@@ -20,9 +20,11 @@
           </div>
 
           <div class="form-group">
-              <label>Reisende</label>
-              <input class="form-control" formControlName="passengerType" />
-          </div>
+            <label>Type billett</label>
+            <select class="form-control" formControlName="passengerType">
+                <option *ngFor="let passengerType of allPtypes" [value]="passengerType.passengerTypeID">{{passengerType.passengerTypeName}}</option>
+            </select>
+        </div>
 
           <div class="form-group">
               <label>Reisevei</label>
@@ -33,8 +35,8 @@
 
           <div class="form-group">
               <label>Type reise</label>
-              <select class="form-control" formControlName="travelTypeName">
-                  <option *ngFor="let travelType of allTtypes" [value]="travelType.travelTypeName">{{travelType.travelTypeName}}</option>
+              <select class="form-control" formControlName="travelType">
+                  <option *ngFor="let travelType of allTtypes" [value]="travelType.travelTypeID">{{travelType.travelTypeName}}</option>
               </select>
           </div>
 
@@ -54,9 +56,8 @@
           </div>
 
           <div class="form-group">
-              <button type="submit" [disabled]="!skjema.valid" class="btn btn-primary">Endre</button>
+              <button type="submit" [disabled]="!skjema.valid" class="btn btn-primary">Lagre</button>
               <button class="btn btn-default" routerLink="/ticketList">Tilbake</button>
-              <button type="button" class="btn btn-default" [routerLink]="['/passengerEdit', passenger.passengerID]">Endre kundeinfo</button>
           </div>
       </form>
    </div>

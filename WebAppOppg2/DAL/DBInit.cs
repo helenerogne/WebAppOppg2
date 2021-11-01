@@ -23,11 +23,11 @@ namespace WebAppOppg2.DAL
 
                 //PassengerTypes
 
-                var baby = new PassengerTypes{PassengerTypeName = "baby",Discount = 100};
-                var barn = new PassengerTypes{PassengerTypeName = "barn",Discount = 50};
-                var voksen = new PassengerTypes{PassengerTypeName = "voksen",Discount = 0};
-                var student = new PassengerTypes{PassengerTypeName = "student",Discount = 10};
-                var honnør = new PassengerTypes{PassengerTypeName = "honnør",Discount = 25};
+                var baby = new PassengerTypes{PassengerTypeName = "Baby",Discount = 100};
+                var barn = new PassengerTypes{PassengerTypeName = "Barn",Discount = 50};
+                var voksen = new PassengerTypes{PassengerTypeName = "Voksen",Discount = 0};
+                var student = new PassengerTypes{PassengerTypeName = "Student",Discount = 10};
+                var honnør = new PassengerTypes{PassengerTypeName = "Honnør",Discount = 25};
 
                 contextTicket.PassengerTypes.Add(baby);
                 contextTicket.PassengerTypes.Add(barn);
@@ -37,7 +37,7 @@ namespace WebAppOppg2.DAL
 
                 //TravelTypes
 
-                var envei = new TravelTypes { TravelTypeName = "Envei" };
+                var envei = new TravelTypes { TravelTypeName = "Enveis" };
                 var retur = new TravelTypes { TravelTypeName = "Tur/Retur" };
                 var cruise = new TravelTypes { TravelTypeName = "Cruise" };
 
@@ -66,14 +66,22 @@ namespace WebAppOppg2.DAL
                 //Route
 
                 var route1 = new Routes { PortFrom = port1, PortTo = port2, Departure = "10:00", RoutePrice = 100, TravelType = envei };
-                var route2 = new Routes { PortFrom = port3, PortTo = port5, Departure = "17:00", RoutePrice = 249, TravelType = retur };
+                var route2 = new Routes { PortFrom = port3, PortTo = port5, Departure = "17:20", RoutePrice = 249, TravelType = retur };
                 var route3 = new Routes { PortFrom = port1, PortTo = port4, Departure = "10:00", RoutePrice = 149, TravelType = cruise };
-                var route4 = new Routes { PortFrom = port7, PortTo = port6, Departure = "14:00", RoutePrice = 99, TravelType = envei };
+                var route4 = new Routes { PortFrom = port7, PortTo = port6, Departure = "14:15", RoutePrice = 199, TravelType = envei };
+                var route5 = new Routes { PortFrom = port1, PortTo = port7, Departure = "12:00", RoutePrice = 300, TravelType = envei };
+                var route6 = new Routes { PortFrom = port3, PortTo = port5, Departure = "18:00", RoutePrice = 249, TravelType = retur };
+                var route7 = new Routes { PortFrom = port4, PortTo = port1, Departure = "09:00", RoutePrice = 149, TravelType = retur };
+                var route8 = new Routes { PortFrom = port7, PortTo = port6, Departure = "08:30", RoutePrice = 499, TravelType = cruise };
 
                 contextTicket.Routes.Add(route1);
                 contextTicket.Routes.Add(route2);
                 contextTicket.Routes.Add(route3);
                 contextTicket.Routes.Add(route4);
+                contextTicket.Routes.Add(route5);
+                contextTicket.Routes.Add(route6);
+                contextTicket.Routes.Add(route7);
+                contextTicket.Routes.Add(route8);
 
                 //Passengers
 
@@ -81,11 +89,15 @@ namespace WebAppOppg2.DAL
                 var passenger2 = new Passengers{Firstname = "Lise",Lastname = "Persen",Email = "lise@persen.com", PassengerType = barn};
                 var passenger3 = new Passengers { Firstname = "Amir", Lastname = "Noor", Email = "amir@noor.com", PassengerType = student };
                 var passenger4 = new Passengers { Firstname = "Bruce", Lastname = "Wayne", Email = "bat@man.com", PassengerType = voksen };
+                var passenger5 = new Passengers { Firstname = "Kari", Lastname = "Tråd", Email = "kari@tråd.com", PassengerType = baby };
+                var passenger6 = new Passengers { Firstname = "Peter", Lastname = "Parker", Email = "spider@man.com", PassengerType = voksen };
 
                 contextTicket.Passengers.Add(passenger1);
                 contextTicket.Passengers.Add(passenger2);
                 contextTicket.Passengers.Add(passenger3);
                 contextTicket.Passengers.Add(passenger4);
+                contextTicket.Passengers.Add(passenger5);
+                contextTicket.Passengers.Add(passenger6);
 
                 //Tickets
 
@@ -93,11 +105,19 @@ namespace WebAppOppg2.DAL
                 var ticket2 = new Tickets { Passenger = passenger4, Route = route4, TicketDate = "15.12.2021" };
                 var ticket3 = new Tickets { Passenger = passenger2, Route = route2, TicketDate = "08.11.2021" };
                 var ticket4 = new Tickets { Passenger = passenger3, Route = route3, TicketDate = "17.11.2022" };
+                var ticket5 = new Tickets{Passenger = passenger1, Route = route7, TicketDate = "10.03.2022"};
+                var ticket6 = new Tickets { Passenger = passenger5, Route = route1, TicketDate = "18.07.2021" };
+                var ticket7 = new Tickets { Passenger = passenger6, Route = route5, TicketDate = "08.11.2021" };
+                var ticket8 = new Tickets { Passenger = passenger4, Route = route8, TicketDate = "17.11.2022" };
 
                 contextTicket.Tickets.Add(ticket1);
                 contextTicket.Tickets.Add(ticket2);
                 contextTicket.Tickets.Add(ticket3);
                 contextTicket.Tickets.Add(ticket4);
+                contextTicket.Tickets.Add(ticket5);
+                contextTicket.Tickets.Add(ticket6);
+                contextTicket.Tickets.Add(ticket7);
+                contextTicket.Tickets.Add(ticket8);
 
 
                 contextTicket.SaveChanges();

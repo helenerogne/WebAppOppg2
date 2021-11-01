@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 using WebAppOppg2.DAL;
 using WebAppOppg2.Models;
 
-namespace WebAppOppg2.OrderController
+namespace WebAppOppg2.PassengerTypeController
 {
     [ApiController]
 
-    [Route ("api/[controller]")] 
+    [Route ("api/[controller]")]
 
-    public class OrderController : ControllerBase
+    public class PassengerTypeController : ControllerBase
     {
 
         private ITicketRepository _db;
-        private ILogger<OrderController> _log;
+        private ILogger<PassengerTypeController> _log;
         private const string _loggetInn = "loggetInn";
 
-        public OrderController(ITicketRepository db, ILogger<OrderController> log)
+        public PassengerTypeController(ITicketRepository db, ILogger<PassengerTypeController> log)
         {
             _db = db;
             _log = log;
@@ -29,7 +29,7 @@ namespace WebAppOppg2.OrderController
 
         //SaveTicket
         [HttpPost]
-        public async Task<ActionResult> SaveTicket(Ticket ticket)
+        public async Task<ActionResult> SavePassenger(PassengerType passengerType)
         {
             /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
@@ -38,10 +38,10 @@ namespace WebAppOppg2.OrderController
             }*/
             if (ModelState.IsValid)
             {
-                bool returOK = await _db.SaveTicket(ticket);
+                bool returOK = await _db.AddPassengerType(passengerType);
                 if (!returOK)
                 {
-                    _log.LogInformation("Billett kunne ikke lagres!");
+                    _log.LogInformation("passengertype kunne ikke lagres!");
                     return BadRequest("");
                 }
                 return Ok("");
@@ -53,7 +53,7 @@ namespace WebAppOppg2.OrderController
 
         //GetOne
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetOne(int id)
+        public async Task<ActionResult> GetOnePassengerType(int id)
         {
             /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
@@ -62,13 +62,13 @@ namespace WebAppOppg2.OrderController
             }*/
             if (ModelState.IsValid)
             {
-                Ticket ticket = await _db.GetOne(id);
-                if (ticket == null)
+                PassengerType passengerType = await _db.GetOnePassengerType(id);
+                if (passengerType == null)
                 {
-                    _log.LogInformation("Fant ikke bilett");
+                    _log.LogInformation("Fant ikke passengertype");
                     return NotFound();
                 }
-                return Ok(ticket);
+                return Ok(passengerType);
             }
             _log.LogInformation("Feil i inputvalidering");
             return BadRequest();
@@ -76,7 +76,7 @@ namespace WebAppOppg2.OrderController
 
         //GetALl
         [HttpGet]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult> GetAllPassengerTypes()
         {
             /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
@@ -84,18 +84,18 @@ namespace WebAppOppg2.OrderController
                 return Unauthorized();
             }
             */
-            List<Ticket> tickets = await _db.GetAll();
-            return Ok(tickets);
+            List<PassengerType> passengerTypes = await _db.GetAllPassengerTypes();
+            return Ok(passengerTypes);
         }
 
         //DeleteTicket
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTicket(int id)
+        public async Task<ActionResult> DeletePassengerType(int id)
         {
-            bool returOK = await _db.DeleteTicket(id);
+            bool returOK = await _db.DeletePassengerType(id);
             if (!returOK)
             {
-                _log.LogInformation("Sletting av biletten ble ikke utført");
+                _log.LogInformation("Sletting av passengertype ble ikke utført");
                 return NotFound();
             }
             return Ok();
@@ -104,7 +104,7 @@ namespace WebAppOppg2.OrderController
 
         //EditTicket
         [HttpPut]
-        public async Task<ActionResult> EditTicket(Ticket ticket)
+        public async Task<ActionResult> EditPassengerType(PassengerType passengerType)
         {
             /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
@@ -113,7 +113,7 @@ namespace WebAppOppg2.OrderController
             }*/
             if (ModelState.IsValid)
             {
-                bool returOK = await _db.EditTicket(ticket);
+                bool returOK = await _db.EditPassengerType(passengerType);
                 if (!returOK)
                 {
                     _log.LogInformation("Endringen kunne ikke utføres");

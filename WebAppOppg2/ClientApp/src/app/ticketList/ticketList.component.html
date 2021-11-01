@@ -1,0 +1,49 @@
+  <div class="container-fluid">
+    <h1>Bestilte billetter</h1>
+        <div>
+            <div *ngIf="loading">Laster billetter....</div>
+            <div class="table-responsive list">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Email</th>
+                            <th>Type</th>
+                            <th>Type</th>
+                            <th>Fra</th>
+                            <th>Til</th>
+                            <th>Avgang</th>
+                            <th>Dato</th>
+                            <th>Pris</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let ticket of allTickets">
+                        <tr>
+                            <td>{{ticket.firstname}}</td>
+                            <td>{{ticket.lastname}}</td>
+                            <td>{{ticket.email}}</td>
+                            <td>{{ticket.passengerType}}</td>
+                            <td>{{ticket.travelType}}</td>
+                            <td>{{ticket.routeFrom}}</td>
+                            <td>{{ticket.routeTo}}</td>
+                            <td>{{ticket.departure}}</td>
+                            <td>{{ticket.ticketDate}}</td>
+                            <td>{{ticket.price}}</td>
+                            <td><button class="btn btn-danger" (click)="deleteOneTicket(ticket.ticketID)">Slett</button></td>
+                            <td><button class="btn btn-success" [routerLink]="['/adminEdit', ticket.ticketID]">Endre</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+            <div class="form-row">
+                <button class="btn btn-primary" routerLink="/ticketAdd">Opprett ny billett</button>
+                <button class="btn btn-default" routerLink="/admin">Tilbake</button>
+            </div>
+</div>
+

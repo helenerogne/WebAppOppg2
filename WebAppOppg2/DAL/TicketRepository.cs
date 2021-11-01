@@ -446,7 +446,6 @@ namespace WebAppOppg2.DAL
                     PortTo = p.PortTo.PortName,
                     RoutePrice = p.RoutePrice,
                     Departure = p.Departure,
-
                 }).ToListAsync();
                 return allRoutes;
             }
@@ -481,7 +480,7 @@ namespace WebAppOppg2.DAL
                 {
                     newPassengerRow.PassengerType = checkPassengerType;
                 }*/
-
+                
                 _db.Passengers.Add(newPassengerRow);
                 await _db.SaveChangesAsync();
                 return true;
@@ -614,7 +613,7 @@ namespace WebAppOppg2.DAL
             try
             {
                 var editObject = await _db.PassengerTypes.FindAsync(editPassengerType.PassengerTypeID);
-                editObject.PassengerTypeID = editPassengerType.PassengerTypeID;
+                //editObject.PassengerTypeID = editPassengerType.PassengerTypeID;
                 editObject.PassengerTypeName = editPassengerType.PassengerTypeName;
                 editObject.Discount = editPassengerType.Discount;
                 await _db.SaveChangesAsync();

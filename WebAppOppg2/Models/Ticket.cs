@@ -16,6 +16,7 @@ namespace WebAppOppg2.Models
         public string Lastname { get; set; }
         public string Email { get; set; }
         public string PassengerType { get; set; }
+        [ForeignKey("RouteID")]
         public int RouteID { get; set; }
         public string TravelType { get; set; }
         public string RouteFrom { get; set; }

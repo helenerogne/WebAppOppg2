@@ -1,0 +1,82 @@
+<div class="container-fluid" style="display: flex">
+
+    <div class="container" style="background-color: #f5f5f5;">
+        <div style="margin-top: 10px;">
+            <h5>Reisetype</h5>
+            <div  >
+                <form [formGroup]="skjema" (ngSubmit)="onSubmit()">
+                    <div formGroupName="travelType">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let travelType of allTtypes">
+                                <tr>
+                                    <td><input type="text" class="form-control" formControlName="travelTypeName" value="{{travelType.travelTypeName}}"/></td>
+                                    <td><button class="btn btn-danger" (click)="deleteOneTicket(travelType.travelTypeName)">Slett</button></td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </form>
+                <button class="btn btn-primary" (click)="addTtype()">Legg til</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 10px;">
+            <h5>Kundetype</h5>
+            <div >
+                <form [formGroup]="skjema2" (ngSubmit)="onSubmit()">
+                    <div formGroupName="passengerType">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Rabatt</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let passengerType of allPtypes">
+                                <tr>
+                                    <td><input type="text" class="form-control" formControlName="passengerTypeName" value="{{passengerType.passengerTypeName}}"/></td>
+                                    <td><input type="text" class="form-control" formControlName="discount" value="{{passengerType.discount}}"/></td>
+                                    <td><button class="btn btn-danger" (click)="deleteOnePtype(passengerType.passengerTypeID)">Slett</button></td>
+                                </tr>
+                            </tbody>
+                     
+                        </table>
+                    </div>
+                </form>
+                <button class="btn btn-primary" (click)="addPtype()">Legg til</button>
+            </div>
+        </div>
+    </div>
+
+        <div class="container" style="margin-top: 10px; background-color: #f5f5f5;">
+            <h5>Havn</h5>
+            <div >
+                <form [formGroup]="skjema3" (ngSubmit)="onSubmit()">
+                    <div formGroupName="port">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Navn</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let port of allPorts">
+                                <tr>
+                                    <td><input type="text" class="form-control" formControlName="portName" value="{{port.portName}}"/></td>
+                                    <td><button class="btn btn-danger" (click)="deleteOnePort(port.portName)">Slett</button></td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </form>
+                <button class="btn btn-primary" (click)="addPort()">Legg til</button>
+            </div>
+        </div>
+</div>
+
