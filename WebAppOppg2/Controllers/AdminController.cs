@@ -17,7 +17,7 @@ namespace WebAppOppg2.Controllers
     {
         private IAdminRepository _db;
         private ILogger<AdminController> _log;
-        private const string _loggetInn = "loggetInn";
+        private const string _loggetInn = "_loggetInn";
 
         public AdminController(IAdminRepository db, ILogger<AdminController> log)
         {

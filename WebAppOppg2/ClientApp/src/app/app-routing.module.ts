@@ -13,7 +13,7 @@ const appRoots: Routes = [
   { path: 'admin', component: admin },
   { path: 'adminLogin', component: AdminLoginComponent },
   { path: 'adminEdit/:id', component: AdminEdit },
-  { path: '', redirectTo: '/admin', pathMatch: 'full' },
+  { path: '', redirectTo: '/adminLogin', pathMatch: 'full' },
   { path: 'ticketList', component: TicketList },
   { path: 'passengerList', component: PassengerList },
   {path: 'settings', component: Settings},
