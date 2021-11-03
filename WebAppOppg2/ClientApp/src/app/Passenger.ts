@@ -3,5 +3,5 @@ export class Passenger {
   firstname: string;
   lastname: string;
   email: string;
-  passengerType: string;
+  passengerTypeID: number;
 }

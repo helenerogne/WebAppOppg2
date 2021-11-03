@@ -12,9 +12,13 @@ import { Meny } from './meny/meny.component';
 import { TicketList } from './ticketList/ticketList.component';
 import { PassengerList } from './passengerList/passengerList.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Modal } from './ticketList/deleteModal';
+import { TicketModal } from './ticketList/deleteTicketModal';
+import { PassengerModal } from './passengerList/deletePassengerModal';
+import { PortModal } from './settings/deletePortModal';
 import { Settings } from './settings/settings.component';
 import { ticketAdd } from './ticketAdd/ticketAdd.component';
+import { passengerEdit } from './passengerEdit/passengerEdit.component';
+
 
 
 @NgModule({
@@ -26,9 +30,12 @@ import { ticketAdd } from './ticketAdd/ticketAdd.component';
     AdminLoginComponent,
     TicketList,
     PassengerList,
-    Modal,
+    TicketModal,
+    PassengerModal,
     Settings,
-    ticketAdd
+    PortModal,
+    ticketAdd,
+    passengerEdit
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,6 +46,6 @@ import { ticketAdd } from './ticketAdd/ticketAdd.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [Modal]
+  entryComponents: [TicketModal, PassengerModal, PortModal]
 })
 export class AppModule { }

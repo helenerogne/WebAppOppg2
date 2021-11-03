@@ -85,12 +85,12 @@ namespace WebAppOppg2.DAL
 
                 //Passengers
 
-                var passenger1 = new Passengers{Firstname = "Per",Lastname = "Hansen",Email = "per@hansen.com", PassengerType = honnør};
-                var passenger2 = new Passengers{Firstname = "Lise",Lastname = "Persen",Email = "lise@persen.com", PassengerType = barn};
-                var passenger3 = new Passengers { Firstname = "Amir", Lastname = "Noor", Email = "amir@noor.com", PassengerType = student };
-                var passenger4 = new Passengers { Firstname = "Bruce", Lastname = "Wayne", Email = "bat@man.com", PassengerType = voksen };
-                var passenger5 = new Passengers { Firstname = "Kari", Lastname = "Tråd", Email = "kari@tråd.com", PassengerType = baby };
-                var passenger6 = new Passengers { Firstname = "Peter", Lastname = "Parker", Email = "spider@man.com", PassengerType = voksen };
+                var passenger1 = new Passengers{Firstname = "Per",Lastname = "Hansen",Email = "per@hansen.com", PassengerTypeID = 1};
+                var passenger2 = new Passengers{Firstname = "Lise",Lastname = "Persen",Email = "lise@persen.com", PassengerTypeID = 2};
+                var passenger3 = new Passengers { Firstname = "Amir", Lastname = "Noor", Email = "amir@noor.com", PassengerTypeID = 3 };
+                var passenger4 = new Passengers { Firstname = "Bruce", Lastname = "Wayne", Email = "bat@man.com", PassengerTypeID = 4 };
+                var passenger5 = new Passengers { Firstname = "Kari", Lastname = "Tråd", Email = "kari@tråd.com", PassengerTypeID = 2 };
+                var passenger6 = new Passengers { Firstname = "Peter", Lastname = "Parker", Email = "spider@man.com", PassengerTypeID = 3 };
 
                 contextTicket.Passengers.Add(passenger1);
                 contextTicket.Passengers.Add(passenger2);

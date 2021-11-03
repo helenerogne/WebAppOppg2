@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ticket } from '../Ticket';
-import { Modal } from './deleteModal';
+import { TicketModal } from './deleteTicketModal';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -46,9 +46,8 @@ export class TicketList {
   */
 
   deleteOneTicket(id: number) {
-
     // først hent navnet på kunden
-
+    
     this.http.get<Ticket>("api/order/" + id)
       .subscribe(ticket => {
         this.ticketForDeleting = ticket.firstname + " " + ticket.lastname;
@@ -62,7 +61,7 @@ export class TicketList {
   }
 
   showModalandDelete(id: number) {
-    const modalRef = this.modalService.open(Modal);
+    const modalRef = this.modalService.open(TicketModal);
 
     modalRef.componentInstance.name = this.ticketForDeleting;
 

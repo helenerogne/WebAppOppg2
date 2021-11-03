@@ -47,7 +47,8 @@ namespace WebAppOppg2.DAL
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }
-        virtual public PassengerTypes PassengerType { get; set; }
+        public int PassengerTypeID {get; set;}
+        public virtual PassengerTypes PassengerType {get; set;}
     }
 
     public class PassengerTypes

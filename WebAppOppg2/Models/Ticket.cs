@@ -63,9 +63,10 @@ namespace WebAppOppg2.Models
         public string Firstname { get; set; }
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}")]
         public string Lastname { get; set; }
-        [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,50}")]
+        [RegularExpression(@"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,30}")]
         public string Email { get; set; }
-        public string PassengerType { get; set; }
+        public int PassengerTypeID { get; set; }
+        public string PassengerType {get; set;}
     }
 
     public class PassengerType
