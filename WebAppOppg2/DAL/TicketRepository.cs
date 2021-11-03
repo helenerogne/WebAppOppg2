@@ -118,6 +118,7 @@ namespace WebAppOppg2.DAL
                     Firstname = t.Passenger.Firstname,
                     Lastname = t.Passenger.Lastname,
                     Email = t.Passenger.Email,
+                    PassengerID = t.Passenger.PassengerID,
                     PassengerType = t.Passenger.PassengerType.PassengerTypeName,
                     TravelType = t.Route.TravelType.TravelTypeName,
                     RouteTo = t.Route.PortTo.PortName,
@@ -162,6 +163,7 @@ namespace WebAppOppg2.DAL
                     Firstname = oneTicket.Passenger.Firstname,
                     Lastname = oneTicket.Passenger.Lastname,
                     Email = oneTicket.Passenger.Email,
+                    PassengerID = oneTicket.Passenger.PassengerID,
                     PassengerType = oneTicket.Passenger.PassengerType.PassengerTypeName,
                     TravelType = oneTicket.Route.TravelType.TravelTypeName,
                     RouteTo = oneTicket.Route.PortTo.PortName,
@@ -465,22 +467,8 @@ namespace WebAppOppg2.DAL
                 newPassengerRow.Firstname = inPassenger.Firstname;
                 newPassengerRow.Lastname = inPassenger.Lastname;
                 newPassengerRow.Email = inPassenger.Email;
-                newPassengerRow.PassengerType.PassengerTypeName = inPassenger.PassengerType;
-
-                /*
-                var checkPassengerType = await _db.PassengerTypes.FindAsync(inPassenger.PassengerType);
-                if(checkPassengerType == null)
-                {
-                    var passengerTypeRow = new PassengerTypes();
-                    passengerTypeRow.PassengerTypeName = inPassenger.PassengerType;
-                    passengerTypeRow.Discount = 0;
-                    newPassengerRow.PassengerType = passengerTypeRow;
-                }
-                else
-                {
-                    newPassengerRow.PassengerType = checkPassengerType;
-                }*/
-                
+                newPassengerRow.PassengerTypeID = inPassenger.PassengerTypeID;
+                newPassengerRow.PassengerType = await _db.PassengerTypes.FindAsync(inPassenger.PassengerTypeID);
                 _db.Passengers.Add(newPassengerRow);
                 await _db.SaveChangesAsync();
                 return true;
@@ -516,7 +504,7 @@ namespace WebAppOppg2.DAL
                 editObject.Firstname = editPassenger.Firstname;
                 editObject.Lastname = editPassenger.Lastname;
                 editObject.Email = editPassenger.Email;
-                editObject.PassengerType.PassengerTypeName = editPassenger.PassengerType;
+                editObject.PassengerTypeID = editPassenger.PassengerTypeID;
                 await _db.SaveChangesAsync();
             }
             catch (Exception e)
@@ -538,7 +526,7 @@ namespace WebAppOppg2.DAL
                     Firstname = onePassenger.Firstname,
                     Lastname = onePassenger.Lastname,
                     Email = onePassenger.Email,
-                    PassengerType = onePassenger.PassengerType.PassengerTypeName
+                    PassengerTypeID = onePassenger.PassengerTypeID
 
                 };
                 return gotPassenger;
@@ -560,6 +548,7 @@ namespace WebAppOppg2.DAL
                     Firstname = p.Firstname,
                     Lastname = p.Lastname,
                     Email = p.Email,
+                    PassengerTypeID = p.PassengerTypeID,
                     PassengerType = p.PassengerType.PassengerTypeName
                 }).ToListAsync();
                 return allPassengers;

@@ -1,37 +1,13 @@
 
 <div class="flex-container">
 
-    <div *ngIf="loading">Laster passasjerer....</div>
-    <div class="container">
-    <h3>Passasjerer</h3>
-        <table class="table list">
-            <thead>
-                <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
-                    <th>Type</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody *ngFor="let passenger of allPassengers">
-                <tr>
-                    <td>{{passenger.firstname}}</td>
-                    <td>{{passenger.lastname}}</td>
-                    <td>{{passenger.email}}</td>
-                    <td>{{passenger.passengerType}}</td>
-                    <td><button class="btn btn-danger" (click)="delete(passenger.passengerID)">Slett</button></td>
-                    <td><button class="btn btn-success" [routerLink]="['/passengerEdit', passenger.passengerID]">Endre</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
+    <div *ngIf="loading">Laster passasjer....</div>
     <div class="container" style="margin-top: 10px;">
         <h5>Opprett ny passasjer</h5>
         <div class="list" >
             <form [formGroup]="skjema" (ngSubmit)="onSubmit()">
+                <input class="form-control" formControlName="passengerID" type="hidden" />
+                
                 <div class="form-group">
                     <label>Fornavn</label>
                     <input class="form-control" formControlName="firstname" />
@@ -62,8 +38,8 @@
 
                 <div class="form-group">
                     <div class="form-row">
-                        <button type="submit" [disabled]="!skjema.valid" class="btn btn-primary">Registrer passasjer</button>
-                        <button class="btn btn-default" routerLink="/admin">Tilbake</button>
+                        <button type="submit" [disabled]="!skjema.valid" class="btn btn-primary">Lagre</button>
+                        <button class="btn btn-default" routerLink="/passengerList">Tilbake</button>
                     </div>
                 </div>
             </form>

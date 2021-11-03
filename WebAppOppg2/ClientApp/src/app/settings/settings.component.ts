@@ -4,8 +4,10 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import {ActivatedRoute, Router} from '@angular/router';
 import { Port } from "../Port";
 import { TravelType } from '../TravelType';
+import { Route } from '../Route';
 import { PassengerType } from "../PassengerType";
-
+import { PortModal } from './deletePortModal';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   templateUrl: "settings.component.html"
@@ -15,11 +17,16 @@ export class Settings {
   allPtypes: any[];
   allTtypes: any[];
   allPorts: any[];
+  allRoutes: Array<Route>;
   skjema: FormGroup;
   skjema2: FormGroup;
   skjema3: FormGroup;
+  saveButton: boolean;
+  portForDeleting: string;
+  passengertypeForDeleting: string;
+  traveltypeForDeleting: string;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private route: ActivatedRoute ) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private modalService: NgbModal ) {
     this.skjema = new FormGroup({travelType: new FormGroup({travelTypeName: new FormControl()})})
     this.skjema2 = new FormGroup({passengerType: new FormGroup({passengerTypeName: new FormControl(), discount: new FormControl()})})
     this.skjema3 = new FormGroup({port: new FormGroup({portName: new FormControl()})})
@@ -29,6 +36,7 @@ export class Settings {
     this.getAllPorts();
     this.getPtypes();
     this.getTtypes();
+    this.getAllRoutes();
   }
 
   getPtypes() {
@@ -50,6 +58,7 @@ export class Settings {
   };
 
   getAllPorts() {
+    this.saveButton = false;
     this.http.get<Port[]>("api/port")
       .subscribe(ports => {
         this.allPorts = ports;
@@ -58,8 +67,32 @@ export class Settings {
       );
   };
 
-  onSubmit(){
-    this.addNewPort();
+  getAllRoutes() {
+    this.http.get<Route[]>("api/route")
+      .subscribe(allroutes => {
+        this.allRoutes = allroutes;
+      },
+        error => console.log(error)
+      );
+  };
+
+  addNewFieldPort(){
+    const blank = new Port();
+    blank.isNew = true;
+    this.allPorts.push(blank)
+    //this.changeButton();
+    /*
+    this.http.put("api/port/", blank)
+    .subscribe(
+      retur =>{
+        this.allPorts.push(blank)
+      },
+      error => console.log(error)
+    );*/
+  }
+
+  changeButton(){
+    this.saveButton = true;
   }
 
   deleteOnePtype(id: number){
@@ -71,6 +104,7 @@ export class Settings {
     error => console.log(error)
     );
   }
+
 /*
   savePort(id: number) {
     this.http.get<Port>("api/port/" + id)
@@ -82,23 +116,66 @@ export class Settings {
         error => console.log(error)
       );
     }*/
-
-
-
-addNewPort(){
-  /*
-  const port = new Port();
-  port.portName = this.skjema.value.passengerID;
-
-  this.http.put("api/port/", changedPort)
+    addNewPort(){
+      this.sendNewPort(this.skjema3.value.port.portName)
+    }
+    
+sendNewPort(port: String){
+  this.http.post("api/port", {portName: port})
     .subscribe(
       retur => {
-        this.router.navigate(['/settings']); 
+        this.allPorts[this.allPorts.length - 1].isNew = false;
       },
       error => console.log(error)
-     );*/
+     );
   }
+
+
+
+
+
+
+
+  deleteOnePort(port) {
+    this.http.get<Port>("api/port/" + port)
+    .subscribe(port => {
+      this.portForDeleting = port.portName;
+      this.checkRoutes(port.portID);
+      
+      //this.showModalandDelete(port.portID);
+    },
+      error => console.log(error)
+    );
+  }
+
+  checkRoutes(port){
+    let isPortFrom = this.allRoutes.find(x => x.portFrom === port.portName);
+    let isPortTo = this.allRoutes.find(x => x.portTo === port.portName);
+
+    if(!isPortFrom || !isPortTo){
+      this.portForDeleting = port.portName;
+      this.showModalandDelete(port.portID);
+    }else{
+      console.log("port tilhører en rute");
+    }
+  }
+
+  showModalandDelete(id: number) {
+    const modalRef = this.modalService.open(PortModal);
+    modalRef.componentInstance.name = this.portForDeleting;
+    modalRef.result.then(retur => {
+      console.log('Lukket med:' + retur);
+      if (retur == "Slett") {
+        this.http.delete("api/port/" + id)
+          .subscribe(retur => {
+            this.getAllPorts();
+            this.router.navigate(['/settings.component.html']);
+          },
+            error => console.log(error)
+          );
+      }
+      this.router.navigate(['/settings']);
+    });
+  }
+
 }
-
-
-

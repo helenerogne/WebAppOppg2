@@ -4,7 +4,7 @@
         <div style="margin-top: 10px;">
             <h5>Reisetype</h5>
             <div  >
-                <form [formGroup]="skjema" (ngSubmit)="onSubmit()">
+                <form [formGroup]="skjema">
                     <div formGroupName="travelType">
                         <table>
                             <thead>
@@ -29,7 +29,7 @@
         <div style="margin-top: 10px;">
             <h5>Kundetype</h5>
             <div >
-                <form [formGroup]="skjema2" (ngSubmit)="onSubmit()">
+                <form [formGroup]="skjema2">
                     <div formGroupName="passengerType">
                         <table>
                             <thead>
@@ -57,7 +57,7 @@
         <div class="container" style="margin-top: 10px; background-color: #f5f5f5;">
             <h5>Havn</h5>
             <div >
-                <form [formGroup]="skjema3" (ngSubmit)="onSubmit()">
+                <form [formGroup]="skjema3">
                     <div formGroupName="port">
                         <table>
                             <thead>
@@ -68,14 +68,14 @@
                             <tbody *ngFor="let port of allPorts">
                                 <tr>
                                     <td><input type="text" class="form-control" formControlName="portName" value="{{port.portName}}"/></td>
-                                    <td><button class="btn btn-danger" (click)="deleteOnePort(port.portName)">Slett</button></td>
+                                    <td><button class="btn btn-danger" (click)="deleteOnePort(port.portID)">Slett</button></td>
+                                    <td><button *ngIf="port.isNew; else enabled" class="btn btn-primary" (click)="addNewPort()">Lagre</button></td>
                                 </tr>
                             </tbody>
-                            
                         </table>
                     </div>
                 </form>
-                <button class="btn btn-primary" (click)="addPort()">Legg til</button>
+                <button class="btn btn-primary" (click)="addNewFieldPort()">Legg til</button>
             </div>
         </div>
 </div>
