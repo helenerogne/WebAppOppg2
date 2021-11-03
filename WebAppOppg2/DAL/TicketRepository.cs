@@ -159,6 +159,7 @@ namespace WebAppOppg2.DAL
                 var gotTicket = new Ticket()
                 {
                     TicketID = oneTicket.TicketID,
+                    PassengerID = oneTicket.Passenger.PassengerID,
                     Firstname = oneTicket.Passenger.Firstname,
                     Lastname = oneTicket.Passenger.Lastname,
                     Email = oneTicket.Passenger.Email,
@@ -168,9 +169,13 @@ namespace WebAppOppg2.DAL
                     RouteFrom = oneTicket.Route.PortFrom.PortName,
                     Departure = oneTicket.Route.Departure,
                     TicketDate = oneTicket.TicketDate,
-                    Price = oneTicket.Route.RoutePrice
+                    Price = oneTicket.Route.RoutePrice,
+                    
                 };
+                
+                _log.LogInformation(gotTicket + "Got ticket");
                 return gotTicket;
+                
             }
             catch (Exception e)
             {
