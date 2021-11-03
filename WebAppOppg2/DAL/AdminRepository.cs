@@ -13,11 +13,11 @@ namespace WebAppOppg2.DAL
 {
     public class AdminRepository : IAdminRepository
     {
-        private AdminDB _db;
+        private TicketDB _db;
 
         private ILogger<AdminRepository> _log;
 
-        public AdminRepository(AdminDB adminDB, ILogger<AdminRepository> log)
+        public AdminRepository(TicketDB adminDB, ILogger<AdminRepository> log)
         {
             _db = adminDB;
             _log = log;

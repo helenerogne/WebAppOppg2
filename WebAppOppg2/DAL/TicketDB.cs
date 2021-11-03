@@ -58,6 +58,14 @@ namespace WebAppOppg2.DAL
         public int Discount { get; set; }
     }
 
+    public class AdminUser
+    {
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public byte[] Password { get; set; }
+        public byte[] Salt { get; set; }
+    }
+
 
     public class TicketDB : DbContext
     {
@@ -73,6 +81,7 @@ namespace WebAppOppg2.DAL
         public DbSet<Routes> Routes { get; set; }
         public DbSet<Passengers> Passengers { get; set; }
         public DbSet<PassengerTypes> PassengerTypes { get; set; }
+        public DbSet<AdminUser> AdminUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
