@@ -58,7 +58,7 @@ export class AdminEdit {
     this.http.get<Ticket>("api/order/" + id)
       .subscribe(
         ticket => {
-          console.log(ticket)
+          console.log(ticket + "Her er ticket");
           this.skjema.patchValue({ id: ticket.ticketID });
           this.skjema.patchValue({ passengerID: ticket.passengerID });
           this.skjema.patchValue({ firstname: ticket.firstname });
@@ -99,7 +99,7 @@ changeOneTicket(){
   const changedTicket = new Ticket();
   console.log(this.skjema.value)
   changedTicket.ticketID = Number(this.skjema.value.id);
-  changedTicket.passengerID = this.skjema.value.passengerID;
+  changedTicket.passengerID = Number(this.skjema.value.passengerID);
   changedTicket.firstname = this.skjema.value.firstname;
   changedTicket.lastname = this.skjema.value.lastname;
   changedTicket.email = this.skjema.value.email;

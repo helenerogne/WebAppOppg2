@@ -33,7 +33,7 @@
 
           <div class="form-group">
               <label>Type reise</label>
-              <select class="form-control" formControlName="travelTypeName">
+              <select class="form-control" formControlName="travelType">
                   <option *ngFor="let travelType of allTtypes" [value]="travelType.travelTypeName">{{travelType.travelTypeName}}</option>
               </select>
           </div>
@@ -56,7 +56,7 @@
           <div class="form-group">
               <button type="submit" [disabled]="!skjema.valid" class="btn btn-primary">Endre</button>
               <button class="btn btn-default" routerLink="/ticketList">Tilbake</button>
-              <button type="button" class="btn btn-default" [routerLink]="['/passengerEdit', passenger.passengerID]">Endre kundeinfo</button>
+             
           </div>
       </form>
    </div>
