@@ -14,7 +14,7 @@ namespace WebAppOppg2.DAL
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var contextTicket = serviceScope.ServiceProvider.GetService<TicketDB>();
-                //var contextAdmin = serviceScope.ServiceProvider.GetService<AdminDB>();
+               // var contextAdmin = serviceScope.ServiceProvider.GetService<AdminDB>();
                 contextTicket.Database.EnsureDeleted();
                 contextTicket.Database.EnsureCreated();
                 //contextAdmin.Database.EnsureDeleted();
@@ -122,23 +122,23 @@ namespace WebAppOppg2.DAL
 
                 contextTicket.SaveChanges();
 
-                /*
+               
                 //hvis noe er feil sjekk om vi ikke må lage to DBInit
 
                 // 1. lag en påoggingsbruker
                 var adminUser = new AdminUser();
-                adminUser.Username = "Admin"; //2. endre til våre egne navn
-                string password = "Test11"; //3. endre til våre egne navn
+                adminUser.Username = "Admin"; 
+                string password = "Admin"; 
                 byte[] salt = AdminRepository.makeSalt();
                 byte[] hash = AdminRepository.makeHash(password, salt);
                 adminUser.Password = hash;
                 adminUser.Salt = salt;
-                contextAdmin.AdminUsers.Add(adminUser);
+                contextTicket.AdminUsers.Add(adminUser);
 
                 //4. lag en bruker til
 
-                contextAdmin.SaveChanges();
-                */
+                contextTicket.SaveChanges();
+                
             }
         }
     }
