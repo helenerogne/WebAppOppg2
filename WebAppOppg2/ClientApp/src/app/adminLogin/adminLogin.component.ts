@@ -1,5 +1,10 @@
+import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from "@angular/router";
+import { Router } from '@angular/router';
+import { Admin } from "../Admin";
+
 
 @Component({
   templateUrl: 'adminLogin.component.html'
@@ -8,18 +13,35 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 export class AdminLoginComponent {
   LoginForm: FormGroup;
 
-  // fb kan endres til et annet logisk navn
-  constructor(private fb: FormBuilder) {
-    this.LoginForm = fb.group({
-      username: ["", Validators.required],
-      password: ["", Validators.pattern("[0-9]{6,15}")]
-    });
+  validering = {
+    id: [""],
+    username: [
+      null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZæøåÆØÅ. \-]{2,20}")])
+    ],
+    password: [
+      null, Validators.compose([Validators.required, Validators.pattern("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{3,}$")])
+    ]
+  }
+
+  constructor(private http: HttpClient, private fb: FormBuilder,
+    private route: ActivatedRoute, private router: Router) {
+    this.LoginForm = fb.group(this.validering);
   }
 
   onSubmit() {
-    console.log("LoginForm innsendt:");
-    console.log(this.LoginForm);
-    console.log(this.LoginForm.value.brukernavn);
-    console.log(this.LoginForm.touched);
+    this.logIn();
+  }
+
+  logIn() {
+    const logIn = new Admin();
+
+    logIn.username = this.LoginForm.value.username;
+    logIn.Password = this.LoginForm.value.password;
+    this.http.post("api/admin", logIn)
+      .subscribe(retur => {
+        this.router.navigate(['/adminLogin.component.html']);
+      },
+        error => console.log(error)
+      );
   }
 }
