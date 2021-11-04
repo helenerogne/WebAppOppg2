@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { admin } from './admin/admin.component';
-import { AdminEdit } from './adminEdit/adminEdit.component';
+import { TicketEdit } from './ticketEdit/ticketEdit.component';
 import { AdminLoginComponent } from './adminLogin/adminLogin.component';
 import { PassengerList } from './passengerList/passengerList.component';
 import { TicketList } from './ticketList/ticketList.component';
@@ -13,7 +13,7 @@ import { passengerEdit } from './passengerEdit/passengerEdit.component';
 const appRoots: Routes = [
   { path: 'admin', component: admin },
   { path: 'adminLogin', component: AdminLoginComponent },
-  { path: 'adminEdit/:id', component: AdminEdit },
+  { path: 'ticketEdit/:id', component: TicketEdit },
   { path: '', redirectTo: '/adminLogin', pathMatch: 'full' },
   { path: 'ticketList', component: TicketList },
   { path: 'passengerList', component: PassengerList },

@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { admin } from './admin/admin.component';
 import { AdminLoginComponent } from './adminLogin/adminLogin.component';
-import { AdminEdit } from './adminEdit/adminEdit.component';
+import { TicketEdit } from './ticketEdit/ticketEdit.component';
 import { Meny } from './meny/meny.component';
 import { TicketList } from './ticketList/ticketList.component';
 import { PassengerList } from './passengerList/passengerList.component';
@@ -25,7 +25,7 @@ import { passengerEdit } from './passengerEdit/passengerEdit.component';
   declarations: [
     AppComponent,
     admin,
-    AdminEdit,
+    TicketEdit,
     Meny,
     AdminLoginComponent,
     TicketList,
