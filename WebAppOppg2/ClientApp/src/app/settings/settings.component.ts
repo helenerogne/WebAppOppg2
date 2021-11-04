@@ -57,8 +57,6 @@ export class Settings {
     this.http.get<TravelType[]>("api/travelType")
       .subscribe(travelTypes => {
         this.allTtypes = travelTypes;
-        console.log("ID = " + travelTypes[2].travelTypeID);
-        
       },
         error => console.log(error)
       );
@@ -108,9 +106,9 @@ export class Settings {
      );
   }
 
-  changeOneTtype(){
+  changeOneTtype(travelTypeID){
     const t = new TravelType();
-    t.travelTypeID = Number(this.skjema.value.travelType.travelTypeID);
+    t.travelTypeID = Number(travelTypeID);
     t.travelTypeName = this.skjema.value.travelType.travelTypeName;
     this.http.put("api/travelType/", t)
       .subscribe(
@@ -149,12 +147,12 @@ export class Settings {
      );
   }
 
-  changeOnePtype(){
-    const p = new PassengerType();
-    p.passengerTypeID = Number(this.skjema.value.passengerType.passengerTypeID);
-    p.passengerTypeName = this.skjema.value.passengerType.passengerTypeName;
-    p.discount = this.skjema.value.passengerType.discount;
-    this.http.put("api/passengerType/", p)
+  changeOnePtype(passengerTypeID){
+    const t = new PassengerType();
+    t.passengerTypeID = Number(passengerTypeID);
+    t.passengerTypeName = this.skjema2.value.passengerType.passengerTypeName;
+    t.discount = Number(this.skjema2.value.passengerType.discount);
+    this.http.put("api/passengerType/", t)
       .subscribe(
         retur => {
           this.router.navigate(['/settings']); 
@@ -163,7 +161,9 @@ export class Settings {
        );
     }
 
-  //Add Port
+
+
+  //Port add and edit
 
   addNewFieldPort(){
     const blank = new Port();
@@ -187,6 +187,18 @@ export class Settings {
      );
   }
 
+    changeOnePort(portID){
+      const t = new Port();
+      t.portID = Number(portID);
+      t.portName = this.skjema3.value.port.portName;
+      this.http.put("api/port/", t)
+        .subscribe(
+          retur => {
+            this.router.navigate(['/settings']); 
+          },
+          error => console.log(error)
+         );
+      }
 
 
 

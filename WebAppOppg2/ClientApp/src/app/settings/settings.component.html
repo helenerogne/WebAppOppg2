@@ -9,15 +9,15 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Type</th>
+                                    <th>Navn</th>
                                 </tr>
                             </thead>
                             <tbody *ngFor="let travelType of allTtypes">
                                 <tr>
-                                    <td style="display: contents"><input type="hidden" class="form-control" formControlName="travelTypeID" value="{{travelType.travelTypeID}}"/></td>
+                                    <td style="display: contents"><input hidden="true" class="form-control" formControlName="travelTypeID" value="{{travelType.travelTypeID}}"/></td>
                                     <td><input type="text" class="form-control" formControlName="travelTypeName" value="{{travelType.travelTypeName}}"/></td>
-                                    <!--<td><button class="btn btn-danger" (click)="deleteOneTtype(travelType.travelTypeName)">Slett</button></td>-->
-                                    <td><button class="btn btn-success" (click)="changeOneTtype(travelType.travelTypeName)">Endre</button></td>
+                                    <!--<td><button class="btn btn-danger" (click)="deleteOneTtype(travelType.travelTypeID)">Slett</button></td>-->
+                                    <td><button class="btn btn-success" (click)="changeOneTtype(travelType.travelTypeID)">Endre</button></td>
                                     <td><button *ngIf="travelType.isNew; else enabled" class="btn btn-primary" (click)="addNewTraveltype()">Lagre</button></td>
                                 </tr>
                             </tbody>
@@ -36,8 +36,8 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Type</th>
-                                    <th>Rabatt</th>
+                                    <th>Navn</th>
+                                    <th>Rabatt i prosent</th>
                                 </tr>
                             </thead>
                             <tbody *ngFor="let passengerType of allPtypes">
@@ -46,7 +46,7 @@
                                     <td><input type="text" class="form-control" formControlName="passengerTypeName" value="{{passengerType.passengerTypeName}}"/></td>
                                     <td><input type="text" class="form-control" formControlName="discount" value="{{passengerType.discount}}"/></td>
                                     <!--<td><button class="btn btn-danger" (click)="deleteOnePtype(passengerType.passengerTypeID)">Slett</button></td>-->
-                                    <td><button class="btn btn-success" (click)="changeOnePtype(passengerType.passengerTypeName)">Endre</button></td>
+                                    <td><button class="btn btn-success" (click)="changeOnePtype(passengerType.passengerTypeID)">Endre</button></td>
                                     <td><button *ngIf="passengerType.isNew; else enabled" class="btn btn-primary" (click)="addNewPassengertype()">Lagre</button></td>
                                 </tr>
                             </tbody>
@@ -83,6 +83,10 @@
                 <button *ngIf="savePort; else enabled" class="btn btn-primary" (click)="addNewFieldPort()">Legg til</button>
             </div>
         </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px">
+        <button class="btn btn-primary" routerLink="/admin">Tilbake</button>
     </div>
 
 
