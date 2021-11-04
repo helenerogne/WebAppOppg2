@@ -165,16 +165,16 @@ namespace WebAppOppg2.DAL
                     Lastname = oneTicket.Passenger.Lastname,
                     Email = oneTicket.Passenger.Email,
                     PassengerType = oneTicket.Passenger.PassengerType.PassengerTypeName,
+                    RouteID = oneTicket.RouteID,
                     TravelType = oneTicket.Route.TravelType.TravelTypeName,
                     RouteTo = oneTicket.Route.PortTo.PortName,
                     RouteFrom = oneTicket.Route.PortFrom.PortName,
                     Departure = oneTicket.Route.Departure,
                     TicketDate = oneTicket.TicketDate,
-                    Price = oneTicket.Route.RoutePrice,
-                    
+                    Price = oneTicket.Route.RoutePrice
                 };
-                
-                _log.LogInformation(gotTicket + "Got ticket");
+                _log.LogInformation("REPO GETONE oneTicket.RouteID " + oneTicket.RouteID);
+                _log.LogInformation("REPO GETONE oneTicket.Route.RouteID " + oneTicket.Route.RouteID);
                 return gotTicket;
                 
             }
@@ -194,12 +194,24 @@ namespace WebAppOppg2.DAL
                 editObject.Passenger.Lastname = editTicket.Lastname;
                 editObject.Passenger.Email = editTicket.Email;
                 editObject.Passenger.PassengerType.PassengerTypeName = editTicket.PassengerType;
+                editObject.RouteID = editTicket.RouteID;
+                editObject.Route = await _db.Routes.FindAsync(editTicket.RouteID);
+
+                _log.LogInformation("REPO editTicket.Route.traveltypeID " + editObject.Route.TravelTypeID);
+                _log.LogInformation("REPO editTicket.Route.Price " + editObject.Route.RoutePrice);
+                _log.LogInformation("REPO editTicket.Route.Departure " + editObject.Route.Departure);
+                _log.LogInformation("REPO editTicket.Route.routID " + editObject.Route.RouteID);
+                _log.LogInformation("REPO editTicket.RouteID " + editObject.RouteID);
+
+                /*
                 editObject.Route.TravelType.TravelTypeName = editTicket.TravelType;
                 editObject.Route.PortFrom.PortName = editTicket.RouteFrom;
                 editObject.Route.PortTo.PortName = editTicket.RouteTo;
-                editObject.Route.Departure = editTicket.Departure;
+                editObject.Route.Departure = editTicket.Departure;*/
+
                 editObject.TicketDate = editTicket.TicketDate;
-                editObject.Route.RoutePrice = editTicket.Price;
+
+                //editObject.Route.RoutePrice = editTicket.Price;
 
                 await _db.SaveChangesAsync();
             }
