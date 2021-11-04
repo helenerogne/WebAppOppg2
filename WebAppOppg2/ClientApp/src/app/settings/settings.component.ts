@@ -21,15 +21,17 @@ export class Settings {
   skjema: FormGroup;
   skjema2: FormGroup;
   skjema3: FormGroup;
-  saveButton: boolean;
+  savePort: boolean;
+  saveP: boolean;
+  saveT: boolean;
   portForDeleting: string;
   passengertypeForDeleting: string;
   traveltypeForDeleting: string;
 
   constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private modalService: NgbModal ) {
-    this.skjema = new FormGroup({travelType: new FormGroup({travelTypeName: new FormControl()})})
-    this.skjema2 = new FormGroup({passengerType: new FormGroup({passengerTypeName: new FormControl(), discount: new FormControl()})})
-    this.skjema3 = new FormGroup({port: new FormGroup({portName: new FormControl()})})
+    this.skjema = new FormGroup({travelType: new FormGroup({travelTypeName: new FormControl(), travelTypeID: new FormControl()})})
+    this.skjema2 = new FormGroup({passengerType: new FormGroup({passengerTypeName: new FormControl(), discount: new FormControl(), passengerTypeID: new FormControl()})})
+    this.skjema3 = new FormGroup({port: new FormGroup({portName: new FormControl(), portID: new FormControl()})})
   }
 
   ngOnInit() {
@@ -37,6 +39,9 @@ export class Settings {
     this.getPtypes();
     this.getTtypes();
     this.getAllRoutes();
+    this.saveP = true;
+    this.saveT = true;
+    this.savePort = true;
   }
 
   getPtypes() {
@@ -52,13 +57,14 @@ export class Settings {
     this.http.get<TravelType[]>("api/travelType")
       .subscribe(travelTypes => {
         this.allTtypes = travelTypes;
+        console.log("ID = " + travelTypes[2].travelTypeID);
+        
       },
         error => console.log(error)
       );
   };
 
   getAllPorts() {
-    this.saveButton = false;
     this.http.get<Port[]>("api/port")
       .subscribe(ports => {
         this.allPorts = ports;
@@ -76,52 +82,89 @@ export class Settings {
       );
   };
 
+  //Add traveltype
+
+  addNewFieldTtype(){
+    const blank = new TravelType();
+    blank.isNew = true;
+    this.saveT = false;
+    this.allTtypes.push(blank)
+  }
+
+  addNewTraveltype(){
+    const newTtype = new TravelType();
+    newTtype.travelTypeName = this.skjema.value.travelType.travelTypeName;
+    this.saveT = true;
+    this.sendNewTraveltype(newTtype);
+  }
+    
+  sendNewTraveltype(travelType){
+    this.http.post("api/travelType", travelType)
+    .subscribe(
+      retur => {
+        this.allTtypes[this.allTtypes.length - 1].isNew = false;
+      },
+      error => console.log(error)
+     );
+  }
+
+  changeOneTtype(){
+    const t = new TravelType();
+    t.travelTypeID = Number(this.skjema.value.travelType.travelTypeID);
+    t.travelTypeName = this.skjema.value.travelType.travelTypeName;
+    this.http.put("api/travelType/", t)
+      .subscribe(
+        retur => {
+          this.router.navigate(['/settings']); 
+        },
+        error => console.log(error)
+       );
+    }
+
+
+  //Add passengertype
+
+  addNewFieldPtype(){
+    const blank = new PassengerType();
+    blank.isNew = true;
+    this.saveP = false;
+    this.allPtypes.push(blank)
+  }
+
+  addNewPassengertype(){
+    const newPtype = new PassengerType();
+    newPtype.passengerTypeName = this.skjema2.value.passengerType.passengerTypeName;
+    newPtype.discount = Number(this.skjema2.value.passengerType.discount);
+    this.saveP = true;
+    this.sendNewPassengertype(newPtype);
+  }
+    
+  sendNewPassengertype(passengerType){
+    this.http.post("api/passengerType", passengerType)
+    .subscribe(
+      retur => {
+        this.allPtypes[this.allPtypes.length - 1].isNew = false;
+      },
+      error => console.log(error)
+     );
+  }
+
+  //Add Port
+
   addNewFieldPort(){
     const blank = new Port();
     blank.isNew = true;
+    this.savePort = false;
     this.allPorts.push(blank)
-    //this.changeButton();
-    /*
-    this.http.put("api/port/", blank)
-    .subscribe(
-      retur =>{
-        this.allPorts.push(blank)
-      },
-      error => console.log(error)
-    );*/
   }
 
-  changeButton(){
-    this.saveButton = true;
+  addNewPort(){
+    this.savePort = true;
+    this.sendNewPort(this.skjema3.value.port.portName)
   }
-
-  deleteOnePtype(id: number){
-    this.http.delete("api/passengerType/"+id)
-    .subscribe(retur =>{
-      this.getPtypes();
-      this.router.navigate(['/settings.component.html']);
-    },
-    error => console.log(error)
-    );
-  }
-
-/*
-  savePort(id: number) {
-    this.http.get<Port>("api/port/" + id)
-      .subscribe(
-        port => {
-          this.skjema.patchValue({ portID: port.portID });
-          this.skjema.patchValue({ portName: port.portName });
-        },
-        error => console.log(error)
-      );
-    }*/
-    addNewPort(){
-      this.sendNewPort(this.skjema3.value.port.portName)
-    }
     
-sendNewPort(port: String){
-  this.http.post("api/port", {portName: port})
+  sendNewPort(port: String){
+    this.http.post("api/port", {portName: port})
     .subscribe(
       retur => {
         this.allPorts[this.allPorts.length - 1].isNew = false;
@@ -135,14 +178,26 @@ sendNewPort(port: String){
 
 
 
+//Delete passengertype
+
+  deleteOnePtype(id: number){
+    this.http.delete("api/passengerType/"+id)
+    .subscribe(retur =>{
+      this.getPtypes();
+      this.router.navigate(['/settings.component.html']);
+    },
+    error => console.log(error)
+    );
+  }
+
+
+//Delete port
 
   deleteOnePort(port) {
     this.http.get<Port>("api/port/" + port)
     .subscribe(port => {
       this.portForDeleting = port.portName;
       this.checkRoutes(port.portID);
-      
-      //this.showModalandDelete(port.portID);
     },
       error => console.log(error)
     );

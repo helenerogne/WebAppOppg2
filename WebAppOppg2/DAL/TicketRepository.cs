@@ -164,7 +164,6 @@ namespace WebAppOppg2.DAL
                     Firstname = oneTicket.Passenger.Firstname,
                     Lastname = oneTicket.Passenger.Lastname,
                     Email = oneTicket.Passenger.Email,
-                    //PassengerID = oneTicket.Passenger.PassengerID,
                     PassengerType = oneTicket.Passenger.PassengerType.PassengerTypeName,
                     TravelType = oneTicket.Route.TravelType.TravelTypeName,
                     RouteTo = oneTicket.Route.PortTo.PortName,
