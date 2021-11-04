@@ -122,10 +122,19 @@ namespace WebAppOppg2.DAL
 
                 contextTicket.SaveChanges();
 
-               
-                //hvis noe er feil sjekk om vi ikke må lage to DBInit
+                /*
+                
+                - Forslag til endring av kodebiten for opprettelse av bruker (under kommentaren).
+                  Blir mer ulikt Tor sin kode + matcher bedre med resten av koden ovenfor.
+                - OBS! Må sjekke at den kjører ordentlig med det først i såfall!
 
-                // 1. lag en påoggingsbruker
+                byte[] salt = TicketRepository.makeSalt();
+                var adminUser = new AdminUser { Id = 1, Username = "Admin", Password = TicketRepository.makeHash("Admin", salt), Salt = salt };
+                contextTicket.AdminUsers.Add(adminUser);
+                contextTicket.SaveChanges();
+
+                */
+
                 var adminUser = new AdminUser();
                 adminUser.Username = "Admin"; 
                 string password = "Admin"; 
@@ -134,8 +143,6 @@ namespace WebAppOppg2.DAL
                 adminUser.Password = hash;
                 adminUser.Salt = salt;
                 contextTicket.AdminUsers.Add(adminUser);
-
-                //4. lag en bruker til
 
                 contextTicket.SaveChanges();
                 
