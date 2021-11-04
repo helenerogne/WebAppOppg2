@@ -28,10 +28,8 @@
     <None Remove="ClientApp\src\app\save\" />
     <None Remove="ClientApp\src\app\admin\" />
     <None Remove="ClientApp\src\app\adminLogin\" />
-    <None Remove="ClientApp\src\app\validation\" />
     <None Remove="Models\" />
     <None Remove="ClientApp\src\app\adminEdit\" />
-    <None Remove="ClientApp\src\app\orderComplete\" />
     <None Remove="DAL\" />
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
@@ -42,13 +40,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\home\" />
     <Folder Include="ClientApp\src\app\admin\" />
     <Folder Include="ClientApp\src\app\adminLogin\" />
-    <Folder Include="ClientApp\src\app\validation\" />
     <Folder Include="Models\" />
     <Folder Include="ClientApp\src\app\adminEdit\" />
-    <Folder Include="ClientApp\src\app\orderComplete\" />
     <Folder Include="ClientApp\src\app\ticketList\" />
     <Folder Include="ClientApp\src\app\passengerList\" />
   </ItemGroup>

@@ -15,6 +15,7 @@ import { TravelType } from '../TravelType';
 
 export class AdminEdit {
   allTickets: Array<Ticket>;
+  //allRoutes: Array<Route>;
   skjema: FormGroup;
   routes: any = [];
   allPtypes: any[];
@@ -41,7 +42,7 @@ export class AdminEdit {
     this.skjema = fb.group(this.validering);
 
   }
-
+  t
   ngOnInit() {
     this.getRoutes();
     this.getTtypes();
@@ -72,16 +73,18 @@ export class AdminEdit {
           this.skjema.patchValue({ departure: ticket.departure });
           this.skjema.patchValue({ ticketDate: ticket.ticketDate });
           this.skjema.patchValue({ price: ticket.price });
+          console.log(ticket.routeID);
         },
         error => console.log(error)
-      );
+    );
     }
  
-getRoutes() {
-  this.http.get("api/route/")
-    .subscribe(
-      routes => {
-        this.routes = routes;
+  getRoutes() {
+    this.http.get("api/route/")
+      .subscribe(
+        routes => {
+          this.routes = routes;
+          console.log("hentet rute");
       },
       error => console.log(error)
     );
@@ -104,7 +107,9 @@ changeOneTicket(){
   changedTicket.lastname = this.skjema.value.lastname;
   changedTicket.email = this.skjema.value.email;
   changedTicket.passengerType = this.skjema.value.passengerType;
-  changedTicket.routeID = Number(this.skjema.value.routeID);
+  console.log("ruteID før" + Number(this.skjema.value.routeID));
+  changedTicket.routeID = 4;
+  console.log("ruteID etter " + changedTicket.routeID)
   changedTicket.travelType = this.skjema.value.travelType;
   changedTicket.routeTo = this.skjema.value.routeTo;
   changedTicket.routeFrom = this.skjema.value.routeFrom;
