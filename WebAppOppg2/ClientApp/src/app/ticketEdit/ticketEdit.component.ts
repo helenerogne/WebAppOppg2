@@ -99,16 +99,14 @@ getTtypes() {
 
 changeOneTicket(){
   const changedTicket = new Ticket();
-  console.log(this.skjema.value)
   changedTicket.ticketID = Number(this.skjema.value.id);
   changedTicket.passengerID = Number(this.skjema.value.passengerID);
   changedTicket.firstname = this.skjema.value.firstname;
   changedTicket.lastname = this.skjema.value.lastname;
   changedTicket.email = this.skjema.value.email;
   changedTicket.passengerType = this.skjema.value.passengerType;
-  console.log("ruteID før" + Number(this.skjema.value.routeID));
-  changedTicket.routeID = 4;
-  console.log("ruteID etter " + changedTicket.routeID)
+  changedTicket.routeID = Number(this.skjema.value.routeID);
+  changedTicket.travelTypeID = Number(this.skjema.value.travelTypeID);
   changedTicket.travelType = this.skjema.value.travelType;
   changedTicket.routeTo = this.skjema.value.routeTo;
   changedTicket.routeFrom = this.skjema.value.routeFrom;
@@ -124,6 +122,21 @@ changeOneTicket(){
       error => console.log(error)
      );
   }
+
+
+
+
+
+
+  /*
+  last inn allroutes
+  lag dropdown routs basert på allrouts
+  bruk onchange på traveltype-dropdown, price og departure
+  endre traveltype,options, price og departure basert på routeID
+
+  endre RouteID basert på travelType-options????
+  */
+
 }
 
 

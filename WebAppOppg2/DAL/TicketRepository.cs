@@ -93,34 +93,20 @@ namespace WebAppOppg2.DAL
             try
             {
                 var newTicketRow = new Tickets();
-                newTicketRow.TicketDate = inTicket.TicketDate;
-
 
                 //CheckPassenger
 
                 var checkPassenger = await _db.Passengers.FindAsync(inTicket.PassengerID);
                 if(checkPassenger == null)
                 {
+                    //Oppretter ny passasjer dersom passasjer ikke finnes fra før
+
                     var passengerRow = new Passengers();
                     passengerRow.Firstname = inTicket.Firstname;
                     passengerRow.Lastname = inTicket.Lastname;
                     passengerRow.Email = inTicket.Email;
-                    passengerRow.PassengerType.PassengerTypeName = inTicket.PassengerType;
-
-                    /*
-                    var checkPassengertype = await _db.PassengerTypes.FindAsync(inTicket.PassengerType);
-                    var newPassengerTypeRow = new PassengerTypes();
-                    if (checkPassengertype == null)
-                    {
-                        var passengerTypeRow = new PassengerTypes();
-                        passengerTypeRow.PassengerTypeName = inTicket.PassengerType;
-                        newTicketRow.Passenger.PassengerType = passengerTypeRow;
-                    }
-                    else
-                    {
-                        newTicketRow.Passenger.PassengerType = checkPassengertype;
-                    }
-                    */
+                    passengerRow.PassengerTypeID = inTicket.PassengerTypeID;
+                    
                     newTicketRow.Passenger = passengerRow;
                 }
                 else
@@ -128,11 +114,11 @@ namespace WebAppOppg2.DAL
                     newTicketRow.Passenger = checkPassenger;
                 }
 
-                newTicketRow.Route.PortFrom.PortName = inTicket.RouteFrom;
-                newTicketRow.Route.PortTo.PortName = inTicket.RouteTo;
-                newTicketRow.Route.RoutePrice = inTicket.Price;
-                newTicketRow.Route.Departure = inTicket.Departure;
-                newTicketRow.Route.TravelType.TravelTypeName = inTicket.TravelType;
+                newTicketRow.RouteID = inTicket.RouteID;
+                newTicketRow.Route = await _db.Routes.FindAsync(inTicket.RouteID);
+                newTicketRow.TicketDate = inTicket.TicketDate;
+                newTicketRow.TravelTypeID = inTicket.TravelTypeID;
+                newTicketRow.TravelType = await _db.TravelTypes.FindAsync(inTicket.TravelTypeID);
 
 
                 //CheckRoute
@@ -187,7 +173,7 @@ namespace WebAppOppg2.DAL
                     Email = t.Passenger.Email,
                     PassengerID = t.Passenger.PassengerID,
                     PassengerType = t.Passenger.PassengerType.PassengerTypeName,
-                    TravelType = t.Route.TravelType.TravelTypeName,
+                    TravelType = t.TravelType.TravelTypeName,
                     RouteTo = t.Route.PortTo.PortName,
                     RouteFrom = t.Route.PortFrom.PortName,
                     Departure = t.Route.Departure,
@@ -232,16 +218,15 @@ namespace WebAppOppg2.DAL
                     Lastname = oneTicket.Passenger.Lastname,
                     Email = oneTicket.Passenger.Email,
                     PassengerType = oneTicket.Passenger.PassengerType.PassengerTypeName,
+                    TravelTypeID = oneTicket.TravelTypeID,
+                    TravelType = oneTicket.TravelType.TravelTypeName,
                     RouteID = oneTicket.RouteID,
-                    TravelType = oneTicket.Route.TravelType.TravelTypeName,
                     RouteTo = oneTicket.Route.PortTo.PortName,
                     RouteFrom = oneTicket.Route.PortFrom.PortName,
                     Departure = oneTicket.Route.Departure,
                     TicketDate = oneTicket.TicketDate,
                     Price = oneTicket.Route.RoutePrice
                 };
-                _log.LogInformation("REPO GETONE oneTicket.RouteID " + oneTicket.RouteID);
-                _log.LogInformation("REPO GETONE oneTicket.Route.RouteID " + oneTicket.Route.RouteID);
                 return gotTicket;
                 
             }
@@ -260,25 +245,13 @@ namespace WebAppOppg2.DAL
                 editObject.Passenger.Firstname = editTicket.Firstname;
                 editObject.Passenger.Lastname = editTicket.Lastname;
                 editObject.Passenger.Email = editTicket.Email;
-                editObject.Passenger.PassengerType.PassengerTypeName = editTicket.PassengerType;
+                editObject.PassengerID = editTicket.PassengerID;
+                editObject.Passenger = await _db.Passengers.FindAsync(editTicket.PassengerID);
+                editObject.TravelTypeID = editTicket.TravelTypeID;
+                editObject.TravelType = await _db.TravelTypes.FindAsync(editTicket.TravelTypeID);
                 editObject.RouteID = editTicket.RouteID;
                 editObject.Route = await _db.Routes.FindAsync(editTicket.RouteID);
-
-                _log.LogInformation("REPO editTicket.Route.traveltypeID " + editObject.Route.TravelTypeID);
-                _log.LogInformation("REPO editTicket.Route.Price " + editObject.Route.RoutePrice);
-                _log.LogInformation("REPO editTicket.Route.Departure " + editObject.Route.Departure);
-                _log.LogInformation("REPO editTicket.Route.routID " + editObject.Route.RouteID);
-                _log.LogInformation("REPO editTicket.RouteID " + editObject.RouteID);
-
-                /*
-                editObject.Route.TravelType.TravelTypeName = editTicket.TravelType;
-                editObject.Route.PortFrom.PortName = editTicket.RouteFrom;
-                editObject.Route.PortTo.PortName = editTicket.RouteTo;
-                editObject.Route.Departure = editTicket.Departure;*/
-
                 editObject.TicketDate = editTicket.TicketDate;
-
-                //editObject.Route.RoutePrice = editTicket.Price;
 
                 await _db.SaveChangesAsync();
             }
@@ -435,7 +408,7 @@ namespace WebAppOppg2.DAL
                 */
 
                 //samme med denne. skal admin kunne opprette nye billettyper når nye ruter opprettes
-
+/*
                 var checkTraveltype = await _db.TravelTypes.FindAsync(inRoute.TravelType);
                 if(checkTraveltype == null)
                 {
@@ -447,7 +420,7 @@ namespace WebAppOppg2.DAL
                 {
                     newRouteRow.TravelType = checkTraveltype;
                 }
-
+*/
                 _db.Routes.Add(newRouteRow);
                 await _db.SaveChangesAsync();
                 return true;
@@ -477,7 +450,7 @@ namespace WebAppOppg2.DAL
 
         public async Task<bool> EditRoute(Route editRoute)
         {
-            try //må se om jeg må endre noe med departurepunkter her 
+            try
             {
                 var editObject = await _db.Routes.FindAsync(editRoute.RouteID);
                 editObject.RouteID = editRoute.RouteID;
@@ -485,7 +458,6 @@ namespace WebAppOppg2.DAL
                 editObject.PortTo.PortName = editRoute.PortTo;
                 editObject.Departure = editRoute.Departure;
                 editObject.RoutePrice = editRoute.RoutePrice;
-                editObject.TravelType.TravelTypeName = editRoute.TravelType;
 
                 await _db.SaveChangesAsync();
             }
@@ -526,7 +498,6 @@ namespace WebAppOppg2.DAL
                 List<Route> allRoutes = await _db.Routes.Select(p => new Route
                 {
                     RouteID = p.RouteID,
-                    TravelType = p.TravelType.TravelTypeName,
                     PortFrom = p.PortFrom.PortName,
                     PortTo = p.PortTo.PortName,
                     RoutePrice = p.RoutePrice,
