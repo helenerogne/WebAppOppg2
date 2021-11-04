@@ -27,10 +27,10 @@
           <div class="form-group">
               <label>Reisevei</label>
               <select class="form-control" formControlName="routeID">
-                  <option *ngFor="let route of routes" [value]="route.routeID">{{route.portFrom}} - {{route.portTo}}</option>
+                  <option *ngFor="let route of routes" [value]="route.routeID">{{route.portFrom}} - {{route.portTo}} </option>
               </select>
           </div>
-
+          
           <div class="form-group">
               <label>Type reise</label>
               <select class="form-control" formControlName="travelType">
