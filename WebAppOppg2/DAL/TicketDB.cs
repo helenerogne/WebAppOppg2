@@ -10,7 +10,9 @@ namespace WebAppOppg2.DAL
     {
         [Key]
         public int TicketID { get; set; }
+        public int PassengerID { get; set; }
         virtual public Passengers Passenger { get; set; }
+        public int RouteID { get; set; }
         virtual public Routes Route { get; set; }
         public string TicketDate { get; set; }
     }
@@ -33,6 +35,7 @@ namespace WebAppOppg2.DAL
     {
         [Key]
         public int RouteID { get; set; }
+        public int TravelTypeID {get; set;}
         virtual public TravelTypes TravelType { get; set; }
         virtual public Ports PortFrom { get; set; }
         virtual public Ports PortTo { get; set; }
