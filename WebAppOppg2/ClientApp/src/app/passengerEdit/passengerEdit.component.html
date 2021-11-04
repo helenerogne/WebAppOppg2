@@ -1,0 +1,49 @@
+
+<div class="flex-container">
+
+    <div *ngIf="loading">Laster passasjer....</div>
+    <div class="container" style="margin-top: 10px;">
+        <h5>Opprett ny passasjer</h5>
+        <div class="list" >
+            <form [formGroup]="skjema" (ngSubmit)="onSubmit()">
+                <input class="form-control" formControlName="passengerID" type="hidden" />
+                
+                <div class="form-group">
+                    <label>Fornavn</label>
+                    <input class="form-control" formControlName="firstname" />
+                    <p class="alert alert-warning" [hidden]="skjema.controls.firstname.valid || (skjema.controls.firstname.pristine && !submitted)">
+                        Fornavn er obligatorisk.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label>Etternavn</label>
+                    <input class="form-control" formControlName="lastname" />
+                    <p class="alert alert-warning" [hidden]="skjema.controls.lastname.valid || (skjema.controls.lastname.pristine && !submitted)">
+                        Etternavn er obligatorisk.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label>Epost</label>
+                    <input class="form-control" formControlName="email" />
+                    <p class="alert alert-warning" [hidden]="skjema.controls.email.valid || (skjema.controls.email.pristine && !submitted)">
+                        Epost er obligatorisk.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label>Type passasjer</label>
+                    <select class="form-control" formControlName="passengerTypeID">
+                        <option *ngFor="let type of allPassengerTypes" [value]="type.passengerTypeID">{{type.passengerTypeName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <button type="submit" [disabled]="!skjema.valid" class="btn btn-primary">Lagre</button>
+                        <button class="btn btn-default" routerLink="/passengerList">Tilbake</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
