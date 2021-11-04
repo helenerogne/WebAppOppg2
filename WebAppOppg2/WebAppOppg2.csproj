@@ -17,6 +17,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +40,10 @@
     <None Remove="Ticket.db-wal" />
     <None Remove="ClientApp\src\app\admin %28copy%29\" />
     <None Remove="ClientApp\src\app\passengerList\" />
+    <None Remove="Serilog.Extensions.Logging" />
+    <None Remove="Microsoft.Extensions.Logging" />
+    <None Remove="Serilog.Extensions.Logging.File" />
+    <None Remove="Logs\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +53,7 @@
     <Folder Include="ClientApp\src\app\adminEdit\" />
     <Folder Include="ClientApp\src\app\ticketList\" />
     <Folder Include="ClientApp\src\app\passengerList\" />
+    <Folder Include="Logs\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,7 +79,7 @@
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
       <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
