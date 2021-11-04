@@ -21,23 +21,23 @@ namespace WebAppOppg2.DAL
             _db = ticketDB;
             _log = log;
         }
-
         public async Task<bool> LogIn(Admin admin)
         {
             try
             {
                 //hvis noe er feil, sjekk at adminuser reference er riktig
                 AdminUser funnetAdmin = await _db.AdminUsers.FirstOrDefaultAsync(b => b.Username == admin.Username);
-                //sjekk passordet
-                byte[] hash = makeHash(admin.Password, funnetAdmin.Salt);
-                bool ok = hash.SequenceEqual(funnetAdmin.Password);
-
-                if (ok)
+                if (funnetAdmin != null)
                 {
-                    return true;
+                    byte[] hash = makeHash(admin.Password, funnetAdmin.Salt);
+                    bool ok = hash.SequenceEqual(funnetAdmin.Password);
+                    if (ok)
+                    {
+                        return true;
+                    }
+                    return false;
                 }
                 return false;
-
             }
 
             catch (Exception e)
@@ -45,7 +45,6 @@ namespace WebAppOppg2.DAL
                 _log.LogInformation(e.Message);
                 return false;
             }
-
         }
 
         public static byte[] makeHash(string passord, byte[] salt)
