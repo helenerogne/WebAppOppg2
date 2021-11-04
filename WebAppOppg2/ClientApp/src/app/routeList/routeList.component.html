@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="col-md4">
+    <div class="list">
+      <form [formGroup]="skjema" (ngSubmit)="onSubmit()">
+        <h5>Reise Liste</h5>
+
+        <div class="form-group">
+          <label>Reise fra</label>
+          <input class="form-control" disabled formControlName="portFrom" />
+        </div>
+
+        <div class="form-group">
+          <label>Reise til</label>
+          <input class="form-control" disabled formControlName="portTo" />
+        </div>
+
+        <div class="form-group">
+          <label>Avreisested</label>
+          <input class="form-control" disabled formControlName="departure" />
+
+        </div>
+
+        <div class="form-group">
+          <label>Dato</label>
+          <input class="form-control" disabled formControlName="ticketDate" />
+        </div>
+
+
+
+        <div class="table-responsive list">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>portFrom</th>
+                <th>portTo</th>
+                <th>departure</th>
+                <th>ticketDate</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let route of allRoutes">
+              <tr>
+                <td>{{route.portFrom}}</td>
+                <td>{{route.portTo}}</td>
+                <td>{{route.departure}}</td>
+                <td>{{route.ticketDate}}</td>
+                <td><button class="btn btn-danger" routerLink="/saveRoute">Legg til</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

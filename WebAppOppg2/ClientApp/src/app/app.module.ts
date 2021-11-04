@@ -18,6 +18,7 @@ import { PortModal } from './settings/deletePortModal';
 import { Settings } from './settings/settings.component';
 import { ticketAdd } from './ticketAdd/ticketAdd.component';
 import { passengerEdit } from './passengerEdit/passengerEdit.component';
+import { routeList } from './routeList/routeList.component';
 
 
 
@@ -35,7 +36,8 @@ import { passengerEdit } from './passengerEdit/passengerEdit.component';
     Settings,
     PortModal,
     ticketAdd,
-    passengerEdit
+    passengerEdit,
+    routeList
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
