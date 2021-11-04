@@ -195,6 +195,7 @@ namespace WebAppOppg2.DAL
                 editObject.Passenger.PassengerType.PassengerTypeName = editTicket.PassengerType;
                 editObject.Route.TravelType.TravelTypeName = editTicket.TravelType;
                 editObject.Route.PortFrom.PortName = editTicket.RouteFrom;
+                _log.LogInformation("endre rute fra " + editObject.Route.PortFrom.PortName + " til "+editTicket.RouteFrom);
                 editObject.Route.PortTo.PortName = editTicket.RouteTo;
                 editObject.Route.Departure = editTicket.Departure;
                 editObject.TicketDate = editTicket.TicketDate;
@@ -202,6 +203,7 @@ namespace WebAppOppg2.DAL
 
                 await _db.SaveChangesAsync();
             }
+
             catch (Exception e)
             {
                 _log.LogInformation(e.Message + "Feil i editTicket");

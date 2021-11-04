@@ -68,6 +68,7 @@ export class AdminEdit {
           this.skjema.patchValue({ routeID: ticket.routeID });
           this.skjema.patchValue({ travelType: ticket.travelType });
           this.skjema.patchValue({ routeTo: ticket.routeTo });
+          console.log("hentet routeTo som er: " + ticket.routeTo);
           this.skjema.patchValue({ routeFrom: ticket.routeFrom });
           this.skjema.patchValue({ departure: ticket.departure });
           this.skjema.patchValue({ ticketDate: ticket.ticketDate });
@@ -107,7 +108,9 @@ changeOneTicket(){
   changedTicket.routeID = Number(this.skjema.value.routeID);
   changedTicket.travelType = this.skjema.value.travelType;
   changedTicket.routeTo = this.skjema.value.routeTo;
+  console.log(this.skjema.value.routeTo);
   changedTicket.routeFrom = this.skjema.value.routeFrom;
+  console.log(this.skjema.value.routeFrom);
   changedTicket.departure = this.skjema.value.departure;
   changedTicket.ticketDate = this.skjema.value.ticketDate;
   changedTicket.price = this.skjema.value.price;
