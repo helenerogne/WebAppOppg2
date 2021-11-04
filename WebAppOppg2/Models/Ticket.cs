@@ -18,6 +18,7 @@ namespace WebAppOppg2.Models
         public int PassengerTypeID {get; set;}
         public string PassengerType { get; set; }
         public int RouteID { get; set; }
+        public int TravelTypeID { get; set; }
         public string TravelType { get; set; }
         public string RouteFrom { get; set; }
         public string RouteTo { get; set; }
@@ -47,8 +48,6 @@ namespace WebAppOppg2.Models
     {
         [Key]
         public int RouteID { get; set; }
-        public int TravelTypeID {get; set;}
-        public string TravelType { get; set; }
         public string PortFrom { get; set; }
         public string PortTo { get; set; }
         [RegularExpression(@"[0-9]{1,100}")]

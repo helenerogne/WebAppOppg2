@@ -65,14 +65,14 @@ namespace WebAppOppg2.DAL
 
                 //Route
 
-                var route1 = new Routes { PortFrom = port1, PortTo = port2, Departure = "10:00", RoutePrice = 100, TravelType = envei };
-                var route2 = new Routes { PortFrom = port3, PortTo = port5, Departure = "17:20", RoutePrice = 249, TravelType = retur };
-                var route3 = new Routes { PortFrom = port1, PortTo = port4, Departure = "10:00", RoutePrice = 149, TravelType = cruise };
-                var route4 = new Routes { PortFrom = port7, PortTo = port6, Departure = "14:15", RoutePrice = 199, TravelType = envei };
-                var route5 = new Routes { PortFrom = port1, PortTo = port7, Departure = "12:00", RoutePrice = 300, TravelType = envei };
-                var route6 = new Routes { PortFrom = port3, PortTo = port5, Departure = "18:00", RoutePrice = 249, TravelType = retur };
-                var route7 = new Routes { PortFrom = port4, PortTo = port1, Departure = "09:00", RoutePrice = 149, TravelType = retur };
-                var route8 = new Routes { PortFrom = port7, PortTo = port6, Departure = "08:30", RoutePrice = 499, TravelType = cruise };
+                var route1 = new Routes { PortFrom = port1, PortTo = port2, Departure = "10:00", RoutePrice = 100};
+                var route2 = new Routes { PortFrom = port3, PortTo = port5, Departure = "17:20", RoutePrice = 249};
+                var route3 = new Routes { PortFrom = port1, PortTo = port4, Departure = "10:00", RoutePrice = 149};
+                var route4 = new Routes { PortFrom = port7, PortTo = port6, Departure = "14:15", RoutePrice = 199};
+                var route5 = new Routes { PortFrom = port1, PortTo = port7, Departure = "12:00", RoutePrice = 300};
+                var route6 = new Routes { PortFrom = port3, PortTo = port5, Departure = "18:00", RoutePrice = 249};
+                var route7 = new Routes { PortFrom = port4, PortTo = port1, Departure = "09:00", RoutePrice = 149};
+                var route8 = new Routes { PortFrom = port7, PortTo = port6, Departure = "08:30", RoutePrice = 499};
 
                 contextTicket.Routes.Add(route1);
                 contextTicket.Routes.Add(route2);
@@ -101,14 +101,14 @@ namespace WebAppOppg2.DAL
 
                 //Tickets
 
-                var ticket1 = new Tickets{Passenger = passenger1, Route = route1, TicketDate = "10.11.2021"};
-                var ticket2 = new Tickets { Passenger = passenger4, Route = route4, TicketDate = "15.12.2021" };
-                var ticket3 = new Tickets { Passenger = passenger2, Route = route2, TicketDate = "08.11.2021" };
-                var ticket4 = new Tickets { Passenger = passenger3, Route = route3, TicketDate = "17.11.2022" };
-                var ticket5 = new Tickets{Passenger = passenger1, Route = route7, TicketDate = "10.03.2022"};
-                var ticket6 = new Tickets { Passenger = passenger5, Route = route1, TicketDate = "18.07.2021" };
-                var ticket7 = new Tickets { Passenger = passenger6, Route = route5, TicketDate = "08.11.2021" };
-                var ticket8 = new Tickets { Passenger = passenger4, Route = route8, TicketDate = "17.11.2022" };
+                var ticket1 = new Tickets{Passenger = passenger1, Route = route1, TravelType = envei, TicketDate = "10.11.2021"};
+                var ticket2 = new Tickets { Passenger = passenger4, Route = route4, TravelType = retur,TicketDate = "15.12.2021" };
+                var ticket3 = new Tickets { Passenger = passenger2, Route = route2, TravelType = envei,TicketDate = "08.11.2021" };
+                var ticket4 = new Tickets { Passenger = passenger3, Route = route3, TravelType = retur,TicketDate = "17.11.2022" };
+                var ticket5 = new Tickets{Passenger = passenger1, Route = route7, TravelType = cruise,TicketDate = "10.03.2022"};
+                var ticket6 = new Tickets { Passenger = passenger5, Route = route1, TravelType = envei,TicketDate = "18.07.2021" };
+                var ticket7 = new Tickets { Passenger = passenger6, Route = route5, TravelType = cruise,TicketDate = "08.11.2021" };
+                var ticket8 = new Tickets { Passenger = passenger4, Route = route8, TravelType = retur,TicketDate = "17.11.2022" };
 
                 contextTicket.Tickets.Add(ticket1);
                 contextTicket.Tickets.Add(ticket2);

@@ -89,6 +89,7 @@ saveTicket(){
   ticket.lastname = this.skjema.value.lastname;
   ticket.email = this.skjema.value.email;
   ticket.passengerTypeID = Number(this.skjema.value.passengerType);
+  ticket.travelTypeID = Number(this.skjema.value.travelType);
   ticket.routeID = Number(this.skjema.value.routeID);
   ticket.ticketDate = this.skjema.value.ticketDate;
 

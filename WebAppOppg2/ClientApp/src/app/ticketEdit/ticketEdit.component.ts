@@ -106,6 +106,7 @@ changeOneTicket(){
   changedTicket.email = this.skjema.value.email;
   changedTicket.passengerType = this.skjema.value.passengerType;
   changedTicket.routeID = Number(this.skjema.value.routeID);
+  changedTicket.travelTypeID = Number(this.skjema.value.travelTypeID);
   changedTicket.travelType = this.skjema.value.travelType;
   changedTicket.routeTo = this.skjema.value.routeTo;
   changedTicket.routeFrom = this.skjema.value.routeFrom;
