@@ -8,6 +8,10 @@ namespace WebAppOppg2.DAL
 {
     public interface ITicketRepository
     {
+        Task<bool> LogIn(Admin admin);
+        //Task<bool> Loggut();
+        Task<bool> EditAdmin(Admin editAdmin);
+
         Task<bool> SaveTicket(Ticket ticket);
         Task<bool> DeleteTicket(int ticketID);
         Task<bool> EditTicket(Ticket editTicket);
