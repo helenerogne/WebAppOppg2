@@ -6,22 +6,22 @@
 
           <div class="form-group">
               <label>Fornavn</label>
-              <input class="form-control" formControlName="firstname" />
+              <input class="form-control" disabled formControlName="firstname" />
           </div>
 
           <div class="form-group">
               <label>Etternavn</label>
-              <input class="form-control" formControlName="lastname" />
+              <input class="form-control" disabled formControlName="lastname" />
           </div>
 
           <div class="form-group">
               <label>Epost</label>
-              <input class="form-control" formControlName="email" />
+              <input class="form-control" disabled formControlName="email" />
           </div>
 
           <div class="form-group">
               <label>Reisende</label>
-              <input class="form-control" formControlName="passengerType" />
+              <input class="form-control" disabled formControlName="passengerType" />
           </div>
 
           <div class="form-group">
@@ -56,7 +56,6 @@
           <div class="form-group">
               <button type="submit" [disabled]="!skjema.valid" class="btn btn-primary">Endre</button>
               <button class="btn btn-default" routerLink="/ticketList">Tilbake</button>
-             
           </div>
       </form>
    </div>

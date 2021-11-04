@@ -4,6 +4,7 @@ export class Ticket {
   firstname: string;
   lastname: string;
   email: string;
+  passengerTypeID: number;
   passengerType: string;
   routeID: number;
   travelType: string;

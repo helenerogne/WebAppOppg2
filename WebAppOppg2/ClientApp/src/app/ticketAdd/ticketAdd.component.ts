@@ -85,20 +85,14 @@ getRoutes() {
 
 saveTicket(){
   const ticket = new Ticket();
-  ticket.passengerID = 10;
   ticket.firstname = this.skjema.value.firstname;
   ticket.lastname = this.skjema.value.lastname;
   ticket.email = this.skjema.value.email;
-  ticket.passengerType = this.skjema.value.passengerTypeName;
-  ticket.routeID = this.skjema.value.routeID;
-  ticket.travelType = this.skjema.value.travelTypeName;
-  ticket.routeTo = "Bergen"
-  ticket.routeFrom = "kristiansand"
-  ticket.departure = this.skjema.value.departure;
+  ticket.passengerTypeID = Number(this.skjema.value.passengerType);
+  ticket.routeID = Number(this.skjema.value.routeID);
   ticket.ticketDate = this.skjema.value.ticketDate;
-  ticket.price = this.skjema.value.price;
 
-  this.http.put("api/order/", ticket)
+  this.http.post("api/order/", ticket)
     .subscribe(
       retur => {
         this.router.navigate(['/ticketList']); 
@@ -106,6 +100,17 @@ saveTicket(){
       error => console.log(error)
      );
   }
+
+
+  /*
+  last inn allroutes
+  lag dropdown routs basert på allrouts
+  bruk onchange på traveltype-dropdown, price og departure
+  endre traveltype,options, price og departure basert på routeID
+
+  endre RouteID basert på travelType-options????
+  */
+
 }
 
 
