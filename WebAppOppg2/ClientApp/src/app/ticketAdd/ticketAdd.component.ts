@@ -18,15 +18,17 @@ export class ticketAdd {
   allPtypes: any[];
   allTtypes: any[];
   routes: any = [];
+  midRoute: any = {};
 
   validering = {
     id: [''],
     passengerID: [''],
     firstname: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
     lastname: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
-    email: [''],
+    email: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,30}")])],
     passengerType: [''],
     routeID: [''],
+    travelTypeID: [''],
     travelType: [''],
     routeFrom: [''],
     routeTo: [''],
@@ -40,10 +42,6 @@ export class ticketAdd {
   }
 
   ngOnInit() {
-    /*
-    this.route.params.subscribe(params => {
-      this.getTicket(params.id);
-    })*/
     this.getPtypes();
     this.getTtypes();
     this.getRoutes();
@@ -79,6 +77,18 @@ getRoutes() {
     );
 }
 
+getRoute(routeId) {
+  return new Promise(function(resolve, reject){
+    this.http.get("api/route/" + routeId)
+      .subscribe(
+        route => {
+          resolve(route);
+        },
+        error => reject(error)
+      );
+    }.bind(this));
+}
+
   onSubmit() {
     this.saveTicket();
   }
@@ -102,16 +112,12 @@ saveTicket(){
      );
   }
 
-
-  /*
-  last inn allroutes
-  lag dropdown routs basert på allrouts
-  bruk onchange på traveltype-dropdown, price og departure
-  endre traveltype,options, price og departure basert på routeID
-
-  endre RouteID basert på travelType-options????
-  */
-
+  async onRouteChange(){
+    let routeId = this.skjema.value.routeID;
+    this.midRoute  = await this.getRoute(routeId);
+    this.skjema.patchValue({departure: this.midRoute.departure});
+    this.skjema.patchValue({price: this.midRoute.routePrice});
+  } 
 }
 
 
