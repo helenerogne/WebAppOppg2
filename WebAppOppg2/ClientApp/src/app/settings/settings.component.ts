@@ -82,7 +82,7 @@ export class Settings {
       );
   };
 
-  //Add traveltype
+  //Traveltype add and edit
 
   addNewFieldTtype(){
     const blank = new TravelType();
@@ -122,7 +122,7 @@ export class Settings {
     }
 
 
-  //Add passengertype
+  //Passengertype add and edit
 
   addNewFieldPtype(){
     const blank = new PassengerType();
@@ -148,6 +148,20 @@ export class Settings {
       error => console.log(error)
      );
   }
+
+  changeOnePtype(){
+    const p = new PassengerType();
+    p.passengerTypeID = Number(this.skjema.value.passengerType.passengerTypeID);
+    p.passengerTypeName = this.skjema.value.passengerType.passengerTypeName;
+    p.discount = this.skjema.value.passengerType.discount;
+    this.http.put("api/passengerType/", p)
+      .subscribe(
+        retur => {
+          this.router.navigate(['/settings']); 
+        },
+        error => console.log(error)
+       );
+    }
 
   //Add Port
 
@@ -177,7 +191,7 @@ export class Settings {
 
 
 
-
+/*
 //Delete passengertype
 
   deleteOnePtype(id: number){
@@ -211,7 +225,6 @@ export class Settings {
       this.portForDeleting = port.portName;
       this.showModalandDelete(port.portID);
     }else{
-      console.log("port tilhører en rute");
     }
   }
 
@@ -231,6 +244,6 @@ export class Settings {
       }
       this.router.navigate(['/settings']);
     });
-  }
+  }*/
 
 }

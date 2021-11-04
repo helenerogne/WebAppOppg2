@@ -12,15 +12,11 @@ import { Admin } from "../Admin";
 
 export class AdminLoginComponent {
   LoginForm: FormGroup;
+  wrongLogin: any;
 
   validering = {
-    id: [""],
-    username: [
-      null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZæøåÆØÅ. \-]{2,20}")])
-    ],
-    password: [
-      null, Validators.compose([Validators.required, Validators.pattern("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{3,}$")])
-    ]
+    username: [''],
+    password: ['']
   }
 
   constructor(private http: HttpClient, private fb: FormBuilder,
@@ -29,17 +25,22 @@ export class AdminLoginComponent {
   }
 
   onSubmit() {
+    this.wrongLogin = false;
     this.logIn();
   }
 
   logIn() {
     const logIn = new Admin();
-
     logIn.username = this.LoginForm.value.username;
     logIn.Password = this.LoginForm.value.password;
-    this.http.post("api/admin", logIn)
-      .subscribe(retur => {
-        this.router.navigate(['/adminLogin.component.html']);
+    this.http.post("api/admin/", logIn)
+      .subscribe(isValidated => {
+        if(isValidated){
+          this.router.navigate(['/admin']);
+        }else{
+          this.wrongLogin = true;
+          //alert('Feil brukernavn eller passord')
+        }
       },
         error => console.log(error)
       );

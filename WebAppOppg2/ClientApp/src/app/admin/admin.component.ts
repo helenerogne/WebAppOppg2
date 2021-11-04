@@ -17,26 +17,5 @@ export class admin {
 
   ngOnInit() {
     this.loading = true;
-    this.getAllTickets();
   }
-
-  getAllTickets() { 
-    this.http.get<Ticket[]>("api/order")
-      .subscribe(tickets => {
-        this.allTickets = tickets;
-        this.loading = false;
-      },
-        error => console.log(error)
-      );
-  };
-
-  deleteOneTicket(id: number) {
-    this.http.delete("api/order/" + id)
-      .subscribe(retur => {
-        this.getAllTickets();
-        this.router.navigate(['/admin.component.html']);
-      },
-        error => console.log(error)
-      );
-  };
 }

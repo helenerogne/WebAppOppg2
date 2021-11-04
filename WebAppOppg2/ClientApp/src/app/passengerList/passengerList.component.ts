@@ -21,6 +21,7 @@ export class PassengerList {
   allTickets: Array<Ticket>;
   passengerForDeleting: string;
   passengerType: any;
+  passengerHadTickets: any;
 
   validering = {
     passengerID: [''],
@@ -46,6 +47,7 @@ export class PassengerList {
     this.loading = true;
     this.getAllPassengers();
     this.getAllPassengerTypes();
+    this.passengerHadTickets = true;
   }
 
 
@@ -111,9 +113,10 @@ export class PassengerList {
   checkTickets(id: number){
     let hasTickets = this.allTickets.find(x => x.passengerID === id);
     if(!hasTickets){
+      this.passengerHadTickets = true;
       this.deleteOnePassenger(id);
     }else{
-      console.log("passesjer har illett");
+      this.passengerHadTickets = false;
     }
   }
 

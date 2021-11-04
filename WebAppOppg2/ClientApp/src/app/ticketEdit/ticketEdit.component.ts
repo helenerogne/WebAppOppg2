@@ -15,11 +15,11 @@ import { TravelType } from '../TravelType';
 
 export class TicketEdit {
   allTickets: Array<Ticket>;
-  //allRoutes: Array<Route>;
   skjema: FormGroup;
   routes: any = [];
   allPtypes: any[];
   allTtypes: any[];
+  midRoute: any = {};
 
 
   validering = {
@@ -27,9 +27,10 @@ export class TicketEdit {
     passengerID: [''],
     firstname: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
     lastname: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
-    email: [''],
+    email: [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,30}")])],
     passengerType: [''],
     routeID: [''],
+    travelTypeID: [''],
     travelType: [''],
     routeFrom: [''],
     routeTo: [''],
@@ -59,7 +60,6 @@ export class TicketEdit {
     this.http.get<Ticket>("api/order/" + id)
       .subscribe(
         ticket => {
-          console.log(ticket + "Her er ticket");
           this.skjema.patchValue({ id: ticket.ticketID });
           this.skjema.patchValue({ passengerID: ticket.passengerID });
           this.skjema.patchValue({ firstname: ticket.firstname });
@@ -68,26 +68,39 @@ export class TicketEdit {
           this.skjema.patchValue({ passengerType: ticket.passengerType });
           this.skjema.patchValue({ routeID: ticket.routeID });
           this.skjema.patchValue({ travelType: ticket.travelType });
+          this.skjema.patchValue({ travelTypeID: ticket.travelTypeID });
           this.skjema.patchValue({ routeTo: ticket.routeTo });
           this.skjema.patchValue({ routeFrom: ticket.routeFrom });
           this.skjema.patchValue({ departure: ticket.departure });
           this.skjema.patchValue({ ticketDate: ticket.ticketDate });
           this.skjema.patchValue({ price: ticket.price });
-          console.log(ticket.routeID);
         },
         error => console.log(error)
     );
     }
  
-  getRoutes() {
-    this.http.get("api/route/")
-      .subscribe(
-        routes => {
-          this.routes = routes;
-      },
-      error => console.log(error)
-    );
+getRoutes() {
+  this.http.get("api/route/")
+    .subscribe(
+      routes => {
+        this.routes = routes;
+    },
+    error => console.log(error)
+  );
 }
+
+getRoute(routeId) {
+  return new Promise(function(resolve, reject){
+    this.http.get("api/route/" + routeId)
+      .subscribe(
+        route => {
+          resolve(route);
+        },
+        error => reject(error)
+      );
+    }.bind(this));
+}
+
 getTtypes() {
   this.http.get<TravelType[]>("api/travelType")
     .subscribe(travelTypes => {
@@ -123,19 +136,12 @@ changeOneTicket(){
      );
   }
 
-
-
-
-
-
-  /*
-  last inn allroutes
-  lag dropdown routs basert på allrouts
-  bruk onchange på traveltype-dropdown, price og departure
-  endre traveltype,options, price og departure basert på routeID
-
-  endre RouteID basert på travelType-options????
-  */
+  async onRouteChange(){
+    let routeId = this.skjema.value.routeID;
+    this.midRoute  = await this.getRoute(routeId);
+    this.skjema.patchValue({departure: this.midRoute.departure});
+    this.skjema.patchValue({price: this.midRoute.routePrice});
+  } 
 
 }
 
