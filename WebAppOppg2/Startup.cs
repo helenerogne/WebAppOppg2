@@ -49,8 +49,8 @@ namespace WebAppOppg2
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //loggerFactory.AddFile("Logs/Ticketlog.txt");
                 DBInit.Initialize(app);
+                loggerFactory.AddFile("Logs/Ticketlog.txt");
             }
             else
             {
