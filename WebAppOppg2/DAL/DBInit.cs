@@ -129,8 +129,8 @@ namespace WebAppOppg2.DAL
                 var adminUser = new AdminUser();
                 adminUser.Username = "Admin"; 
                 string password = "Admin"; 
-                byte[] salt = AdminRepository.makeSalt();
-                byte[] hash = AdminRepository.makeHash(password, salt);
+                byte[] salt = TicketRepository.makeSalt();
+                byte[] hash = TicketRepository.makeHash(password, salt);
                 adminUser.Password = hash;
                 adminUser.Salt = salt;
                 contextTicket.AdminUsers.Add(adminUser);

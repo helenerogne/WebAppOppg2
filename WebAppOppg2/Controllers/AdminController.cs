@@ -15,11 +15,11 @@ namespace WebAppOppg2.Controllers
     [Route("api/[controller]")]
     public class AdminController : ControllerBase
     {
-        private IAdminRepository _db;
+        private ITicketRepository _db;
         private ILogger<AdminController> _log;
         private const string _loggetInn = "_loggetInn";
 
-        public AdminController(IAdminRepository db, ILogger<AdminController> log)
+        public AdminController(ITicketRepository db, ILogger<AdminController> log)
         {
             _db = db;
             _log = log;
