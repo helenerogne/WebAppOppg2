@@ -30,10 +30,11 @@ namespace WebAppOppg2.RouteController
         [HttpPost]
         public async Task<ActionResult> SaveRoute(Route route)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Rute ikke lagret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.AddRoute(route);
@@ -51,10 +52,11 @@ namespace WebAppOppg2.RouteController
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOneRoute(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Rute ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 Route route = await _db.GetOneRoute(id);
@@ -72,10 +74,11 @@ namespace WebAppOppg2.RouteController
         [HttpGet]
         public async Task<ActionResult> GetAllRoutes()
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Ruter ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             List<Route> routes = await _db.GetAllRoutes();
             return Ok(routes);
         }
@@ -83,10 +86,11 @@ namespace WebAppOppg2.RouteController
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteRoute(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Rute ikke slettet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             bool returOK = await _db.DeleteRoute(id);
             if (!returOK)
             {
@@ -99,10 +103,11 @@ namespace WebAppOppg2.RouteController
         [HttpPut]
         public async Task<ActionResult> EditRoute(Route route)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Rute ikke endret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.EditRoute(route);

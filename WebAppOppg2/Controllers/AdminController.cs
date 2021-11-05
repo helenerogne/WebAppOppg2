@@ -29,6 +29,7 @@ namespace WebAppOppg2.Controllers
         [HttpPut]
         public async Task<ActionResult> EditAdmin(Admin admin)
         {
+            
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Admin ikke endret - status: ikke innlogget");
@@ -50,6 +51,7 @@ namespace WebAppOppg2.Controllers
         [HttpPost]
         public async Task<ActionResult> LogIn(Admin admin)
         {
+            
             if (ModelState.IsValid)
             {
                 bool returnOK = await _db.LogIn(admin);
