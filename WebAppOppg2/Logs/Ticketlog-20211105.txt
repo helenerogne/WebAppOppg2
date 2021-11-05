@@ -1,8 +1,0 @@
-2021-11-05T09:55:43.7821025+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
-2021-11-05T09:55:43.8088107+01:00  [INF] Hosting environment: "Development" (c3307c92)
-2021-11-05T09:55:43.8158234+01:00  [INF] Content root path: "C:\Users\maria\Documents\BA-anvendt-data\h21\ITPE3200-web\test-eks-del2\WebAppOppg2" (b5d60022)
-2021-11-05T09:56:13.7031264+01:00  [ERR] (node:22604) [DEP0111] DeprecationWarning: Access to process.binding('http_parser') is deprecated.
- (cfe97334)
-2021-11-05T09:56:13.7129609+01:00  [ERR] (Use `node --trace-deprecation ...` to show where the warning was created)
- (567f389e)
-2021-11-05T09:56:46.7731389+01:00 8000000b-0003-fe00-b63f-84710c7967bb [INF] Innloggingen feilet for bruker (13b46012)
