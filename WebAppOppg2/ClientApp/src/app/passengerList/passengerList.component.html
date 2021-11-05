@@ -1,5 +1,5 @@
 
-<div class="container list" style="display: flex;">
+<div class="container list container-passenger">
 
     <div *ngIf="loading">Laster passasjerer....</div>
     <div class="container" style="margin-right: 20px;">
@@ -63,7 +63,7 @@
                 <div class="form-group">
                     <div class="form-row">
                         <button type="submit" [disabled]="!skjema.valid" class="btn btn-primary">Registrer passasjer</button>
-                        <button class="btn btn-default" routerLink="/admin">Tilbake</button>
+                        <button class="btn btn-secondary" routerLink="/admin">Tilbake</button>
                     </div>
                 </div>
             </form>
