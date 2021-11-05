@@ -39,7 +39,6 @@ namespace WebAppOppg2.Models
     {
         [Key]
         public int TravelTypeID { get; set; }
-        [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}")]
         public string TravelTypeName { get; set; }
     }
 

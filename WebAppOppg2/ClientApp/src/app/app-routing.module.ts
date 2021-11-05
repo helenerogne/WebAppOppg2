@@ -8,6 +8,7 @@ import { TicketList } from './ticketList/ticketList.component';
 import { Settings } from './settings/settings.component';
 import { ticketAdd } from './ticketAdd/ticketAdd.component';
 import { passengerEdit } from './passengerEdit/passengerEdit.component';
+import { routeList } from './routeList/routeList.component';
 
 
 const appRoots: Routes = [
@@ -19,7 +20,8 @@ const appRoots: Routes = [
   { path: 'passengerList', component: PassengerList },
   {path: 'settings', component: Settings},
   {path: 'ticketAdd', component: ticketAdd},
-  {path: 'passengerEdit/:id', component: passengerEdit}
+  { path: 'passengerEdit/:id', component: passengerEdit },
+  { path: 'routeList', component: routeList}
 ]
 
 @NgModule({

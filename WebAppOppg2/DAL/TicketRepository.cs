@@ -21,23 +21,23 @@ namespace WebAppOppg2.DAL
             _db = ticketDB;
             _log = log;
         }
-
         public async Task<bool> LogIn(Admin admin)
         {
             try
             {
                 //hvis noe er feil, sjekk at adminuser reference er riktig
                 AdminUser funnetAdmin = await _db.AdminUsers.FirstOrDefaultAsync(b => b.Username == admin.Username);
-                //sjekk passordet
-                byte[] hash = makeHash(admin.Password, funnetAdmin.Salt);
-                bool ok = hash.SequenceEqual(funnetAdmin.Password);
-
-                if (ok)
+                if (funnetAdmin != null)
                 {
-                    return true;
+                    byte[] hash = makeHash(admin.Password, funnetAdmin.Salt);
+                    bool ok = hash.SequenceEqual(funnetAdmin.Password);
+                    if (ok)
+                    {
+                        return true;
+                    }
+                    return false;
                 }
                 return false;
-
             }
 
             catch (Exception e)
@@ -45,7 +45,6 @@ namespace WebAppOppg2.DAL
                 _log.LogInformation(e.Message);
                 return false;
             }
-
         }
 
         public static byte[] makeHash(string passord, byte[] salt)
@@ -119,35 +118,6 @@ namespace WebAppOppg2.DAL
                 newTicketRow.TicketDate = inTicket.TicketDate;
                 newTicketRow.TravelTypeID = inTicket.TravelTypeID;
                 newTicketRow.TravelType = await _db.TravelTypes.FindAsync(inTicket.TravelTypeID);
-
-
-                //CheckRoute
-                /*
-                var checkRoute = await _db.Routes.FindAsync(inTicket.RouteID);
-                if (checkRoute == null)
-                {
-                    var routeRow = new Route();
-                    routeRow.PortFrom = inTicket.RouteFrom;
-                    routeRow.PortTo = inTicket.RouteTo;
-                    routeRow.RoutePrice = inTicket.Price;
-                    routeRow.Departure = inTicket.Departure;
-
-                    var checkTravelType = await _db.TravelTypes.FindAsync(inTicket.TravelType);
-                    if(checkTravelType == null)
-                    {
-                        var travelTypeRow = new TravelTypes();
-                        travelTypeRow.TravelTypeName = inTicket.TravelType;
-                        newTicketRow.Route.TravelType = travelTypeRow;
-                    }
-                    else
-                    {
-                        newTicketRow.Route.TravelType = checkTravelType;
-                    }
-                }
-                else
-                {
-                    newTicketRow.Route = checkRoute;
-                }*/
 
                 _db.Tickets.Add(newTicketRow);
                 await _db.SaveChangesAsync();
@@ -378,8 +348,6 @@ namespace WebAppOppg2.DAL
                 newRouteRow.PortFrom.PortName = inRoute.PortFrom;
                 newRouteRow.PortTo.PortName = inRoute.PortTo;
 
-                //her kan vi velge om admin skal ha mulighet til å legge til nye ports når nye ruter opprettes!
-
                 /*
                 var checkPortFrom = await _db.Ports.FindAsync(inRoute.PortFrom);
                 if(checkPortFrom == null)
@@ -407,7 +375,7 @@ namespace WebAppOppg2.DAL
                 }
                 */
 
-                //samme med denne. skal admin kunne opprette nye billettyper når nye ruter opprettes
+             
 /*
                 var checkTraveltype = await _db.TravelTypes.FindAsync(inRoute.TravelType);
                 if(checkTraveltype == null)

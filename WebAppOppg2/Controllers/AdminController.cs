@@ -18,6 +18,7 @@ namespace WebAppOppg2.Controllers
         private ITicketRepository _db;
         private ILogger<AdminController> _log;
         private const string _loggetInn = "_loggetInn";
+        private const string _ikkeLoggetInn = "";
 
         public AdminController(ITicketRepository db, ILogger<AdminController> log)
         {
@@ -25,13 +26,12 @@ namespace WebAppOppg2.Controllers
             _log = log;
         }
 
-        //EditAdmin
         [HttpPut]
         public async Task<ActionResult> EditAdmin(Admin admin)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
-                return Unauthorized();
+                return Unauthorized("Admin ikke endret - status: ikke innlogget");
             }
             if (ModelState.IsValid)
             {
@@ -39,16 +39,14 @@ namespace WebAppOppg2.Controllers
                 if (!returOK)
                 {
                     _log.LogInformation("Endringen kunne ikke utføres");
-                    return NotFound();
+                    return NotFound("Admin ikke endret, feil i DB - status: innlogget");
                 }
-                return Ok();
+                return Ok("Admin endret - status: innlogget");
             }
             _log.LogInformation("Feil i inputvalidering");
-            return BadRequest();
+            return BadRequest("Admin ikke endret, feil ved inputvalideringen på server - status: innlogget");
         }
 
-        //LogIn
-        //ikke sikker på om det er riktig Http som benyttes  
         [HttpPost]
         public async Task<ActionResult> LogIn(Admin admin)
         {
@@ -58,19 +56,17 @@ namespace WebAppOppg2.Controllers
                 _log.LogInformation("inne i login på server");
                 if (!returnOK)
                 {
-                    _log.LogInformation("Innloggingen feilet for bruker" + admin.Username);
-                    HttpContext.Session.SetString(_loggetInn, "");
+                    _log.LogInformation("Innloggingen feilet for bruker");
+                    HttpContext.Session.SetString(_loggetInn, _ikkeLoggetInn);
                     return Ok(false);
                 }
-                HttpContext.Session.SetString(_loggetInn, "LoggetInn");
+                HttpContext.Session.SetString(_loggetInn, _loggetInn);
                 return Ok(true);
             }
-            _log.LogInformation("Feil i inputvalidering");
-            return BadRequest("Feil i inputvalidering på server");
+            _log.LogInformation("Feil ved inputvalideringen");
+            return BadRequest("Feil ved inputvalideringen på server - status: innlogget");
         }
 
-        //LogOut
-        //ikke sikker på om det er riktig Http benyttes  
         [HttpDelete]
         public void LogOut()
         {

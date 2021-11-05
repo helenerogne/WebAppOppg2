@@ -27,6 +27,7 @@ export class Settings {
   portForDeleting: string;
   passengertypeForDeleting: string;
   traveltypeForDeleting: string;
+  portHasRoutes: any;
 
   constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private modalService: NgbModal ) {
     this.skjema = new FormGroup({travelType: new FormGroup({travelTypeName: new FormControl(), travelTypeID: new FormControl()})})
@@ -42,6 +43,7 @@ export class Settings {
     this.saveP = true;
     this.saveT = true;
     this.savePort = true;
+    this.portHasRoutes = true;
   }
 
   getPtypes() {
@@ -57,8 +59,6 @@ export class Settings {
     this.http.get<TravelType[]>("api/travelType")
       .subscribe(travelTypes => {
         this.allTtypes = travelTypes;
-        console.log("ID = " + travelTypes[2].travelTypeID);
-        
       },
         error => console.log(error)
       );
@@ -82,7 +82,8 @@ export class Settings {
       );
   };
 
-  //Add traveltype
+
+  //Traveltype add and edit
 
   addNewFieldTtype(){
     const blank = new TravelType();
@@ -108,9 +109,9 @@ export class Settings {
      );
   }
 
-  changeOneTtype(){
+  changeOneTtype(travelTypeID){
     const t = new TravelType();
-    t.travelTypeID = Number(this.skjema.value.travelType.travelTypeID);
+    t.travelTypeID = Number(travelTypeID);
     t.travelTypeName = this.skjema.value.travelType.travelTypeName;
     this.http.put("api/travelType/", t)
       .subscribe(
@@ -122,7 +123,7 @@ export class Settings {
     }
 
 
-  //Add passengertype
+  //Passengertype add and edit
 
   addNewFieldPtype(){
     const blank = new PassengerType();
@@ -149,7 +150,22 @@ export class Settings {
      );
   }
 
-  //Add Port
+  changeOnePtype(passengerTypeID){
+    const t = new PassengerType();
+    t.passengerTypeID = Number(passengerTypeID);
+    t.passengerTypeName = this.skjema2.value.passengerType.passengerTypeName;
+    t.discount = Number(this.skjema2.value.passengerType.discount);
+    this.http.put("api/passengerType/", t)
+      .subscribe(
+        retur => {
+          this.router.navigate(['/settings']); 
+        },
+        error => console.log(error)
+       );
+    }
+
+
+  //Port add and edit
 
   addNewFieldPort(){
     const blank = new Port();
@@ -173,45 +189,46 @@ export class Settings {
      );
   }
 
+    changeOnePort(portID){
+      const t = new Port();
+      t.portID = Number(portID);
+      t.portName = this.skjema3.value.port.portName;
+      this.http.put("api/port/", t)
+        .subscribe(
+          retur => {
+            this.router.navigate(['/settings']); 
+          },
+          error => console.log(error)
+         );
+      }
 
 
-
-
-
-//Delete passengertype
-
-  deleteOnePtype(id: number){
-    this.http.delete("api/passengerType/"+id)
-    .subscribe(retur =>{
-      this.getPtypes();
-      this.router.navigate(['/settings.component.html']);
-    },
-    error => console.log(error)
-    );
-  }
-
-
-//Delete port
 
   deleteOnePort(port) {
     this.http.get<Port>("api/port/" + port)
     .subscribe(port => {
       this.portForDeleting = port.portName;
-      this.checkRoutes(port.portID);
+      this.checkRoutes(port);
     },
       error => console.log(error)
     );
   }
 
+  /*
+checkRoutes er ikke komplett. 
+Her trengs det en await på sjekken om havnen er en del av en rute. Slett vil derfor fungere avogtil,
+avhengig av responsitden fra server.
+*/
+
   checkRoutes(port){
     let isPortFrom = this.allRoutes.find(x => x.portFrom === port.portName);
     let isPortTo = this.allRoutes.find(x => x.portTo === port.portName);
-
     if(!isPortFrom || !isPortTo){
+      this.portHasRoutes = true;
       this.portForDeleting = port.portName;
       this.showModalandDelete(port.portID);
     }else{
-      console.log("port tilhører en rute");
+      this.portHasRoutes = false;
     }
   }
 
@@ -224,7 +241,6 @@ export class Settings {
         this.http.delete("api/port/" + id)
           .subscribe(retur => {
             this.getAllPorts();
-            this.router.navigate(['/settings.component.html']);
           },
             error => console.log(error)
           );
@@ -232,5 +248,4 @@ export class Settings {
       this.router.navigate(['/settings']);
     });
   }
-
 }
