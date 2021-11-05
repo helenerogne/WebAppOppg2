@@ -1,4 +1,8 @@
-
+<div class="container-fluid" style="align-self: center; width: 400px;">
+    <p class="alert alert-warning" [hidden]="portHasRoutes">
+        Denne havnen er en del av en aktiv rute! Slett ruten først.
+    </p>
+</div>
     <div class="container-fluid" style="background-color: #f5f5f5; display: inline-flex; justify-content: space-between;">
         <div style="margin-top: 10px;">
             <h5 style="text-align: center;">Reisetype</h5>
@@ -72,7 +76,7 @@
                                 <tr>
                                     <td style="display: contents"><input type="hidden" class="form-control" formControlName="portID" value="{{port.portID}}"/></td>
                                     <td><input type="text" class="form-control" formControlName="portName" value="{{port.portName}}"/></td>
-                                    <!--<td><button class="btn btn-danger" (click)="deleteOnePort(port.portID)">Slett</button></td>-->
+                                    <td><button class="btn btn-danger" (click)="deleteOnePort(port.portID)">Slett</button></td>
                                     <td><button class="btn btn-success" (click)="changeOnePort(port.portID)">Endre</button></td>
                                     <td><button *ngIf="port.isNew; else enabled" class="btn btn-primary" (click)="addNewPort()">Lagre</button></td>
                                 </tr>

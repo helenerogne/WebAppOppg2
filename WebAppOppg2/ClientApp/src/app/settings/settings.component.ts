@@ -27,6 +27,7 @@ export class Settings {
   portForDeleting: string;
   passengertypeForDeleting: string;
   traveltypeForDeleting: string;
+  portHasRoutes: any;
 
   constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private modalService: NgbModal ) {
     this.skjema = new FormGroup({travelType: new FormGroup({travelTypeName: new FormControl(), travelTypeID: new FormControl()})})
@@ -42,6 +43,7 @@ export class Settings {
     this.saveP = true;
     this.saveT = true;
     this.savePort = true;
+    this.portHasRoutes = true;
   }
 
   getPtypes() {
@@ -79,6 +81,7 @@ export class Settings {
         error => console.log(error)
       );
   };
+
 
   //Traveltype add and edit
 
@@ -162,7 +165,6 @@ export class Settings {
     }
 
 
-
   //Port add and edit
 
   addNewFieldPort(){
@@ -202,41 +204,31 @@ export class Settings {
 
 
 
-
-/*
-//Delete passengertype
-
-  deleteOnePtype(id: number){
-    this.http.delete("api/passengerType/"+id)
-    .subscribe(retur =>{
-      this.getPtypes();
-      this.router.navigate(['/settings.component.html']);
-    },
-    error => console.log(error)
-    );
-  }
-
-
-//Delete port
-
   deleteOnePort(port) {
     this.http.get<Port>("api/port/" + port)
     .subscribe(port => {
       this.portForDeleting = port.portName;
-      this.checkRoutes(port.portID);
+      this.checkRoutes(port);
     },
       error => console.log(error)
     );
   }
 
+  /*
+checkRoutes er ikke komplett. 
+Her trengs det en await på sjekken om havnen er en del av en rute. Slett vil derfor fungere avogtil,
+avhengig av responsitden fra server.
+*/
+
   checkRoutes(port){
     let isPortFrom = this.allRoutes.find(x => x.portFrom === port.portName);
     let isPortTo = this.allRoutes.find(x => x.portTo === port.portName);
-
     if(!isPortFrom || !isPortTo){
+      this.portHasRoutes = true;
       this.portForDeleting = port.portName;
       this.showModalandDelete(port.portID);
     }else{
+      this.portHasRoutes = false;
     }
   }
 
@@ -249,13 +241,11 @@ export class Settings {
         this.http.delete("api/port/" + id)
           .subscribe(retur => {
             this.getAllPorts();
-            this.router.navigate(['/settings.component.html']);
           },
             error => console.log(error)
           );
       }
       this.router.navigate(['/settings']);
     });
-  }*/
-
+  }
 }
