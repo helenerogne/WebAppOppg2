@@ -1,40 +1,15 @@
 <div class="container">
   <div class="col-md4">
+    <h2 style="margin-top: 20px;" >Reiser</h2>
     <div class="list">
-      <form [formGroup]="skjema" (ngSubmit)="onSubmit()">
-        <h5>Reise Liste</h5>
-
-        <div class="form-group">
-          <label>Reise fra</label>
-          <input class="form-control" disabled formControlName="portFrom" />
-        </div>
-
-        <div class="form-group">
-          <label>Reise til</label>
-          <input class="form-control" disabled formControlName="portTo" />
-        </div>
-
-        <div class="form-group">
-          <label>Avreisested</label>
-          <input class="form-control" disabled formControlName="departure" />
-
-        </div>
-
-        <div class="form-group">
-          <label>Dato</label>
-          <input class="form-control" disabled formControlName="ticketDate" />
-        </div>
-
-
-
         <div class="table-responsive list">
           <table class="table table-condensed">
             <thead>
               <tr>
-                <th>portFrom</th>
-                <th>portTo</th>
-                <th>departure</th>
-                <th>ticketDate</th>
+                <th>Avreisehavn</th>
+                <th>Ankomsthavn</th>
+                <th>Avreisetidspunkt</th>
+                <th>Pris</th>
                 <th></th>
                 <th></th>
               </tr>
@@ -44,13 +19,14 @@
                 <td>{{route.portFrom}}</td>
                 <td>{{route.portTo}}</td>
                 <td>{{route.departure}}</td>
-                <td>{{route.ticketDate}}</td>
-                <td><button class="btn btn-danger" routerLink="/saveRoute">Legg til</button></td>
+                <td>{{route.routePrice}}</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </form>
     </div>
   </div>
+</div>
+<div class="form-row">
+  <button class="btn btn-default" routerLink="/admin">Tilbake</button>
 </div>
