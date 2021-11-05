@@ -1,13 +1,11 @@
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebAppOppg2.DAL;
 using WebAppOppg2.Models;
-using WebAppOppg2.OrderController; // Skal denne bare være Controllers?
+using WebAppOppg2.OrderController;
 using Xunit;
 using Microsoft.Extensions.Logging;
-using WebAppOppg2.Controllers;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +14,10 @@ namespace UnitTestProject
 {
     public class OrderControllerTest
     {
-        private const string loggedIn = "loggedIn";
-        private const string notLoggedIn = "notLoggedIn";
+        // Sett på Canvas-modul om enhetstesting.
+
+        private const string _loggetInn = "loggetInn";
+        private const string _ikkeLoggetInn = "";
 
         private readonly Mock<ITicketRepository> mockRep = new Mock<ITicketRepository>();
         private readonly Mock<ILogger<OrderController>> mockLog = new Mock<ILogger<OrderController>>();
@@ -31,7 +31,7 @@ namespace UnitTestProject
             // Arrange
             mockRep.Setup(o => o.SaveTicket(It.IsAny<Ticket>())).ReturnsAsync(true);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -49,7 +49,7 @@ namespace UnitTestProject
             // Arrange
             mockRep.Setup(o => o.SaveTicket(It.IsAny<Ticket>())).ReturnsAsync(false);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -68,7 +68,7 @@ namespace UnitTestProject
             mockRep.Setup(o => o.SaveTicket(It.IsAny<Ticket>())).ReturnsAsync(true);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
             orderController.ModelState.AddModelError("Firstname", "Feil ved inputvalideringen på server");
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -80,15 +80,13 @@ namespace UnitTestProject
             Assert.Equal("Billett ikke lagret, feil ved inputvalideringen på server - status: innlogget", result.Value);
         }
 
-        // Forvirret av denne... Tror den må justeres
-        // SaveTicketError_LoginNone
         [Fact]
         public async Task SaveTicket_LoginNone()
         {
             // Arrange
             mockRep.Setup(o => o.SaveTicket(It.IsAny<Ticket>())).ReturnsAsync(true);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = notLoggedIn;
+            mockSession[_loggetInn] = _ikkeLoggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -116,14 +114,14 @@ namespace UnitTestProject
                 TravelType = "Tur/Retur", // "Tur/Retur", TravelTypeID = 2
                 RouteFrom = "Bergen", // Bergen, PortID = 1
                 RouteTo = "Hirtshals", // Hirtshals, PortID = 2
-                Departure = "11:00", // ??
-                TicketDate = "11-11-21", // ??
+                Departure = "11:00",
+                TicketDate = "11-11-21",
                 Price = 150
             };
 
             mockRep.Setup(o => o.GetOne(It.IsAny<int>())).ReturnsAsync(ticket1);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -141,7 +139,7 @@ namespace UnitTestProject
             // Assert
             mockRep.Setup(o => o.GetOne(It.IsAny<int>())).ReturnsAsync(() => null);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -153,16 +151,13 @@ namespace UnitTestProject
             Assert.Equal("Billett ikke hentet, feil i DB - status: innlogget", result.Value);
         }
 
-
-        // Forvirret av denne... Tror den må justeres
-        // GetOneError_LoginNone
         [Fact]
         public async Task GetOne_LoginNone()
         {
             // Assert
             mockRep.Setup(o => o.GetOne(It.IsAny<int>())).ReturnsAsync(() => null);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = notLoggedIn;
+            mockSession[_loggetInn] = _ikkeLoggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -190,8 +185,8 @@ namespace UnitTestProject
                 TravelType = "Tur/Retur", // "Tur/Retur", TravelTypeID = 2
                 RouteFrom = "Bergen", // Bergen, PortID = 1
                 RouteTo = "Hirtshals", // Hirtshals, PortID = 2
-                Departure = "11:00", // ??
-                TicketDate = "11-11-21", // ??
+                Departure = "11:00",
+                TicketDate = "11-11-21",
                 Price = 150
             };
             var ticket2 = new Ticket
@@ -206,8 +201,8 @@ namespace UnitTestProject
                 TravelType = "Envei", // "Envei", TravelTypeID = 1
                 RouteFrom = "Langesund", // Langesund, PortID = 3
                 RouteTo = "Stavanger", // Stavanger, PortID = 5
-                Departure = "18:30", // ??
-                TicketDate = "28-01-22", // ??
+                Departure = "18:30",
+                TicketDate = "28-01-22",
                 Price = 150
             };
             var ticket3 = new Ticket
@@ -222,8 +217,8 @@ namespace UnitTestProject
                 TravelType = "Cruise", // "Cruise", TravelTypeID = 3
                 RouteFrom = "Hirtshals", // Hirtshals, PortID = 2
                 RouteTo = "Hirtshals", // Hirtshals, PortID = 2
-                Departure = "09:00", // ??
-                TicketDate = "03-12-21", // ??
+                Departure = "09:00",
+                TicketDate = "03-12-21",
                 Price = 150
             };
 
@@ -234,7 +229,7 @@ namespace UnitTestProject
 
             mockRep.Setup(o => o.GetAll()).ReturnsAsync(orderList);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -253,7 +248,7 @@ namespace UnitTestProject
             var orderList = new List<Ticket>();
             mockRep.Setup(o => o.GetAll()).ReturnsAsync(() => null);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -265,15 +260,13 @@ namespace UnitTestProject
             Assert.Null(result.Value);
         }
 
-        // Forvirret av denne... Tror den må justeres
-        // GetOneError_LoginNone
         [Fact]
         public async Task GetAll_LoginNone()
         {
             // Arrange
             mockRep.Setup(o => o.GetAll()).ReturnsAsync(It.IsAny<List<Ticket>>());
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = notLoggedIn;
+            mockSession[_loggetInn] = _ikkeLoggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -291,7 +284,7 @@ namespace UnitTestProject
             // Assert
             mockRep.Setup(o => o.DeleteTicket(It.IsAny<int>())).ReturnsAsync(true);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -309,7 +302,7 @@ namespace UnitTestProject
             // Assert
             mockRep.Setup(o => o.DeleteTicket(It.IsAny<int>())).ReturnsAsync(false);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -321,15 +314,13 @@ namespace UnitTestProject
             Assert.Equal("Billett ikke slettet, feil i DB - status: innlogget", result.Value);
         }
 
-        // Forvirret av denne... Tror den må justeres
-        // DeleteError_LoginNone
         [Fact]
         public async Task DeleteTicket_LoginNone()
         {
             // Assert
             mockRep.Setup(o => o.DeleteTicket(It.IsAny<int>())).ReturnsAsync(true);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _ikkeLoggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -347,7 +338,7 @@ namespace UnitTestProject
             // Arrange
             mockRep.Setup(o => o.EditTicket(It.IsAny<Ticket>())).ReturnsAsync(true);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -366,7 +357,7 @@ namespace UnitTestProject
             // Arrange
             mockRep.Setup(o => o.EditTicket(It.IsAny<Ticket>())).ReturnsAsync(false);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -385,7 +376,7 @@ namespace UnitTestProject
             mockRep.Setup(o => o.EditTicket(It.IsAny<Ticket>())).ReturnsAsync(true);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
             orderController.ModelState.AddModelError("Firstname", "Feil ved inputvalideringen på server");
-            mockSession[loggedIn] = loggedIn;
+            mockSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -397,15 +388,13 @@ namespace UnitTestProject
             Assert.Equal("Billett ikke endret, feil ved inputvalideringen på server - status: innlogget", result.Value);
         }
 
-        // Forvirret av denne... Tror den må justeres
-        // EditError_LoginNone
         [Fact]
         public async Task EditTicket_LoginNone()
         {
             // Arrange
             mockRep.Setup(o => o.EditTicket(It.IsAny<Ticket>())).ReturnsAsync(true);
             var orderController = new OrderController(mockRep.Object, mockLog.Object);
-            mockSession[loggedIn] = notLoggedIn;
+            mockSession[_loggetInn] = _ikkeLoggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockSession);
             orderController.ControllerContext.HttpContext = mockHttpContext.Object;
 

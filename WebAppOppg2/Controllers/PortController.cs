@@ -12,7 +12,7 @@ namespace WebAppOppg2.PortController
 {
     [ApiController]
 
-    [Route ("api/[controller]")] 
+    [Route("api/[controller]")]
 
     public class PortController : ControllerBase
     {
@@ -27,46 +27,41 @@ namespace WebAppOppg2.PortController
             _log = log;
         }
 
-        //SaveTicket
         [HttpPost]
         public async Task<ActionResult> SavePort(Port port)
         {
-            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
-                return Unauthorized();
-            }*/
+                return Unauthorized("Havn ikke lagret - status: ikke innlogget");
+            }
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.AddPort(port);
                 if (!returOK)
                 {
-                    _log.LogInformation("port kunne ikke lagres!");
-                    return BadRequest("");
+                    _log.LogInformation("Havn kunne ikke lagres!");
+                    return BadRequest("Havn ikke lagret, feil i DB - status: innlogget");
                 }
-                return Ok("");
+                return Ok("Havn lagret - status: innlogget");
             }
             _log.LogInformation("Feil i inputvalidering");
-            return BadRequest("");
+            return BadRequest("Havn ikke lagret, feil ved inputvalideringen på server - status: innlogget");
         }
 
-
-        //GetOne
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOnePort(int id)
         {
-            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
-                return Unauthorized();
-            }*/
+                return Unauthorized("Havn ikke hentet, feil i DB - status: ikke innlogget");
+            }
             if (ModelState.IsValid)
             {
                 Port port = await _db.GetOnePort(id);
                 if (port == null)
                 {
                     _log.LogInformation("Fant ikke port");
-                    return NotFound();
+                    return NotFound("Havn ikke hentet, feil i DB - status: innlogget");
                 }
                 return Ok(port);
             }
@@ -74,55 +69,53 @@ namespace WebAppOppg2.PortController
             return BadRequest();
         }
 
-        //GetALl
         [HttpGet]
         public async Task<ActionResult> GetAllPorts()
         {
-            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
-                return Unauthorized();
+                return Unauthorized("Havner ikke hentet, feil i DB - status: ikke innlogget");
             }
-            */
             List<Port> ports = await _db.GetAllPorts();
             return Ok(ports);
         }
 
-        //DeleteTicket
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePort(int id)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized("Havn ikke slettet, feil i DB - status: ikke innlogget");
+            }
             bool returOK = await _db.DeletePort(id);
             if (!returOK)
             {
                 _log.LogInformation("Sletting av port ble ikke utført");
-                return NotFound();
+                return NotFound("Havn ikke slettet, feil i DB - status: innlogget");
             }
-            return Ok();
+            return Ok("Havn slettet - status: innlogget");
 
         }
 
-        //EditTicket
         [HttpPut]
         public async Task<ActionResult> EditPort(Port port)
         {
-            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
-                return Unauthorized();
-            }*/
+                return Unauthorized("Havn ikke endret - status: ikke innlogget");
+            }
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.EditPort(port);
                 if (!returOK)
                 {
                     _log.LogInformation("Endringen kunne ikke utføres");
-                    return NotFound();
+                    return NotFound("Havn ikke endret, feil i DB - status: innlogget");
                 }
-                return Ok();
+                return Ok("Havn endret - status: innlogget");
             }
             _log.LogInformation("Feil i inputvalidering");
-            return BadRequest();
+            return BadRequest("Havn ikke endret, feil ved inputvalideringen på server - status: innlogget");
         }
     }
 }
