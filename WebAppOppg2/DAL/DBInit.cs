@@ -69,10 +69,10 @@ namespace WebAppOppg2.DAL
                 var route2 = new Routes { PortFrom = port3, PortTo = port5, Departure = "17:20", RoutePrice = 249};
                 var route3 = new Routes { PortFrom = port1, PortTo = port4, Departure = "10:00", RoutePrice = 149};
                 var route4 = new Routes { PortFrom = port7, PortTo = port6, Departure = "14:15", RoutePrice = 199};
-                var route5 = new Routes { PortFrom = port1, PortTo = port7, Departure = "12:00", RoutePrice = 300};
+                var route5 = new Routes { PortFrom = port2, PortTo = port7, Departure = "12:00", RoutePrice = 300};
                 var route6 = new Routes { PortFrom = port3, PortTo = port5, Departure = "18:00", RoutePrice = 249};
                 var route7 = new Routes { PortFrom = port4, PortTo = port1, Departure = "09:00", RoutePrice = 149};
-                var route8 = new Routes { PortFrom = port7, PortTo = port6, Departure = "08:30", RoutePrice = 499};
+                var route8 = new Routes { PortFrom = port4, PortTo = port6, Departure = "08:30", RoutePrice = 499};
 
                 contextTicket.Routes.Add(route1);
                 contextTicket.Routes.Add(route2);
@@ -89,7 +89,7 @@ namespace WebAppOppg2.DAL
                 var passenger2 = new Passengers{Firstname = "Lise",Lastname = "Persen",Email = "lise@persen.com", PassengerTypeID = 2};
                 var passenger3 = new Passengers { Firstname = "Amir", Lastname = "Noor", Email = "amir@noor.com", PassengerTypeID = 3 };
                 var passenger4 = new Passengers { Firstname = "Bruce", Lastname = "Wayne", Email = "bat@man.com", PassengerTypeID = 4 };
-                var passenger5 = new Passengers { Firstname = "Kari", Lastname = "Tråd", Email = "kari@tråd.com", PassengerTypeID = 2 };
+                var passenger5 = new Passengers { Firstname = "Kari", Lastname = "Gunnersen", Email = "kari@gunnersen.com", PassengerTypeID = 2 };
                 var passenger6 = new Passengers { Firstname = "Peter", Lastname = "Parker", Email = "spider@man.com", PassengerTypeID = 3 };
 
                 contextTicket.Passengers.Add(passenger1);
