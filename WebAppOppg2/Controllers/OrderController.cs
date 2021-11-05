@@ -31,10 +31,11 @@ namespace WebAppOppg2.OrderController
         [HttpPost]
         public async Task<ActionResult> SaveTicket(Ticket ticket)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Billett ikke lagret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.SaveTicket(ticket);
@@ -54,10 +55,11 @@ namespace WebAppOppg2.OrderController
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOne(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Billett ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 Ticket ticket = await _db.GetOne(id);
@@ -76,10 +78,11 @@ namespace WebAppOppg2.OrderController
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Billetter ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             List<Ticket> tickets = await _db.GetAll();
             return Ok(tickets);
         }
@@ -88,10 +91,11 @@ namespace WebAppOppg2.OrderController
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTicket(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Billett ikke slettet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             bool returOK = await _db.DeleteTicket(id);
             if (!returOK)
             {
@@ -106,10 +110,11 @@ namespace WebAppOppg2.OrderController
         [HttpPut]
         public async Task<ActionResult> EditTicket(Ticket ticket)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Billett ikke endret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.EditTicket(ticket);

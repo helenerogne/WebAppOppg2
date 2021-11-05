@@ -3,7 +3,7 @@
         <h1 class="fancy" style="padding-top:1em; padding-left: 5em;">Innlogging</h1>
         <div style="padding-top:2em;padding-bottom:2em">
             <div *ngIf="loading">Laster siden....</div>
-            <form [formGroup]="LoginForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="LoginForm">
                 <fieldset class="form-group">
                     <legend class="sr-only">Innloggingsskjema</legend>
 
@@ -23,19 +23,19 @@
                         <div class="col-md-3">
                             <input type="password" id="password" class="form-control" formControlName="password" />
                         </div>
-                       
+
                     </div>
 
                     <div class="form-row" style="padding-bottom:1em;padding-left:6em">
-                        <button type="submit" class="btn btn-primary btn-custom" [disabled]="!LoginForm.invalid" routerLink="/admin">Logg inn</button>
+                        <button class="btn btn-primary btn-custom" (click)="onSubmit()">Logg inn</button>
                     </div>
                 </fieldset>
             </form>
         </div>
-      <div class="container-fluid" style="align-self: center; width: 400px;">
+</div>
+<div class="container-fluid" style="align-self: center; width: 400px;">
     <p class="alert alert-danger" [hidden]="!wrongLogin">
         Brukernavn eller passord er feil!
     </p>
 </div>
-    </div>
 

@@ -30,10 +30,11 @@ namespace WebAppOppg2.PassengerController
         [HttpPost]
         public async Task<ActionResult> SavePassenger(Passenger passenger)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Passasjer ikke lagret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.AddPassenger(passenger);
@@ -51,10 +52,11 @@ namespace WebAppOppg2.PassengerController
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOnePassenger(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Passasjer ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 Passenger passenger = await _db.GetOnePassenger(id);
@@ -72,10 +74,11 @@ namespace WebAppOppg2.PassengerController
         [HttpGet]
         public async Task<ActionResult> GetAllPassengers()
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Passasjerer ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             List<Passenger> passengers = await _db.GetAllPassengers();
             return Ok(passengers);
         }
@@ -83,10 +86,11 @@ namespace WebAppOppg2.PassengerController
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePassenger(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Passasjer ikke slettet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             bool returOK = await _db.DeletePassenger(id);
             if (!returOK)
             {
@@ -99,10 +103,11 @@ namespace WebAppOppg2.PassengerController
         [HttpPut]
         public async Task<ActionResult> EditPassenger(Passenger passenger)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Passasjer ikke endret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.EditPassenger(passenger);

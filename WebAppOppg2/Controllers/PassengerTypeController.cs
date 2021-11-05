@@ -30,10 +30,11 @@ namespace WebAppOppg2.PassengerTypeController
         [HttpPost]
         public async Task<ActionResult> SavePassenger(PassengerType passengerType)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Passasjertype ikke lagret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.AddPassengerType(passengerType);
@@ -51,10 +52,11 @@ namespace WebAppOppg2.PassengerTypeController
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOnePassengerType(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Passasjertype ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 PassengerType passengerType = await _db.GetOnePassengerType(id);
@@ -72,10 +74,11 @@ namespace WebAppOppg2.PassengerTypeController
         [HttpGet]
         public async Task<ActionResult> GetAllPassengerTypes()
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Passasjertyper ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             List<PassengerType> passengerTypes = await _db.GetAllPassengerTypes();
             return Ok(passengerTypes);
         }
@@ -83,10 +86,11 @@ namespace WebAppOppg2.PassengerTypeController
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePassengerType(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Passasjertype ikke slettet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             bool returOK = await _db.DeletePassengerType(id);
             if (!returOK)
             {
@@ -99,10 +103,11 @@ namespace WebAppOppg2.PassengerTypeController
         [HttpPut]
         public async Task<ActionResult> EditPassengerType(PassengerType passengerType)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Passasjertype ikke endret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.EditPassengerType(passengerType);

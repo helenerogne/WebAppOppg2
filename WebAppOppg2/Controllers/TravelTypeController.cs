@@ -30,10 +30,11 @@ namespace WebAppOppg2.TravelTypeController
         [HttpPost]
         public async Task<ActionResult> SaveTravelType(TravelType travelType)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Reisetype ikke lagret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.AddTravelType(travelType);
@@ -51,10 +52,11 @@ namespace WebAppOppg2.TravelTypeController
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOneTravelType(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Reisetype ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 TravelType travelType = await _db.GetOneTravelType(id);
@@ -72,10 +74,11 @@ namespace WebAppOppg2.TravelTypeController
         [HttpGet]
         public async Task<ActionResult> GetAllTravelTypes()
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Reisetype ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             List<TravelType> travelTypes = await _db.GetAllTravelTypes();
             return Ok(travelTypes);
         }
@@ -83,10 +86,11 @@ namespace WebAppOppg2.TravelTypeController
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTravelType(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Reisetype ikke slettet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             bool returOK = await _db.DeleteTravelType(id);
             if (!returOK)
             {
@@ -100,10 +104,11 @@ namespace WebAppOppg2.TravelTypeController
         [HttpPut]
         public async Task<ActionResult> EditTravelType(TravelType travelType)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Reisetype ikke endret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.EditTravelType(travelType);

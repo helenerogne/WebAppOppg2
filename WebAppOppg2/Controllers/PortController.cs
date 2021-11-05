@@ -30,10 +30,11 @@ namespace WebAppOppg2.PortController
         [HttpPost]
         public async Task<ActionResult> SavePort(Port port)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Havn ikke lagret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.AddPort(port);
@@ -51,10 +52,11 @@ namespace WebAppOppg2.PortController
         [HttpGet("{id}")]
         public async Task<ActionResult> GetOnePort(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Havn ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 Port port = await _db.GetOnePort(id);
@@ -72,10 +74,11 @@ namespace WebAppOppg2.PortController
         [HttpGet]
         public async Task<ActionResult> GetAllPorts()
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Havner ikke hentet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             List<Port> ports = await _db.GetAllPorts();
             return Ok(ports);
         }
@@ -83,10 +86,11 @@ namespace WebAppOppg2.PortController
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePort(int id)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Havn ikke slettet, feil i DB - status: ikke innlogget");
-            }
+            }*/
             bool returOK = await _db.DeletePort(id);
             if (!returOK)
             {
@@ -100,10 +104,11 @@ namespace WebAppOppg2.PortController
         [HttpPut]
         public async Task<ActionResult> EditPort(Port port)
         {
+            /*
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized("Havn ikke endret - status: ikke innlogget");
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 bool returOK = await _db.EditPort(port);
