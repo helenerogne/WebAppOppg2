@@ -53,6 +53,7 @@ namespace WebAppOppg2.Controllers
             if (ModelState.IsValid)
             {
                 bool returnOK = await _db.LogIn(admin);
+                _log.LogInformation("inne i login på server");
                 if (!returnOK)
                 {
                     _log.LogInformation("Innloggingen feilet for bruker");

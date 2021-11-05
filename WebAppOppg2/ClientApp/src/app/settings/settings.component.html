@@ -1,93 +1,34 @@
-<div class="container-fluid" style="align-self: center; width: 400px;">
-    <p class="alert alert-warning" [hidden]="portHasRoutes">
-        Denne havnen er en del av en aktiv rute! Slett ruten først.
-    </p>
-</div>
-    <div class="container-fluid" style="background-color: #f5f5f5; display: inline-flex; justify-content: space-between;">
-        <div style="margin-top: 10px;">
-            <h5 style="text-align: center;">Reisetype</h5>
-            <div >
-                
-                <form [formGroup]="skjema">
-                    <div formGroupName="travelType">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Navn</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngFor="let travelType of allTtypes">
-                                <tr>
-                                    <td style="display: contents"><input hidden="true" class="form-control" formControlName="travelTypeID" value="{{travelType.travelTypeID}}"/></td>
-                                    <td><input type="text" class="form-control" formControlName="travelTypeName" value="{{travelType.travelTypeName}}"/></td>
-                                    <!--<td><button class="btn btn-danger" (click)="deleteOneTtype(travelType.travelTypeID)">Slett</button></td>-->
-                                    <td><button class="btn btn-success" (click)="changeOneTtype(travelType.travelTypeID)">Endre</button></td>
-                                    <td><button *ngIf="travelType.isNew; else enabled" class="btn btn-primary" (click)="addNewTraveltype()">Lagre</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
-                <button *ngIf="saveT; else enabled" class="btn btn-primary" (click)="addNewFieldTtype()">Legg til</button>
-            </div>
-        </div>
 
-        <div style="margin-top: 10px;">
-            <h5 style="text-align: center;">Kundetype</h5>
-            <div >
-                <form [formGroup]="skjema2">
-                    <div formGroupName="passengerType">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Navn</th>
-                                    <th>Rabatt i prosent</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngFor="let passengerType of allPtypes">
-                                <tr>
-                                    <td style="display: contents"><input type="hidden" class="form-control" formControlName="passengerTypeID" value="{{passengerType.passengerTypeID}}"/></td>
-                                    <td><input type="text" class="form-control" formControlName="passengerTypeName" value="{{passengerType.passengerTypeName}}"/></td>
-                                    <td><input type="text" class="form-control" formControlName="discount" value="{{passengerType.discount}}"/></td>
-                                    <!--<td><button class="btn btn-danger" (click)="deleteOnePtype(passengerType.passengerTypeID)">Slett</button></td>-->
-                                    <td><button class="btn btn-success" (click)="changeOnePtype(passengerType.passengerTypeID)">Endre</button></td>
-                                    <td><button *ngIf="passengerType.isNew; else enabled" class="btn btn-primary" (click)="addNewPassengertype()">Lagre</button></td>
-                                </tr>
-                            </tbody>
-                     
-                        </table>
-                    </div>
-                </form>
-                <button *ngIf="saveP; else enabled" class="btn btn-primary" (click)="addNewFieldPtype()">Legg til</button>
-            </div>
-        </div>
-        <div style="margin-top: 10px; background-color: #f5f5f5;">
-            <h5 style="text-align: center;">Havn</h5>
-            <div >
-                <form [formGroup]="skjema3">
-                    <div formGroupName="port">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Navn</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngFor="let port of allPorts">
-                                <tr>
-                                    <td style="display: contents"><input type="hidden" class="form-control" formControlName="portID" value="{{port.portID}}"/></td>
-                                    <td><input type="text" class="form-control" formControlName="portName" value="{{port.portName}}"/></td>
-                                    <td><button class="btn btn-danger" (click)="deleteOnePort(port.portID)">Slett</button></td>
-                                    <td><button class="btn btn-success" (click)="changeOnePort(port.portID)">Endre</button></td>
-                                    <td><button *ngIf="port.isNew; else enabled" class="btn btn-primary" (click)="addNewPort()">Lagre</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
-                <button *ngIf="savePort; else enabled" class="btn btn-primary" (click)="addNewFieldPort()">Legg til</button>
-            </div>
         </div>
     </div>
+    <div style="margin-top: 10px;">
+        <h5 style="text-align: center; padding-top:25px; padding-bottom: 25px">Kundetype</h5>
+        <div>
+            <form [formGroup]="skjema2">
+                <div formGroupName="passengerType">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Rabatt</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let passengerType of allPtypes">
+                            <tr>
+                                <td style="display: contents"><input type="hidden" class="form-control" formControlName="passengerTypeID" value="{{passengerType.passengerTypeID}}" /></td>
+                                <td><input type="text" class="form-control" formControlName="passengerTypeName" value="{{passengerType.passengerTypeName}}" /></td>
+                                <td><input type="text" class="form-control" formControlName="discount" value="{{passengerType.discount}}" /></td>
+                                <td><button class="btn btn-danger" (click)="deleteOnePtype(passengerType.passengerTypeID)">Slett</button></td>
+                                <td><button *ngIf="passengerType.isNew; else enabled" class="btn btn-primary" (click)="addNewPassengertype()">Lagre</button></td>
+                            </tr>
+                        </tbody>
+
+
+            </div>
+        </form>
+        <button *ngIf="saveT; else enabled" class="btn btn-primary btn-add" (click)="addNewFieldTtype()">Legg til</button>
+    </div>
+</div>
 
     <div style="text-align: center; margin-top: 20px">
         <button class="btn btn-primary" routerLink="/admin">Tilbake</button>
