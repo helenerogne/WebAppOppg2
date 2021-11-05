@@ -1,15 +1,11 @@
 
 
 <div class="container list container-passenger">
-
-
     <div style="align-self: center; width: 400px;">
         <p class="alert alert-warning" [hidden]="passengerHadTickets">
             Denne passasjeren har registrerte billetter! Slett billettene først.
         </p>
     </div>
-<div class="container list" style="display: flex;">
-
     <div *ngIf="loading">Laster passasjerer....</div>
     <div class="container" style="margin-right: 20px;">
     <h3>Passasjerer</h3>
