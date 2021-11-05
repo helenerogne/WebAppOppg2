@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Http;
 
 /*
  Kode hentet fra Canvas-modul "Enhetstest av KundeApp-logginn løsning" (i faget ITPE3200-1 21H).
- 
- Mocker selve sesjonshåndteringen ved hjelp av denne klassen her.
  */
 
 namespace UnitTestProject
@@ -21,31 +19,6 @@ namespace UnitTestProject
         {
             get { return sessionStorage[name]; }
             set { sessionStorage[name] = value; }
-        }
-        public string Id => throw new NotImplementedException();
-
-        public bool IsAvailable => throw new NotImplementedException();
-
-        public IEnumerable<string> Keys => throw new NotImplementedException();
-
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task CommitAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task LoadAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(string key)
-        {
-            throw new NotImplementedException();
         }
 
         void ISession.Set(string key, byte[] value)
@@ -65,6 +38,43 @@ namespace UnitTestProject
                 value = null;
                 return false;
             }
+        }
+
+        // de underligggende metodene er ikke nødvendige for mocking 
+
+        IEnumerable<string> ISession.Keys
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        string ISession.Id
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        bool ISession.IsAvailable
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        void ISession.Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        void ISession.Remove(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ISession.CommitAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ISession.LoadAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }
