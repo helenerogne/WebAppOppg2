@@ -33,17 +33,6 @@ export class TicketList {
       );
   };
 
-  /*
-  deleteOneTicket(id: number) {
-    this.http.delete("api/order/" + id)
-      .subscribe(retur => {
-        this.getAllTickets();
-        this.router.navigate(['/admin.component.html']);
-      },
-        error => console.log(error)
-      );
-  };
-  */
 
   deleteOneTicket(id: number) {
     // først hent navnet på kunden

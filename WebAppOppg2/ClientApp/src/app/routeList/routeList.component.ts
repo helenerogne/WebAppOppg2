@@ -12,7 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export class routeList {
   skjema: FormGroup;
-  allRoutes: Array<Route>
+  allRoutes: Array<Route>;
   loading: boolean;
 
   validering = {
@@ -45,7 +45,7 @@ export class routeList {
     lagretRoute.portFrom = this.skjema.value.portFrom;
     lagretRoute.portTo = this.skjema.value.portTo;
     lagretRoute.departure = this.skjema.value.departure;
-    lagretRoute.ticketDate = this.skjema.value.ticketDate;
+    lagretRoute.routePrice = this.skjema.value.routePrice;
 
     console.log(lagretRoute);
 
